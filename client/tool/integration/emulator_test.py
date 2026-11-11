@@ -404,21 +404,65 @@ class Device:
 
 # =============================================================== recorder ==
 class Recorder:
-    """Records the device screen during the run (adb screenrecord, in
-    170 s pieces because of its 3 minute limit), then joins the pieces into
-    one MP4 with ffmpeg (from the imageio-ffmpeg package, if installed)."""
+    """Records the device screen during the run.
+
+    Emulator: the emulator's own recorder (`adb emu screenrecord`), which also
+    records the game's sound (WebM, up to 180 s). Real phone: `adb shell
+    screenrecord` in 170 s pieces (picture only; Android can't capture app
+    audio that way). Either way the result is converted to one MP4 with ffmpeg
+    (from the imageio-ffmpeg package, if installed)."""
 
     def __init__(self, out_dir):
         self.out = out_dir
         self.parts = []
         self.stop_flag = threading.Event()
         self.thread = None
+        self.emu_file = None
 
     def start(self):
+        serials = [l.split()[0] for l in adb('devices').splitlines()[1:] if l.strip().endswith('device')]
+        # Turn media volume up so the game is audible in the recording.
+        adb('shell', 'cmd', 'media_session', 'volume', '--stream', '3', '--set', '15', check=False)
+        if serials and serials[0].startswith('emulator-'):
+            self.emu_file = os.path.join(self.out, 'rec_emu.webm')
+            adb('emu', 'screenrecord', 'start', '--time-limit', '180', self.emu_file)
+            time.sleep(1.0)
+            return
         adb('shell', 'rm', '-f', '/sdcard/rps_rec_*.mp4', check=False)
         self.thread = threading.Thread(target=self._loop, daemon=True)
         self.thread.start()
         time.sleep(1.0)
+
+    @staticmethod
+    def _ffmpeg():
+        try:
+            import imageio_ffmpeg
+            return imageio_ffmpeg.get_ffmpeg_exe()
+        except ImportError:
+            return None
+
+    def _stop_emu(self):
+        adb('emu', 'screenrecord', 'stop', check=False)
+        for _ in range(40):  # the emulator finishes writing in the background
+            time.sleep(0.5)
+            if os.path.exists(self.emu_file) and os.path.getsize(self.emu_file) > 1000:
+                size = os.path.getsize(self.emu_file)
+                time.sleep(1.0)
+                if os.path.getsize(self.emu_file) == size:
+                    break
+        if not os.path.exists(self.emu_file):
+            return None
+        ff = self._ffmpeg()
+        if not ff:
+            return self.emu_file
+        final = os.path.join(self.out, 'test_video.mp4')
+        subprocess.run([ff, '-y', '-i', self.emu_file, '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '23',
+                        '-pix_fmt', 'yuv420p',
+                        # the emulator records web audio very quietly: lift it, limit the peaks
+                        '-af', 'volume=26dB,alimiter=limit=0.89:level=disabled',
+                        '-c:a', 'aac', '-b:a', '160k', '-movflags', '+faststart', final],
+                       capture_output=True)
+        return final if os.path.exists(final) else self.emu_file
 
     def _loop(self):
         i = 0
@@ -430,6 +474,8 @@ class Recorder:
                            capture_output=True)
 
     def stop(self):
+        if self.emu_file:
+            return self._stop_emu()
         self.stop_flag.set()
         adb('shell', 'pkill', '-INT', 'screenrecord', check=False)
         if self.thread:
@@ -510,7 +556,8 @@ class Runner:
         d.navigate(self.url)
         time.sleep(1.5)
         js = ("localStorage.clear();localStorage.setItem('rps.lang','ko');localStorage.setItem('rps.char','pebble');"
-              "localStorage.setItem('rps.quality','0');localStorage.setItem('rps.map','rps_arena');")
+              "localStorage.setItem('rps.quality','0');localStorage.setItem('rps.map','rps_arena');"
+              "localStorage.setItem('rps.sfx','1');localStorage.setItem('rps.music','0.6');")
         for k, v in (extra_storage or {}).items():
             js += f'localStorage.setItem({json.dumps(k)},{json.dumps(v)});'
         d.eval(js + 'true')
@@ -702,14 +749,22 @@ class Runner:
             check(g2['shotSeq'] > g['shotSeq'], '발사 버튼으로 총이 나가지 않음')
             d.shot('fire', '발사 버튼으로 사격')
 
-        # 6) skill Q (Pebble: gravel blink, 3 charges)
-        g = d.state()['game']
+        # 6) skill Q (Pebble: gravel blink, 3 charges). Blink needs room in
+        #    front; if we face a wall it fails (by design), so turn and retry.
         q = d.dom_center('#rps-touch [data-id="q"]')
-        d.tap(q['x'], q['y'])
-        time.sleep(0.4)
-        g2 = d.state()['game']
-        notes.append(f'Q 스킬: 충전 {g["skillCharges"][0]}→{g2["skillCharges"][0]}')
-        check(g2['skillCharges'][0] < g['skillCharges'][0] or not g2['alive'], 'Q 스킬이 써지지 않음')
+        g = d.state()['game']
+        used = False
+        for attempt in range(4):
+            before = d.state()['game']['skillCharges'][0]
+            d.tap(q['x'], q['y'])
+            time.sleep(0.5)
+            g2 = d.state()['game']
+            if g2['skillCharges'][0] < before or not g2['alive']:
+                used = True
+                break
+            d.hold(w * 0.55, h * 0.45, 0.1, dx=200)  # look ~45 degrees further and retry
+        notes.append(f'Q 스킬: 충전 {g["skillCharges"][0]}→{g2["skillCharges"][0]} (시도 {attempt + 1}회)')
+        check(used, 'Q 스킬이 써지지 않음')
         d.shot('skill_q', 'Q 스킬(자갈 점멸) 사용')
 
         # 7) reload
