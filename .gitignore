@@ -60,3 +60,4 @@ app.*.map.json
 __pycache__/
 /image/
 /server/data/
+/ppt/
