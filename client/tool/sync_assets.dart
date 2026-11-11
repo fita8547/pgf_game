@@ -24,7 +24,13 @@ void main() {
       final rel = f.path.substring(src.path.length + 1).replaceAll('\\', '/');
       if (where != null && !where(rel)) continue;
       final out = File('$to/$rel');
-      if (out.existsSync() && out.lengthSync() == f.lengthSync()) continue;
+      // Skip only if same size and not older than the source (same-size edits
+      // still get copied).
+      if (out.existsSync() &&
+          out.lengthSync() == f.lengthSync() &&
+          !f.lastModifiedSync().isAfter(out.lastModifiedSync())) {
+        continue;
+      }
       out.parent.createSync(recursive: true);
       f.copySync(out.path);
       files++;

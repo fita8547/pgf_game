@@ -3,6 +3,9 @@ import '../content/economy.dart';
 import '../content/guns.dart';
 import '../math.dart';
 
+/// fx keys that are server bookkeeping only (not sent in snapshots).
+final _serverOnlyFx = RegExp(r'^(bump|cut)\d+$|^(healed|dashedAt|grab)$');
+
 class Player {
   final int id;
   String name;
@@ -138,7 +141,7 @@ class Player {
         r(jumpCooldown, 3), r(landPenalty, 3), r(groundTime > 9 ? 9 : groundTime, 3), hopChain,
         r(ult, 1), kills, deaths, assists, headshots, r(damageDealt, 0), r(captureTime, 1),
         r(skillCd[0], 2), r(skillCd[1], 2), r(skillCd[2], 2), ...skillCharges, r(revealed, 2),
-        {for (final e in fx.entries) e.key: r(e.value, 3)}, mode,
+        {for (final e in fx.entries) if (!_serverOnlyFx.hasMatch(e.key)) e.key: r(e.value, 3)}, mode,
       ];
 
   static Player fromNet(List l) {

@@ -63,6 +63,10 @@ class LandslideCharge extends SkillImpl {
   const LandslideCharge();
   static const double speed = 13, time = 0.9;
 
+  /// The charge itself is predicted on the client; grabbing/damage is server-side.
+  @override
+  bool get predictable => true;
+
   @override
   Use use(GameSim sim, Player p, PlayerInput inp) {
     final f = _flatForward(p);
@@ -342,8 +346,9 @@ class CleaveLeap extends SkillImpl {
     return Use.spend;
   }
 
+  /// Leap predicted on the client; the landing cleave is server-side.
   @override
-  bool get predictable => false;
+  bool get predictable => true;
 
   @override
   void landed(GameSim sim, Player p) {

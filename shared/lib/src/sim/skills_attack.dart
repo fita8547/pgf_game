@@ -127,6 +127,10 @@ class ShurikenStorm extends SkillImpl {
 class GaleCut extends SkillImpl {
   const GaleCut();
 
+  /// Dash predicted on the client; the slash damage is server-side.
+  @override
+  bool get predictable => true;
+
   @override
   Use use(GameSim sim, Player p, PlayerInput inp) {
     final f = _flat(p);
