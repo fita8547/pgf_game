@@ -5,6 +5,14 @@ Flutter Web(UI) + three.js(3D) 클라이언트, Dart 서버, 공용 Dart 게임 
 
 ![사막 유적 점령전](docs/screenshots/battle.png)
 
+## 바로 플레이
+**게임 주소: https://pollution-lovers-building-buildings.trycloudflare.com/**
+(PC·폰 브라우저로 접속 → 게임 시작 → 로비에서 [온라인 참가] 또는 [봇 연습])
+
+<img src="docs/play-qr.png" width="160" alt="게임 주소 QR">
+
+- 서버를 켜 둔 동안만 접속된다. 무료 터널이라 서버를 다시 켜면 주소가 바뀌고, 그때 이 링크를 새 주소로 고친다.
+
 ## 스크린샷
 | | |
 |---|---|
