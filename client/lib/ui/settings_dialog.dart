@@ -48,6 +48,25 @@ class _SettingsBodyState extends State<_SettingsBody> {
         s.musicVolume = v;
         vol();
       }),
+      Row(children: [
+        const SizedBox(width: 110, child: Text('그래픽')),
+        for (final (q, label) in const [(0, '낮음'), (1, '보통'), (2, '높음')])
+          Padding(
+            padding: const EdgeInsets.only(right: 6),
+            child: ChoiceChip(
+              label: Text(label),
+              selected: s.quality == q,
+              onSelected: (_) => setState(() {
+                s.quality = q;
+                Engine.I.js.setQuality(q);
+              }),
+            ),
+          ),
+      ]),
+      const Padding(
+        padding: EdgeInsets.only(left: 110, top: 2),
+        child: Text('낮음: 그림자·빛번짐 끄고 해상도 낮춤 (느린 PC용)', style: TextStyle(fontSize: 11, color: Colors.white54)),
+      ),
       const SizedBox(height: 8),
       Align(
         alignment: Alignment.centerRight,

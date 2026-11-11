@@ -27,7 +27,7 @@
 - [ ] 5-1 실제로 플레이해 보고 수치 조정 (총·스킬·체력·경제 모두 임시값)
 - [x] 5-2 에셋 버그 수정 (사용자가 new-modeling으로 전달) → 네온 테스트 skip 해제, 5개 맵 전부 통과
 - [ ] 5-3 스킬 전용 효과음 (지금은 폭발·사격음 재사용), 1인칭에서 표창/쌍날 모드 전용 뷰모델
-- [ ] 5-4 git 저장소 연결 (fita8547/pgf_game 등) — 사용자 확인 필요
+- [~] 5-4 git: 로컬 저장소 만들고 커밋 완료(main 1개 + chore/maintenance). GitHub 업로드는 사용자가 직접 push 필요
 
 ### 4. 콘텐츠
 - [x] 4-1a 스킬 구조 + 페블 4개 (shared/lib/src/sim/skills.dart, 테스트 7개)
@@ -56,6 +56,12 @@
 - 화면 확인 도구: `python tool/cdp_shot.py URL 출력.png --wait 15 --shots 3 --at 5:"자바스크립트"`
 
 ## 기록
+- 유지보수(사용자 요청 '쭉 해줘'): git 초기화(.gitattributes, 생성물·new-modeling·백업 제외, 커밋 계정은 GitHub
+  noreply 메일), README 새로 작성, 에셋 복사 도구가 크기 같은 수정도 감지, 돌진·도약 스킬 클라이언트 예측(온라인
+  튐 감소), 스냅샷에서 서버 전용 값 제외, 프로토콜 버전 2, 큰 파일 분리(엔진→audio/input 모듈, 컨트롤러→
+  game_events/game_debug, 게임 화면→game_hud/game_overlays), 안 쓰는 코드 삭제.
+  성능: 맵 조각을 재질별로 합치고 캐릭터는 뼈별로 합쳐 그리기 호출 약 2000→약 900(아레나 1022, 네온 839),
+  그래픽 품질 설정(낮음: 그림자·빛번짐 끔·해상도↓ → 578). 테스트 97+3 통과, 브라우저 확인.
 - 2026-11-11 new-modeling(143개) 통합 시작. 원본 백업: _archive/rps_assets_before_2026-11-11.
   glb(anims, fp_skills, fx 추가 / guns·fp_rigs·맵 3개 교체), src → rps_assets/src, 아이콘 → rps_assets/icons,
   효과음 14개 → song/rps_sfx/mp3. 맵 확인: 5개 맵 모두 봇 이동·5대5 경기 통과(네온 포함), 아레나 2층 경로 생김.

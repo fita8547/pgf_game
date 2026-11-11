@@ -16,6 +16,7 @@ extension type RpsEngine._(JSObject _) implements JSObject {
   external JSPromise<JSAny?> showLobby(String charId, String gunId);
   external void setLobbyOffset(double x);
   external void hideAll();
+  external void setQuality(int q);
 
   // game
   external JSPromise<JSAny?> loadMap(String mapId);

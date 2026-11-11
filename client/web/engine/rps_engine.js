@@ -9,6 +9,7 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { Audio } from './audio.js';
 import { Input } from './input.js';
 
@@ -32,6 +33,46 @@ function loadGltf(path) {
   }
   return gltfCache.get(path);
 }
+
+// Draw-call reduction (brief §6-2): merge opaque leaf meshes that share a
+// material and an anchor node into one mesh attached to that anchor.
+// Maps anchor everything to the map root; characters anchor to the nearest
+// non-mesh ancestor (the bone), so animation still works.
+function mergeMeshes(root, anchorOf) {
+  root.updateMatrixWorld(true);
+  const groups = new Map();
+  root.traverse((o) => {
+    if (!o.isMesh || o.isSkinnedMesh || o.children.length) return;
+    const mat = o.material;
+    if (!mat || Array.isArray(mat) || mat.transparent) return;
+    const anchor = anchorOf(o);
+    if (!anchor) return;
+    const g = o.geometry;
+    const key = `${anchor.uuid}|${mat.uuid}|${Object.keys(g.attributes).sort().join(',')}|${g.index ? 'i' : 'n'}`;
+    if (!groups.has(key)) groups.set(key, { anchor, mat, items: [] });
+    groups.get(key).items.push(o);
+  });
+  let merged = 0;
+  const inv = new THREE.Matrix4(), m = new THREE.Matrix4();
+  for (const { anchor, mat, items } of groups.values()) {
+    if (items.length < 2) continue;
+    inv.copy(anchor.matrixWorld).invert();
+    const geoms = items.map((o) => o.geometry.clone().applyMatrix4(m.multiplyMatrices(inv, o.matrixWorld)));
+    const geo = mergeGeometries(geoms, false);
+    for (const g of geoms) g.dispose();
+    if (!geo) continue;
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.name = 'merged';
+    mesh.castShadow = items[0].castShadow;
+    mesh.receiveShadow = items[0].receiveShadow;
+    anchor.add(mesh);
+    for (const o of items) o.parent.remove(o);
+    merged += items.length;
+  }
+  return merged;
+}
+
+const nearestNonMesh = (o) => { let a = o.parent; while (a && a.isMesh) a = a.parent; return a; };
 
 function findNode(root, name) {
   let out = null;
@@ -153,6 +194,9 @@ class Engine {
 
   _frame() {
     const dt = Math.min(this.clock.getDelta(), 0.1);
+    // Count draw calls across all passes of this frame (shown by stats()).
+    this.renderer.info.autoReset = false;
+    this.renderer.info.reset();
     if (this.tick) {
       try { this.tick(dt); } catch (e) { console.error(e); }
     }
@@ -187,6 +231,34 @@ class Engine {
       r.setClearColor(0x000000, 0);
       r.clear();
     }
+  }
+
+  // Graphics quality: 0 low (no shadows/bloom, lower resolution),
+  // 1 medium, 2 high.
+  setQuality(q) {
+    this.quality = q;
+    const dpr = window.devicePixelRatio || 1;
+    this.renderer.setPixelRatio(q === 0 ? Math.min(dpr, 1) * 0.75 : q === 1 ? Math.min(dpr, 1.25) : Math.min(dpr, 2));
+    this.renderer.shadowMap.enabled = q > 0;
+    const size = q === 2 ? 2048 : 1024;
+    for (const light of [this.sun]) {
+      if (light && light.shadow.mapSize.x !== size) {
+        light.shadow.mapSize.set(size, size);
+        if (light.shadow.map) { light.shadow.map.dispose(); light.shadow.map = null; }
+      }
+    }
+    this.bloom.enabled = q > 0;
+    // Materials must recompile when shadows toggle.
+    this.scene.traverse((o) => { if (o.material) o.material.needsUpdate = true; });
+    this._resize();
+  }
+
+  // Dev: draw calls / triangles of the last frame and loaded object counts.
+  stats() {
+    const i = this.renderer.info;
+    let meshes = 0;
+    this.scene.traverse((o) => { if (o.isMesh) meshes++; });
+    return { calls: i.render.calls, triangles: i.render.triangles, meshes, geometries: i.memory.geometries };
   }
 
   // ------------------------------------------------------------- lobby --
@@ -239,6 +311,8 @@ class Engine {
       o.castShadow = !seeThrough;
       o.receiveShadow = true;
     });
+    const merged = mergeMeshes(map, () => map);
+    if (DEBUG) console.log('[rps] map merge', mapId, 'meshes merged', merged);
     this.world.add(map);
     const look = MAP_LOOK[mapId] || MAP_LOOK.rps_arena;
     this.scene.background = new THREE.Color(look.sky);
@@ -498,17 +572,34 @@ class Engine {
     return out;
   }
 
+  // Character + gun at rest pose with meshes merged per bone; shared by all
+  // players using that combination (clones share geometry).
+  async _playerProto(charId, gunId) {
+    this._protos ??= new Map();
+    const key = `${charId}/${gunId}`;
+    if (!this._protos.has(key)) {
+      this._protos.set(key, (async () => {
+        const [ch, gun] = await Promise.all([loadGltf(`glb/characters/${charId}.glb`), loadGltf(`glb/guns/${gunId}.glb`)]);
+        const model = ch.scene.clone(true);
+        model.traverse((o) => { if (o.isMesh) o.castShadow = true; });
+        const socket = findNode(model, 'weapon_socket_R');
+        if (socket) socket.add(gun.scene.clone(true));
+        const merged = mergeMeshes(model, nearestNonMesh);
+        if (DEBUG) console.log('[rps] player merge', key, merged);
+        return model;
+      })());
+    }
+    return this._protos.get(key);
+  }
+
   async _buildPlayer(p, charId, gunId) {
-    const [ch, gun] = await Promise.all([loadGltf(`glb/characters/${charId}.glb`), loadGltf(`glb/guns/${gunId}.glb`)]);
+    const proto = await this._playerProto(charId, gunId);
     if (p.charId !== charId || p.gunId !== gunId || !this.players.has(p.id)) return;
     if (p.model) p.root.remove(p.model);
     if (p.mixer) this.mixers.delete(p.mixer);
-    const model = ch.scene.clone(true);
-    model.traverse((o) => { if (o.isMesh) o.castShadow = true; });
+    const model = proto.clone(true);
     const socket = findNode(model, 'weapon_socket_R');
-    const gunObj = gun.scene.clone(true);
-    if (socket) socket.add(gunObj);
-    p.muzzle = findNode(gunObj, 'muzzle');
+    p.muzzle = socket ? findNode(socket, 'muzzle') : null;
     p.bones = { chest: findNode(model, 'chest'), head: findNode(model, 'head') };
     const hips = findNode(model, 'hips');
     p.model = model;

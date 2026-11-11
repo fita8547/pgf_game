@@ -41,7 +41,7 @@ Q/E/C 스킬 · V 궁극기 · R 재장전 · 1/2/휠 무기 · B 상점(스폰�
 
 ## 테스트
 ```sh
-cd shared && dart test     # 게임 규칙·스킬·맵·봇 경기 (94개)
+cd shared && dart test     # 게임 규칙·스킬·맵·봇 경기 (97개)
 cd server && dart test     # 서버 접속·입력 검사 (3개)
 cd client && flutter analyze
 ```

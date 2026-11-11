@@ -15,6 +15,7 @@ Future<void> main() async {
   await Engine.ready();
   final s = Settings.I;
   Engine.I.audio.setVolumes(s.sfxVolume, s.musicVolume);
+  Engine.I.js.setQuality(s.quality);
   runApp(const RpsApp());
 }
 

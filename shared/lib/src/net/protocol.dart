@@ -14,7 +14,7 @@ import '../sim/input.dart';
 ///   {t:'snap', s:snapshot, ev:[events], ack}  ~20 Hz
 ///   {t:'pong', c, s:serverTick}  {t:'err', m}  {t:'msg', m}
 abstract final class Net {
-  static const int version = 1;
+  static const int version = 2;
   static const int tickHz = 60;
   static const int snapEvery = 3; // 20 Hz snapshots
   static const String path = '/ws';

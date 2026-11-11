@@ -18,6 +18,9 @@ class Settings {
   /// Last online server (empty = the host that served this page).
   String server = '';
 
+  /// Graphics: 0 low, 1 medium, 2 high.
+  int quality = 2;
+
   void load() {
     try {
       final s = web.window.localStorage;
@@ -31,6 +34,7 @@ class Settings {
       mapId = s.getItem('rps.map') ?? mapId;
       name = s.getItem('rps.name') ?? name;
       server = s.getItem('rps.server') ?? server;
+      quality = int.tryParse(s.getItem('rps.quality') ?? '') ?? quality;
     } catch (_) {
       // Private mode / blocked storage: defaults are fine.
     }
@@ -48,6 +52,7 @@ class Settings {
       s.setItem('rps.map', mapId);
       s.setItem('rps.name', name);
       s.setItem('rps.server', server);
+      s.setItem('rps.quality', '$quality');
     } catch (_) {}
   }
 }
