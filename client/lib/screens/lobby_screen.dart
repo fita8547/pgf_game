@@ -303,8 +303,8 @@ class _LobbyScreenState extends State<LobbyScreen> {
               onChanged: (_) => _saveFields(),
             ),
           ),
-          const SizedBox(width: 10),
-          Expanded(
+          if (!Settings.standalone) const SizedBox(width: 10),
+          if (!Settings.standalone) Expanded(
             flex: 2,
             child: TextField(
               controller: _server,
@@ -325,8 +325,8 @@ class _LobbyScreenState extends State<LobbyScreen> {
               child: Text(tr('봇 연습', 'Practice vs bots')),
             ),
           ),
-          const SizedBox(width: 10),
-          Expanded(
+          if (!Settings.standalone) const SizedBox(width: 10),
+          if (!Settings.standalone) Expanded(
             child: FilledButton(
               style: FilledButton.styleFrom(backgroundColor: Rps.blue, foregroundColor: Colors.white),
               onPressed: () {
@@ -338,7 +338,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
           ),
         ]),
         const SizedBox(height: 4),
-        Text(tr('봇 연습: 이 맵·난이도로 5대5 · 온라인: 서버의 맵 순환을 따름', 'Practice: 5v5 on this map and bot skill · Online: follows the server\'s map rotation'),
+        if (!Settings.standalone) Text(tr('봇 연습: 이 맵·난이도로 5대5 · 온라인: 서버의 맵 순환을 따름', 'Practice: 5v5 on this map and bot skill · Online: follows the server\'s map rotation'),
             style: TextStyle(fontSize: 11, color: Rps.cream.withValues(alpha: 0.6))),
       ]),
     );

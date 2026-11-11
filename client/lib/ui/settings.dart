@@ -96,6 +96,10 @@ class Settings {
   }
 
   // ------------------------------------------------------------ server --
+  /// Built with `--dart-define=STANDALONE=true`: no game server (hosted as a
+  /// static page). Bot practice only; settings stay in this browser.
+  static const bool standalone = bool.fromEnvironment('STANDALONE');
+
   /// API base: the server that served this page.
   static String get apiBase => web.window.location.origin;
 
@@ -112,6 +116,7 @@ class Settings {
 
   /// True if the game server answers.
   static Future<bool> serverReachable() async {
+    if (standalone) return true;
     try {
       final m = jsonDecode(await _fetch('GET', '/api/health'));
       return m is Map && m['ok'] == true;
@@ -122,6 +127,7 @@ class Settings {
 
   /// Loads dark mode / font size from the server (server wins over local).
   Future<bool> pullFromServer() async {
+    if (standalone) return true;
     try {
       final m = jsonDecode(await _fetch('GET', '/api/settings?cid=$clientId')) as Map<String, dynamic>;
       if (m['dark'] is bool) dark = m['dark'] as bool;
@@ -136,6 +142,7 @@ class Settings {
   /// Saves dark mode / font size locally and on the server.
   Future<bool> pushToServer() async {
     save();
+    if (standalone) return true;
     try {
       await _fetch('PUT', '/api/settings?cid=$clientId', {'dark': dark, 'fontScale': fontScale});
       return true;

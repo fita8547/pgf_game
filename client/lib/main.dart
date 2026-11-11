@@ -136,6 +136,7 @@ class _RpsAppState extends State<RpsApp> {
   }
 
   void _startNetWatch() {
+    if (Settings.standalone) return;
     _offlineFn = ((web.Event _) {
       _fatalNetwork();
     }).toJS;

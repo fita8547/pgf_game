@@ -131,7 +131,7 @@ class _SettingsBodyState extends State<_SettingsBody> {
         ),
         Padding(
           padding: const EdgeInsets.only(left: 110, top: 2, bottom: 6),
-          child: Text(switch (_synced) {
+          child: Text(Settings.standalone ? tr('이 브라우저에 저장됩니다', 'Saved in this browser') : switch (_synced) {
             null => tr('다크 모드·글자 크기는 서버에 저장되어 다시 켜도 유지됩니다', 'Dark mode and text size are saved on the server'),
             true => tr('서버에 저장됨', 'Saved on the server'),
             false => tr('서버 저장 실패 (이 기기에만 저장됨)', 'Server save failed (saved on this device only)'),
