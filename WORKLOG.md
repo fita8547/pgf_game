@@ -61,7 +61,7 @@
   강제), 포인터락 대신 가상 잠금+전체화면/가로 고정 시도. 작은 화면은 UI를 가상 1280x720 기준으로 축소(main.dart
   _UiScale). 폰 첫 실행은 그래픽 낮음. cdp_shot.py --touch/--tap 추가, 844x390에서 이동·시점 확인.
 - 밸런스: 퀘이크 죽으면 바위 포탑 제거(SkillImpl.diesWithOwner). 오리가미 캐릭터 피해 x1.5
-  (content/characters.dart characterDamage), 종이학 20→45, 표창 95→120. 테스트 98개 통과.
+  (content/characters.dart characterDamage), 종이학 20→45→100(사용자 요청), 표창 95→120. 테스트 98개 통과.
 - 인터넷 공개: 사용자가 start-public.bat로 trycloudflare 터널 실행 성공.
 - 2026-11-11 GitHub 업로드: fita8547/pgf_game main 브랜치(공개). 이후 작업도 커밋 후 push.
 - 유지보수(사용자 요청 '쭉 해줘'): git 초기화(.gitattributes, 생성물·new-modeling·백업 제외, 커밋 계정은 GitHub

@@ -69,7 +69,7 @@ class CraneScout extends SkillImpl {
   bool impact(GameSim sim, Projectile pj, Vec3 at, Player? hit) {
     if (hit != null) {
       hit.revealed = math.max(hit.revealed, 6);
-      sim.applyDamage(hit, 45, sim.players[pj.owner], 'crane_scout', false);
+      sim.applyDamage(hit, 100, sim.players[pj.owner], 'crane_scout', false);
       sim.events.add({'e': 'reveal', 'p': at.toList(2), 'r': 1.0, 't': pj.team, 'ids': [hit.id]});
     }
     return true;
