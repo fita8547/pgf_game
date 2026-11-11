@@ -26,6 +26,28 @@ extension _GameDebug on GameController {
     o['state'] = (() => '${me!.pos} hp=${me!.hp} alive=${me!.alive} gun=${me!.gunId} cr=${me!.credits} '
             'owner=${sim!.owner} score=${sim!.score} t=${sim!.time.toStringAsFixed(1)}'
         .toJS).toJS;
+    // Aim at the nearest living enemy in line of sight (for recorded demos).
+    // Returns its distance, or -1 if none is visible.
+    o['aimNearest'] = (() {
+      final s = sim!, p = me!;
+      Player? best;
+      var bd = 1e9;
+      for (final q in s.players.values) {
+        if (q.team == p.team || !q.alive) continue;
+        final d = q.pos.distanceTo(p.pos);
+        if (d < bd && s.map.world.lineClear(p.eye, q.eye)) {
+          bd = d;
+          best = q;
+        }
+      }
+      if (best == null) return (-1).toJS;
+      final dx = best.pos.x - p.pos.x, dz = best.pos.z - p.pos.z;
+      final dy = best.pos.y + best.eyeHeight * 0.8 - p.eye.y;
+      yaw = math.atan2(dx, -dz);
+      pitch = math.atan2(dy, math.sqrt(dx * dx + dz * dz));
+      return bd.toJS;
+    }).toJS;
+    o['me'] = (() => [me!.pos.x, me!.pos.y, me!.pos.z, yaw, me!.alive ? 1 : 0, me!.mag].jsify()).toJS;
     globalContext['rpsDebug'] = o;
   }
 }
