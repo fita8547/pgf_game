@@ -109,4 +109,20 @@ void main() {
     expect(q.skillCharges, p.skillCharges);
     expect(q.skillCd[0], closeTo(p.skillCd[0], 0.01));
   });
+
+  test('rock turret disappears when quake dies; origami hits harder', () {
+    final sim = arena();
+    final q = place(sim, sim.addPlayer('q', 'quake', teamId: 0), 0, 10);
+    final e = place(sim, sim.addPlayer('e', 'origami', teamId: 1), 3, -10);
+    press(sim, q, Btn.skillQ);
+    expect(sim.deployablesOf(q, 'rock_turret'), isNotEmpty);
+    q.spawnProtect = 0;
+    final hp = q.hp;
+    sim.applyDamage(q, 10, e, 'pistol', false);
+    final taken = hp - q.hp;
+    expect(taken, closeTo(10 * 1.35 * 1.5 * q.character.stats.damageTaken, 0.01));
+    sim.applyDamage(q, 9999, e, 'pistol', false);
+    expect(q.alive, isFalse);
+    expect(sim.deployablesOf(q, 'rock_turret'), isEmpty);
+  });
 }

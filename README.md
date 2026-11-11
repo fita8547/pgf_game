@@ -47,9 +47,12 @@ dart run bin/server.dart --port 8090
 WASD 이동 · 마우스 조준/좌클릭 사격 · 우클릭 정조준 · Space 점프 · Shift 앉기 ·
 Q/E/C 스킬 · V 궁극기 · R 재장전 · 1/2/휠 무기 · B 상점(스폰룸)/사망 중 캐릭터 변경 · Tab 점수판 · Esc 메뉴
 
+폰·태블릿(터치)은 자동으로 화면 버튼이 나온다: 왼쪽 엄지 이동, 오른쪽 드래그 시점, 발사 버튼을 누른 채 끌면 조준하며 사격.
+가로 화면 권장. PC에서 확인하려면 주소에 `?touch`.
+
 ## 테스트
 ```sh
-cd shared && dart test     # 게임 규칙·스킬·맵·봇 경기 (97개)
+cd shared && dart test     # 게임 규칙·스킬·맵·봇 경기 (98개)
 cd server && dart test     # 서버 접속·입력 검사 (3개)
 cd client && flutter analyze
 ```

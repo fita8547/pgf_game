@@ -69,7 +69,7 @@ class CraneScout extends SkillImpl {
   bool impact(GameSim sim, Projectile pj, Vec3 at, Player? hit) {
     if (hit != null) {
       hit.revealed = math.max(hit.revealed, 6);
-      sim.applyDamage(hit, 20, sim.players[pj.owner], 'crane_scout', false);
+      sim.applyDamage(hit, 45, sim.players[pj.owner], 'crane_scout', false);
       sim.events.add({'e': 'reveal', 'p': at.toList(2), 'r': 1.0, 't': pj.team, 'ids': [hit.id]});
     }
     return true;
@@ -79,7 +79,7 @@ class CraneScout extends SkillImpl {
 /// 궁 표창 폭풍: 5 precise paper shurikens replace your gun; kills refund one.
 class ShurikenStorm extends SkillImpl {
   const ShurikenStorm();
-  static const double damage = 95, rate = 3;
+  static const double damage = 120, rate = 3;
 
   @override
   Use use(GameSim sim, Player p, PlayerInput inp) {

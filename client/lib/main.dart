@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import 'engine/engine.dart';
@@ -14,6 +16,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Engine.ready();
   final s = Settings.I;
+  // Phones: start on low graphics unless the player picked something.
+  if (Engine.I.input.isTouch() && !s.qualitySaved) s.quality = 0;
   Engine.I.audio.setVolumes(s.sfxVolume, s.musicVolume);
   Engine.I.js.setQuality(s.quality);
   runApp(const RpsApp());
@@ -85,6 +89,7 @@ class _RpsAppState extends State<RpsApp> {
       title: 'RPS',
       debugShowCheckedModeBanner: false,
       theme: Rps.theme(),
+      builder: (context, child) => _UiScale(child: child!),
       home: Scaffold(
         backgroundColor: Colors.transparent,
         body: AnimatedSwitcher(
@@ -100,6 +105,31 @@ class _RpsAppState extends State<RpsApp> {
             Screen.result => ResultScreen(key: const ValueKey('result'), result: result!, onContinue: () => _go(Screen.lobby)),
           },
         ),
+      ),
+    );
+  }
+}
+
+/// Small screens (phones): lay the UI out on a larger virtual canvas and
+/// scale it down, so the HUD and menus keep their desktop proportions.
+class _UiScale extends StatelessWidget {
+  const _UiScale({required this.child});
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final mq = MediaQuery.of(context);
+    final size = mq.size;
+    final fit = math.min(size.width / 1280, size.height / 720);
+    if (fit >= 0.95 || size.isEmpty) return child;
+    final scale = math.max(0.6, fit);
+    final virtual = size / scale;
+    return FittedBox(
+      fit: BoxFit.fill,
+      alignment: Alignment.topLeft,
+      child: SizedBox.fromSize(
+        size: virtual,
+        child: MediaQuery(data: mq.copyWith(size: virtual, padding: mq.padding / scale), child: child),
       ),
     );
   }

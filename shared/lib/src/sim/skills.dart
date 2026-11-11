@@ -47,6 +47,9 @@ abstract class SkillImpl {
   /// Pure movement skills also run in client prediction (no rubber-banding).
   bool get predictable => false;
 
+  /// Deployables of this skill vanish when their owner dies.
+  bool get diesWithOwner => false;
+
   /// May be pressed while on cooldown (second press of a two-step skill).
   bool recastable(GameSim sim, Player p) => false;
 

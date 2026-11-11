@@ -20,6 +20,7 @@ class Settings {
 
   /// Graphics: 0 low, 1 medium, 2 high.
   int quality = 2;
+  bool qualitySaved = false;
 
   void load() {
     try {
@@ -34,7 +35,9 @@ class Settings {
       mapId = s.getItem('rps.map') ?? mapId;
       name = s.getItem('rps.name') ?? name;
       server = s.getItem('rps.server') ?? server;
-      quality = int.tryParse(s.getItem('rps.quality') ?? '') ?? quality;
+      final q = int.tryParse(s.getItem('rps.quality') ?? '');
+      qualitySaved = q != null;
+      quality = q ?? quality;
     } catch (_) {
       // Private mode / blocked storage: defaults are fine.
     }

@@ -440,6 +440,8 @@ class GameController extends ChangeNotifier {
       if (down.contains('KeyS')) mz -= 1;
       if (down.contains('KeyD')) mx += 1;
       if (down.contains('KeyA')) mx -= 1;
+      mx = clampD(mx + inp.jx, -1, 1);
+      mz = clampD(mz + inp.jy, -1, 1);
       if (inp.buttons & 1 != 0) buttons |= Btn.fire;
       if (inp.buttons & 4 != 0) buttons |= Btn.ads;
       if (down.contains('Space')) buttons |= Btn.jump;

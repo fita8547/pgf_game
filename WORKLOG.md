@@ -56,6 +56,13 @@
 - 화면 확인 도구: `python tool/cdp_shot.py URL 출력.png --wait 15 --shots 3 --at 5:"자바스크립트"`
 
 ## 기록
+- 2026-11-11 모바일 터치 조작: web/engine/touch.js (왼쪽 떠다니는 조이스틱=아날로그 이동, 오른쪽 드래그=시점,
+  발사(누른 채 끌면 조준), 조준·앉기 토글, 점프·장전·무기·Q/E/C/궁·상점·점수·메뉴). 터치 기기 자동 감지(?touch로
+  강제), 포인터락 대신 가상 잠금+전체화면/가로 고정 시도. 작은 화면은 UI를 가상 1280x720 기준으로 축소(main.dart
+  _UiScale). 폰 첫 실행은 그래픽 낮음. cdp_shot.py --touch/--tap 추가, 844x390에서 이동·시점 확인.
+- 밸런스: 퀘이크 죽으면 바위 포탑 제거(SkillImpl.diesWithOwner). 오리가미 캐릭터 피해 x1.5
+  (content/characters.dart characterDamage), 종이학 20→45, 표창 95→120. 테스트 98개 통과.
+- 인터넷 공개: 사용자가 start-public.bat로 trycloudflare 터널 실행 성공.
 - 2026-11-11 GitHub 업로드: fita8547/pgf_game main 브랜치(공개). 이후 작업도 커밋 후 push.
 - 유지보수(사용자 요청 '쭉 해줘'): git 초기화(.gitattributes, 생성물·new-modeling·백업 제외, 커밋 계정은 GitHub
   noreply 메일), README 새로 작성, 에셋 복사 도구가 크기 같은 수정도 감지, 돌진·도약 스킬 클라이언트 예측(온라인

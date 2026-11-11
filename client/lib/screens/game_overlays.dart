@@ -173,6 +173,7 @@ class _Pause extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final touch = Engine.I.input.isTouch();
     return GestureDetector(
       onTap: g.requestLock,
       child: Container(
@@ -180,16 +181,20 @@ class _Pause extends StatelessWidget {
         child: Center(
           child: Panel(
             child: Column(mainAxisSize: MainAxisSize.min, children: [
-              Image.asset('assets/logo/wide.png', height: 70),
+              Image.asset('assets/logo/wide.png', height: touch ? 44 : 70),
               const SizedBox(height: 10),
-              const Text('화면을 클릭하면 게임으로 돌아갑니다', style: TextStyle(fontSize: 16)),
+              Text(touch ? '화면을 터치하면 게임으로 돌아갑니다' : '화면을 클릭하면 게임으로 돌아갑니다',
+                  style: const TextStyle(fontSize: 16)),
               const SizedBox(height: 10),
-              const Text(
-                'WASD 이동 · 마우스 조준/사격 · 우클릭 정조준 · Space 점프 · Shift 앉기\n'
-                'Q / E / C 스킬 · V 궁극기 · R 재장전 · 1/2/휠 무기 교체\n'
-                'B 상점(스폰룸) · Tab 점수판 · Esc 메뉴',
+              Text(
+                touch
+                    ? '왼쪽 엄지: 이동 · 오른쪽 드래그: 시점 · 발사 버튼을 누른 채 끌면 조준하며 사격\n'
+                        '조준·앉기는 눌러서 켜고 끄기 · Q/E/C 스킬 · 궁 = 궁극기 · ☰ 메뉴'
+                    : 'WASD 이동 · 마우스 조준/사격 · 우클릭 정조준 · Space 점프 · Shift 앉기\n'
+                        'Q / E / C 스킬 · V 궁극기 · R 재장전 · 1/2/휠 무기 교체\n'
+                        'B 상점(스폰룸) · Tab 점수판 · Esc 메뉴',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 12, color: Colors.white70),
+                style: const TextStyle(fontSize: 12, color: Colors.white70),
               ),
               const SizedBox(height: 14),
               Row(mainAxisSize: MainAxisSize.min, children: [

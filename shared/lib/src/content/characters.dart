@@ -49,6 +49,12 @@ const Map<String, Body> _bodies = {
   'staple': Body(1.48, 1.41, 0.90),
 };
 
+/// Per-character damage multiplier on top of the role profile (all damage
+/// the character deals: guns and skills).
+const Map<String, double> characterDamage = {
+  'origami': 1.5,
+};
+
 /// Everything the sim needs about a character: catalog info (art, skills)
 /// joined with role stats and body dimensions.
 class CharacterDef {
@@ -62,6 +68,7 @@ class CharacterDef {
   RoleStats get stats => roleStats[info.role]!;
   double get maxHp => stats.hp;
   double get speed => stats.speed;
+  double get damageMul => characterDamage[info.id] ?? 1;
 }
 
 final List<CharacterDef> characters = [

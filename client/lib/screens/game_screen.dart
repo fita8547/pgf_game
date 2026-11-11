@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:rps_shared/rps_shared.dart';
 
+import '../engine/engine.dart';
 import '../game/game_controller.dart';
 import '../ui/settings.dart';
 import '../ui/settings_dialog.dart';

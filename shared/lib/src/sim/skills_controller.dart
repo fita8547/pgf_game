@@ -110,6 +110,9 @@ class RockTurret extends SkillImpl {
   const RockTurret();
 
   @override
+  bool get diesWithOwner => true;
+
+  @override
   Use use(GameSim sim, Player p, PlayerInput inp) {
     for (final old in [...sim.deployablesOf(p, 'rock_turret')]) {
       sim.removeDeployable(old);

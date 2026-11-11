@@ -646,7 +646,7 @@ class GameSim {
     if (attacker != null && attacker.id != victim.id) {
       // Role profile: attacker's damage (+ controller skill power), victim's armour.
       final ra = attacker.character.stats;
-      amount *= ra.damageDealt;
+      amount *= ra.damageDealt * attacker.character.damageMul;
       if (weapon != null && !isGun(weapon)) amount *= ra.skillPower;
       amount *= victim.character.stats.damageTaken;
       if (has(attacker, 'amp')) amount *= 1 + (attacker.fx['ampMul'] ?? 0);
@@ -691,6 +691,9 @@ class GameSim {
       for (final sk in killer.character.info.skills) {
         skillImpls[sk.id]?.onKill(this, killer, victim);
       }
+    }
+    for (final d in [...deployables]) {
+      if (d.owner == victim.id && (skillImpls[d.kind]?.diesWithOwner ?? false)) removeDeployable(d, destroyed: true);
     }
     victim.fx.clear();
     victim.mode = '';

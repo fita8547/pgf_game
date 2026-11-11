@@ -79,9 +79,13 @@ extension type RpsInput._(JSObject _) implements JSObject {
   external void lock();
   external void unlock();
   external bool locked();
+  external bool isTouch();
 }
 
 extension type InputFrame._(JSObject _) implements JSObject {
+  /// Touch joystick, -1..1 (jy forward).
+  external double get jx;
+  external double get jy;
   external double get dx;
   external double get dy;
   external double get wheel;

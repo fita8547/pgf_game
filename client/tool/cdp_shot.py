@@ -89,6 +89,8 @@ def main():
     ap.add_argument("--shots", type=int, default=1)
     ap.add_argument("--click", action="append", default=[], help="T:x,y  real mouse click at T seconds")
     ap.add_argument("--size", default="1600,900")
+    ap.add_argument("--touch", action="store_true", help="emulate a phone (touch, mobile viewport)")
+    ap.add_argument("--tap", action="append", default=[], help="T:x,y[,x2,y2]  touch tap or drag at T seconds")
     a = ap.parse_args()
 
     prof = tempfile.mkdtemp(prefix="rps-cdp-")
@@ -108,9 +110,15 @@ def main():
         ws = WS(page["webSocketDebuggerUrl"])
         ws.send("Runtime.enable")
         ws.send("Page.enable")
+        if a.touch:
+            w, h = (int(v) for v in a.size.split(","))
+            ws.send("Emulation.setDeviceMetricsOverride", width=w, height=h, deviceScaleFactor=2, mobile=True)
+            ws.send("Emulation.setTouchEmulationEnabled", enabled=True, maxTouchPoints=5)
+            ws.send("Emulation.setEmitTouchEventsForMouse", enabled=True)
         ws.send("Page.navigate", url=a.url)
         at = sorted([(float(x.split(":", 1)[0]), x.split(":", 1)[1]) for x in a.at] +
-                    [(float(x.split(":", 1)[0]), "CLICK:" + x.split(":", 1)[1]) for x in a.click])
+                    [(float(x.split(":", 1)[0]), "CLICK:" + x.split(":", 1)[1]) for x in a.click] +
+                    [(float(x.split(":", 1)[0]), "TAP:" + x.split(":", 1)[1]) for x in a.tap])
         start = time.time()
         shots = [a.wait * (i + 1) / a.shots for i in range(a.shots)]
         base, ext = os.path.splitext(a.out)
@@ -122,6 +130,18 @@ def main():
             now = time.time() - start
             while at and at[0][0] <= now:
                 code = at.pop(0)[1]
+                if code.startswith("TAP:"):
+                    v = [float(t) for t in code[4:].split(",")]
+                    x, y = v[0], v[1]
+                    x2, y2 = (v[2], v[3]) if len(v) >= 4 else (x, y)
+                    ws.send("Input.dispatchTouchEvent", type="touchStart", touchPoints=[{"x": x, "y": y}])
+                    for k in range(1, 9):
+                        ws.pump(0.03)
+                        ws.send("Input.dispatchTouchEvent", type="touchMove",
+                                touchPoints=[{"x": x + (x2 - x) * k / 8, "y": y + (y2 - y) * k / 8}])
+                    ws.send("Input.dispatchTouchEvent", type="touchEnd", touchPoints=[])
+                    print("[tap]", v)
+                    continue
                 if code.startswith("CLICK:"):
                     x, y = (float(v) for v in code[6:].split(","))
                     for t in ("mousePressed", "mouseReleased"):
