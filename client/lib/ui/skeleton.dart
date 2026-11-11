@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../test_hooks.dart';
 import 'theme.dart';
 
 /// Skeleton UI: grey placeholder blocks with a moving shimmer, shown while
@@ -15,6 +16,12 @@ class Shimmer extends StatefulWidget {
 class _ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
   late final AnimationController _c = AnimationController(vsync: this, duration: const Duration(milliseconds: 1300))
     ..repeat();
+
+  @override
+  void initState() {
+    super.initState();
+    TestHooks.shimmers++;
+  }
 
   @override
   void dispose() {
@@ -94,6 +101,7 @@ class HudSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TestHooks.hudSkeletons++;
     Widget panel(double w, double h, List<Widget> rows) => Container(
       width: w,
       height: h,

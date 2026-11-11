@@ -93,7 +93,14 @@ class _SettingsBodyState extends State<_SettingsBody> {
         Row(
           children: [
             SizedBox(width: 110, child: Text(tr('다크 모드', 'Dark mode'))),
-            Switch(value: s.dark, activeThumbColor: Rps.gold, onChanged: (v) => _applyServerSetting(() => s.dark = v)),
+            Semantics(
+              label: tr('다크 모드 스위치', 'Dark mode switch'),
+              child: Switch(
+                value: s.dark,
+                activeThumbColor: Rps.gold,
+                onChanged: (v) => _applyServerSetting(() => s.dark = v),
+              ),
+            ),
             const SizedBox(width: 8),
             Text(s.dark ? tr('어둡게', 'Dark') : tr('밝게', 'Light'), style: TextStyle(color: Rps.fg(0.7))),
           ],

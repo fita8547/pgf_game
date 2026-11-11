@@ -13,6 +13,7 @@ import 'screens/lobby_screen.dart';
 import 'screens/result_screen.dart';
 import 'screens/splash_screen.dart';
 import 'screens/title_screen.dart';
+import 'test_hooks.dart';
 import 'ui/i18n.dart';
 import 'ui/settings.dart';
 import 'ui/theme.dart';
@@ -20,6 +21,7 @@ import 'ui/theme.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Rps.dark = Settings.I.dark;
+  TestHooks.install();
   runApp(const RpsApp());
 }
 
@@ -158,6 +160,7 @@ class _RpsAppState extends State<RpsApp> {
     } catch (_) {}
     final ctx = _nav.currentContext;
     if (ctx != null) {
+      TestHooks.dialog = 'network';
       await showDialog<void>(
         context: ctx,
         barrierDismissible: false,
@@ -171,6 +174,7 @@ class _RpsAppState extends State<RpsApp> {
         ),
       );
     }
+    TestHooks.dialog = '';
     _exit();
   }
 
@@ -218,6 +222,10 @@ class _RpsAppState extends State<RpsApp> {
 
   @override
   Widget build(BuildContext context) {
+    TestHooks.screen = screen.name;
+    TestHooks.game = game;
+    TestHooks.bootStatus = _bootStatus;
+    TestHooks.bootProgress = _bootProgress;
     return MaterialApp(
       title: 'RPS',
       debugShowCheckedModeBanner: false,

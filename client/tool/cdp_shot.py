@@ -90,6 +90,7 @@ def main():
     ap.add_argument("--click", action="append", default=[], help="T:x,y  real mouse click at T seconds")
     ap.add_argument("--size", default="1600,900")
     ap.add_argument("--touch", action="store_true", help="emulate a phone (touch, mobile viewport)")
+    ap.add_argument("--throttle", type=float, default=0, help="limit download to N KB/s (to see loading screens)")
     ap.add_argument("--tap", action="append", default=[], help="T:x,y[,x2,y2]  touch tap or drag at T seconds")
     a = ap.parse_args()
 
@@ -115,6 +116,10 @@ def main():
             ws.send("Emulation.setDeviceMetricsOverride", width=w, height=h, deviceScaleFactor=2, mobile=True)
             ws.send("Emulation.setTouchEmulationEnabled", enabled=True, maxTouchPoints=5)
             ws.send("Emulation.setEmitTouchEventsForMouse", enabled=True)
+        if a.throttle:
+            ws.send("Network.enable")
+            ws.send("Network.emulateNetworkConditions", offline=False, latency=40,
+                    downloadThroughput=a.throttle * 1024, uploadThroughput=-1)
         ws.send("Page.navigate", url=a.url)
         at = sorted([(float(x.split(":", 1)[0]), x.split(":", 1)[1]) for x in a.at] +
                     [(float(x.split(":", 1)[0]), "CLICK:" + x.split(":", 1)[1]) for x in a.click] +

@@ -56,6 +56,12 @@
 - 화면 확인 도구: `python tool/cdp_shot.py URL 출력.png --wait 15 --shots 3 --at 5:"자바스크립트"`
 
 ## 기록
+- 2026-11-11 모바일 통합 테스트: client/tool/integration/emulator_test.py — adb + Chrome DevTools로 에뮬레이터 크롬을
+  실제 터치로 조작, 전용 테스트 서버(8095, 별도 설정 파일)를 띄우고 재시작까지 함. 9단계(스플래시, 로비 스켈레톤,
+  다크·글자 서버 저장, 서버 재시작 유지, 경기 로딩 스켈레톤·부활 무적, 터치 플레이(상점·이동·시점·사격·스킬),
+  나가기, 접속 중 오프라인→알림·종료, 시작 시 API 차단→알림·종료). --record 로 화면 녹화(mp4).
+  앱 쪽 훅: ?test 일 때만 Flutter semantics + window.rpsTest.state() (lib/test_hooks.dart). 결과 9/9 통과.
+  주의: 테스트 중 에뮬레이터를 직접 만지면 탭이 바뀌어 연결이 끊김. 개발자 옵션이 켜져야 크롬 DevTools 소켓이 열림.
 - 2026-11-11 요구사항 5종:
   1) 스플래시: 첫 화면(로고·진행막대·단계 문구). 엔진 → 서버 확인 → 서버 설정 불러오기 → 이미지 → 타이틀. (screens/splash_screen.dart)
   2) 다크 모드(전체): 설정 > 다크 모드 스위치. 라이트는 종이 톤 표면 + 남색 글자, 금색 글자는 진하게(Rps.goldText).

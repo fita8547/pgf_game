@@ -86,6 +86,9 @@ cd shared && dart test     # 게임 규칙·스킬·맵·봇 경기 (100개)
 cd server && dart test     # 서버 접속·입력 검사, 설정 저장 API (6개)
 cd client && flutter analyze
 ```
+모바일(에뮬레이터) 통합 테스트: Android 에뮬레이터를 켠 뒤
+`python client/tool/integration/emulator_test.py --record` → `client/tool/integration/out/<시각>/report.md` + 녹화 mp4.
+
 화면 확인용 헤드리스 캡처: `python client/tool/cdp_shot.py "http://localhost:8090/?screen=game&fakelock&debug" out.png --wait 12`
 (개발용 주소 옵션: `?screen=lobby|game`, `&map=`, `&char=`, `&server=`, `&debug`, `&fakelock`, `&nopause=1`)
 
