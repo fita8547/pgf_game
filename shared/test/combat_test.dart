@@ -148,6 +148,20 @@ void main() {
     expect(sim.map.inSpawnRoom(1, v.pos), isTrue);
   });
 
+  test('buying the gun you hold refills its ammo at half price', () {
+    final sim = arena();
+    final p = sim.addPlayer('p', 'pebble', teamId: 0);
+    expect(sim.buy(p, 'revolver'), isNull);
+    expect(sim.buy(p, 'revolver'), isNotNull, reason: 'ammo already full');
+    p.secMag = 1;
+    p.secRes = 0;
+    final c = p.credits;
+    expect(sim.buy(p, 'revolver'), isNull);
+    expect(p.credits, c - 250);
+    expect(p.secMag, gunById('revolver').stats.mag);
+    expect(p.secRes, gunById('revolver').stats.reserve);
+  });
+
   test('shop only works in your own spawn room', () {
     final sim = arena();
     final p = sim.addPlayer('p', 'pebble', teamId: 0);

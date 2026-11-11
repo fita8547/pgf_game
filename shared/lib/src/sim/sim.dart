@@ -223,16 +223,29 @@ class GameSim {
   }
 
   // --------------------------------------------------------------- shop --
+  /// Buying a gun you already hold refills its ammo for this fraction of the price.
+  static const double refillPriceFactor = 0.5;
+
+  static int refillCost(GunDef g) => (g.stats.cost * refillPriceFactor).round();
+
+  /// True if [p] holds [g] with a full magazine and full reserve.
+  static bool ammoFull(Player p, GunDef g) => g.slot == GunSlot.primary
+      ? p.primMag >= g.stats.mag && p.primRes >= g.stats.reserve
+      : p.secMag >= g.stats.mag && p.secRes >= g.stats.reserve;
+
   /// Buys [gunId] (replaces the gun in that slot). Only alive, in own spawn.
+  /// Buying the gun you already hold refills its ammo at [refillCost].
   String? buy(Player p, String gunId) {
     if (!isGun(gunId)) return 'unknown gun';
     if (phase == Phase.ended) return 'match over';
-    if (!p.alive || !map.inSpawnRoom(p.team, p.pos)) return 'shop is only open in your spawn room';
+    if (!p.alive || !map.inSpawnRoom(p.team, p.pos)) return '상점은 스폰룸에서만 열립니다';
     final g = gunById(gunId);
     final current = g.slot == GunSlot.primary ? p.primary : p.secondary;
-    if (current == gunId) return 'already owned';
-    if (p.credits < g.stats.cost) return 'not enough credits';
-    p.credits -= g.stats.cost;
+    final refill = current == gunId;
+    if (refill && ammoFull(p, g)) return '탄약이 이미 가득 찼습니다';
+    final cost = refill ? refillCost(g) : g.stats.cost;
+    if (p.credits < cost) return '크레딧이 부족합니다';
+    p.credits -= cost;
     if (g.slot == GunSlot.primary) {
       p.primary = gunId;
       p.primMag = g.stats.mag;
