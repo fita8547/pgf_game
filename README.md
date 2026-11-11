@@ -41,7 +41,7 @@ dart run bin/server.dart --port 8090
    - 게임 서버를 켜고 Cloudflare 무료 터널을 연다. 창에 `https://....trycloudflare.com` 주소가 나온다.
 3. 그 주소를 친구들에게 보내면 브라우저로 접속 → 로비에서 **[온라인 참가]**.
 - 두 창을 닫으면 종료. 주소는 켤 때마다 바뀐다. 주소를 아는 누구나 들어올 수 있다.
-- Windows는 `%USERPROFILE%	ools\cloudflared.exe` 를 사용한다.
+- Windows는 `%USERPROFILE%\tools\cloudflared.exe` 를 사용한다.
 
 ## 조작
 WASD 이동 · 마우스 조준/좌클릭 사격 · 우클릭 정조준 · Space 점프 · Shift 앉기 ·
