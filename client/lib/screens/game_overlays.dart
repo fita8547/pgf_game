@@ -15,7 +15,7 @@ class _CharPicker extends StatelessWidget {
       child: Panel(
         opacity: 0.92,
         child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(tr('캐릭터 변경 (부활할 때 적용)', 'Change character (applies on respawn)'), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: Rps.gold)),
+          Text(tr('캐릭터 변경 (부활할 때 적용)', 'Change character (applies on respawn)'), style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: Rps.goldText)),
           const SizedBox(height: 8),
           for (final role in Role.values) ...[
             Row(children: [
@@ -33,7 +33,7 @@ class _CharPicker extends StatelessWidget {
                       onPressed: () => g.pickCharacter(c.id),
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
-                        side: BorderSide(color: c.id == p.charId ? Rps.gold : Colors.white24, width: c.id == p.charId ? 2 : 1),
+                        side: BorderSide(color: c.id == p.charId ? Rps.gold : Rps.fg(0.24), width: c.id == p.charId ? 2 : 1),
                       ),
                       child: Row(mainAxisSize: MainAxisSize.min, children: [
                         charIcon(c.id, 32),
@@ -66,14 +66,14 @@ class _Shop extends StatelessWidget {
         child: SingleChildScrollView(
             child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(children: [
-            Text(tr('상점', 'Shop'), style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Rps.gold)),
+            Text(tr('상점', 'Shop'), style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Rps.goldText)),
             const Spacer(),
-            Text('${p.credits} ₵', style: const TextStyle(fontSize: 20, color: Rps.gold, fontWeight: FontWeight.w800)),
+            Text('${p.credits} ₵', style: TextStyle(fontSize: 20, color: Rps.goldText, fontWeight: FontWeight.w800)),
           ]),
           const SizedBox(height: 4),
           Text(tr('죽으면 주무기와 방어구를 잃습니다. 킬 +${Economy.kill} · 데스 +${Economy.death} · 어시스트 +${Economy.assist} · 거점 위 초당 +${Economy.capturePerSecond}',
                   'You lose your primary and armor on death. Kill +${Economy.kill} · Death +${Economy.death} · Assist +${Economy.assist} · On point +${Economy.capturePerSecond}/s'),
-              style: TextStyle(fontSize: 12, color: Colors.white60)),
+              style: TextStyle(fontSize: 12, color: Rps.fg(0.60))),
           const SizedBox(height: 10),
           for (final slot in GunSlot.values) ...[
             Text(slot == GunSlot.primary ? tr('주무기', 'Primary') : tr('보조무기', 'Sidearm'), style: const TextStyle(fontWeight: FontWeight.w700)),
@@ -109,19 +109,19 @@ class _Shop extends StatelessWidget {
         decoration: BoxDecoration(
           color: have ? Rps.navyMid : Rps.navy,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: have ? Rps.gold : (can ? Colors.white30 : Colors.white10)),
+          border: Border.all(color: have ? Rps.gold : (can ? Rps.fg(0.30) : Rps.fg(0.10))),
         ),
         child: Row(children: [
-          Icon(Icons.shield, color: can || have ? _armorColor : Colors.white24, size: 30),
+          Icon(Icons.shield, color: can || have ? _armorColor : Rps.fg(0.24), size: 30),
           const SizedBox(width: 8),
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(armorName(a), style: const TextStyle(fontWeight: FontWeight.w800)),
-              Text('+${a.amount.round()}', style: const TextStyle(fontSize: 12, color: Colors.white70)),
+              Text('+${a.amount.round()}', style: TextStyle(fontSize: 12, color: Rps.fg(0.70))),
             ]),
           ),
           Text(have ? tr('보유', 'Owned') : '${a.cost}',
-              style: TextStyle(color: can || have ? Rps.gold : Colors.white38, fontWeight: FontWeight.w700)),
+              style: TextStyle(color: can || have ? Rps.goldText : Rps.fg(0.38), fontWeight: FontWeight.w700)),
         ]),
       ),
     );
@@ -142,19 +142,19 @@ class _Shop extends StatelessWidget {
         decoration: BoxDecoration(
           color: owned ? Rps.navyMid : Rps.navy,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: owned ? Rps.gold : (can ? Colors.white30 : Colors.white10)),
+          border: Border.all(color: owned ? Rps.gold : (can ? Rps.fg(0.30) : Rps.fg(0.10))),
         ),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Center(child: gunIcon(gun.id, 150, 50)),
           Row(children: [
             Expanded(child: Text(gunName(gun.id), style: const TextStyle(fontWeight: FontWeight.w800))),
             Text(full ? tr('보유 · 탄약 가득', 'Owned · full') : (owned ? tr('탄약 보충 $price', 'Refill $price') : '${st.cost}'),
-                style: TextStyle(color: can || owned ? Rps.gold : Colors.white38, fontWeight: FontWeight.w700)),
+                style: TextStyle(color: can || owned ? Rps.goldText : Rps.fg(0.38), fontWeight: FontWeight.w700)),
           ]),
           Text(
             '${gunClass(gun)} · ${tr('피해', 'Dmg')} ${st.damage.round()}${st.pellets > 1 ? '×${st.pellets}' : ''} · '
             '${(st.fireRate * 60).round()}RPM · ${st.mag}${tr('발', ' rds')}',
-            style: const TextStyle(fontSize: 11, color: Colors.white70),
+            style: TextStyle(fontSize: 11, color: Rps.fg(0.70)),
           ),
         ]),
       ),
@@ -177,14 +177,14 @@ class _Scoreboard extends StatelessWidget {
         const SizedBox(height: 4),
         for (final q in rows)
           Container(
-            color: q.id == p.id ? Colors.white10 : null,
+            color: q.id == p.id ? Rps.fg(0.10) : null,
             padding: const EdgeInsets.symmetric(vertical: 2),
             child: Row(children: [
               SizedBox(width: 170, child: Text(playerName(q.name), overflow: TextOverflow.ellipsis)),
               SizedBox(width: 70, child: Text(charName(q.charId), style: const TextStyle(fontSize: 12))),
               SizedBox(width: 90, child: Text('${q.kills} / ${q.deaths} / ${q.assists}')),
               SizedBox(width: 60, child: Text('${q.damageDealt.round()}', style: const TextStyle(fontSize: 12))),
-              Icon(q.alive ? Icons.circle : Icons.close, size: 10, color: q.alive ? Colors.greenAccent : Colors.white38),
+              Icon(q.alive ? Icons.circle : Icons.close, size: 10, color: q.alive ? Colors.greenAccent : Rps.fg(0.38)),
             ]),
           ),
       ]);
@@ -193,13 +193,13 @@ class _Scoreboard extends StatelessWidget {
     return Panel(
       opacity: 0.9,
       child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text('${mapName(s.map.def.id)} · ${tr('점령전', 'Capture')}', style: const TextStyle(color: Rps.gold, fontWeight: FontWeight.w800)),
+        Text('${mapName(s.map.def.id)} · ${tr('점령전', 'Capture')}', style: TextStyle(color: Rps.goldText, fontWeight: FontWeight.w800)),
         const SizedBox(height: 8),
         table(p.team),
         const SizedBox(height: 12),
         table(1 - p.team),
         const SizedBox(height: 6),
-        Text(tr('이름 · 캐릭터 · 킬/데스/어시 · 피해', 'Name · Character · K/D/A · Damage'), style: const TextStyle(fontSize: 11, color: Colors.white54)),
+        Text(tr('이름 · 캐릭터 · 킬/데스/어시 · 피해', 'Name · Character · K/D/A · Damage'), style: TextStyle(fontSize: 11, color: Rps.fg(0.54))),
       ]),
     );
   }
@@ -240,7 +240,7 @@ class _Pause extends StatelessWidget {
                             'Q / E / C skills · V ultimate · R reload · 1/2/wheel switch weapon\n'
                             'B shop (spawn room) · Tab scoreboard · Esc menu'),
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 12, color: Colors.white70),
+                style: TextStyle(fontSize: 12, color: Rps.fg(0.70)),
               ),
               const SizedBox(height: 14),
               Row(mainAxisSize: MainAxisSize.min, children: [

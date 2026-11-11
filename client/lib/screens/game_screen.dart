@@ -8,6 +8,7 @@ import '../game/game_controller.dart';
 import '../ui/settings.dart';
 import '../ui/settings_dialog.dart';
 import '../ui/i18n.dart';
+import '../ui/skeleton.dart';
 import '../ui/theme.dart';
 
 part 'game_hud.dart';
@@ -42,16 +43,8 @@ class _GameScreenState extends State<GameScreen> {
       builder: (context, _) {
         if (g.error != null) return _center(Text(g.error!, style: const TextStyle(color: Rps.danger)), back: true);
         if (g.loading) {
-          return Container(
-            color: Rps.navyDeep,
-            child: _center(Column(mainAxisSize: MainAxisSize.min, children: [
-              Image.asset('assets/logo/origami.png', height: 220),
-              const SizedBox(height: 16),
-              const SizedBox(width: 220, child: LinearProgressIndicator(color: Rps.gold)),
-              const SizedBox(height: 10),
-              Text(g.status),
-            ])),
-          );
+          // Skeleton of the HUD while the map, models and server connect.
+          return HudSkeleton(status: g.status);
         }
         final s = g.sim!, p = g.me!;
         return Stack(children: [
@@ -87,7 +80,7 @@ class _GameScreenState extends State<GameScreen> {
                           (p.spawnProtect > 0
                               ? tr(' · 무적 ${p.spawnProtect.ceil()}초', ' · invulnerable ${p.spawnProtect.ceil()}s')
                               : ''),
-                      style: const TextStyle(fontSize: 13, color: Rps.gold)),
+                      style: TextStyle(fontSize: 13, color: Rps.goldText)),
                 ),
               ),
             ),
@@ -97,7 +90,7 @@ class _GameScreenState extends State<GameScreen> {
             Positioned(
                 top: 14,
                 left: 16,
-                child: Text('${tr('온라인', 'Online')} · ${g.ping}ms', style: const TextStyle(fontSize: 12, color: Colors.white70))),
+                child: Text('${tr('온라인', 'Online')} · ${g.ping}ms', style: TextStyle(fontSize: 12, color: Rps.fg(0.70)))),
           Positioned(left: 20, bottom: 20, child: _Vitals(p)),
           Positioned(right: 20, bottom: 20, child: _Ammo(p, s)),
           if (g.bannerTime > 0 && g.banner != null)

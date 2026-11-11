@@ -18,7 +18,7 @@ class ResultScreen extends StatelessWidget {
     final title = r.winner < 0 ? tr('무승부', 'Draw') : (won ? tr('승리!', 'Victory!') : tr('패배', 'Defeat'));
     final mm = (r.seconds ~/ 60), ss = (r.seconds.toInt() % 60).toString().padLeft(2, '0');
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: RadialGradient(colors: [Rps.navyMid, Rps.navyDeep], radius: 1.2),
       ),
       child: Center(
@@ -27,7 +27,7 @@ class ResultScreen extends StatelessWidget {
           child: Column(mainAxisSize: MainAxisSize.min, children: [
             Text(title,
                 style: TextStyle(
-                    fontSize: 56, fontWeight: FontWeight.w900, color: won ? Rps.gold : Rps.cream, letterSpacing: 4)),
+                    fontSize: 56, fontWeight: FontWeight.w900, color: won ? Rps.goldText : Rps.cream, letterSpacing: 4)),
             Text('${mapName(r.mapId)} · $mm:$ss · '
                 '${(r.score[r.myTeam] * 100).floor()}% : ${(r.score[1 - r.myTeam] * 100).floor()}%'),
             const SizedBox(height: 16),
@@ -35,7 +35,7 @@ class ResultScreen extends StatelessWidget {
               child: Column(children: [
                 for (final row in r.rows)
                   Container(
-                    color: row.me ? Colors.white10 : null,
+                    color: row.me ? Rps.fg(0.10) : null,
                     padding: const EdgeInsets.symmetric(vertical: 3),
                     child: Row(children: [
                       Container(width: 6, height: 18, color: Rps.team(row.team)),

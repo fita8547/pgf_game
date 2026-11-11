@@ -3,7 +3,7 @@
 //
 //   cd server && dart run bin/server.dart [--port 8080] [--maps rps_arena,desert_ruins]
 //                                         [--web ../client/build/web] [--assets ../rps_assets]
-//                                         [--bots 0.5] [--team 5]
+//                                         [--bots 0.5] [--team 5] [--data data/user_settings.json]
 import 'dart:io';
 
 import 'package:rps_server/rps_server.dart';
@@ -28,6 +28,12 @@ Future<void> main(List<String> args) async {
 
   final server = await HttpServer.bind(InternetAddress.anyIPv4, port);
   final statics = StaticFiles(web);
+  final userSettings = UserSettingsStore(opt('data', 'data/user_settings.json'));
+  stdout.writeln('user settings: ${userSettings.file.path} (${userSettings.length} players)');
+  ProcessSignal.sigint.watch().listen((_) {
+    userSettings.saveNow();
+    exit(0);
+  });
   stdout.writeln('RPS server on http://localhost:$port  (game: ws://<host>:$port${Net.path})');
   for (final ip in await _lanAddresses()) {
     stdout.writeln('  LAN: http://$ip:$port');
@@ -37,7 +43,7 @@ Future<void> main(List<String> args) async {
     if (req.uri.path == Net.path && WebSocketTransformer.isUpgradeRequest(req)) {
       final addr = req.connectionInfo?.remoteAddress.address ?? '?';
       WebSocketTransformer.upgrade(req).then((ws) => room.accept(ws, addr), onError: (_) {});
-    } else {
+    } else if (!await userSettings.handle(req)) {
       statics.serve(req);
     }
   }

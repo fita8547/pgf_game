@@ -6,6 +6,7 @@ import '../game/net_client.dart';
 import '../ui/settings.dart';
 import '../ui/settings_dialog.dart';
 import '../ui/i18n.dart';
+import '../ui/skeleton.dart';
 import '../ui/theme.dart';
 
 class LobbyScreen extends StatefulWidget {
@@ -38,11 +39,26 @@ class _LobbyScreenState extends State<LobbyScreen> {
     s.save();
   }
 
+  /// Character portraits still loading: show skeleton cards meanwhile.
+  bool _iconsReady = false;
+
   @override
   void initState() {
     super.initState();
     if (!isCharacter(s.charId)) s.charId = characters.first.id;
     _show();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_iconsReady) return;
+    Future.wait([
+      for (final c in characters) precacheImage(AssetImage('assets/icons/char/${c.id}.png'), context).catchError((_) {}),
+      for (final r in Role.values) precacheImage(AssetImage('assets/icons/role/${r.name}.png'), context).catchError((_) {}),
+    ]).then((_) {
+      if (mounted) setState(() => _iconsReady = true);
+    });
   }
 
   void _show() {
@@ -61,11 +77,11 @@ class _LobbyScreenState extends State<LobbyScreen> {
     final ch = characterById(s.charId);
     return Stack(children: [
       // Soft vignette so the 3D model reads against the page background.
-      const Positioned.fill(
+      Positioned.fill(
         child: DecoratedBox(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Rps.navyDeep, Color(0xCC121842), Color(0x55121842)],
+              colors: [Rps.navyDeep, Rps.navyDeep.withValues(alpha: 0.8), Rps.navyDeep.withValues(alpha: 0.33)],
               stops: [0, 0.45, 1],
             ),
           ),
@@ -78,7 +94,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
         width: 520,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(children: [
-            IconButton(onPressed: widget.onBack, icon: const Icon(Icons.arrow_back, color: Rps.cream)),
+            IconButton(onPressed: widget.onBack, icon: Icon(Icons.arrow_back, color: Rps.cream)),
             Image.asset('assets/logo/wide.png', height: 54),
           ]),
           const SizedBox(height: 10),
@@ -92,7 +108,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
         top: 20,
         child: IconButton(
           onPressed: () => showSettings(context, s),
-          icon: const Icon(Icons.settings, color: Rps.cream),
+          icon: Icon(Icons.settings, color: Rps.cream),
           tooltip: tr('설정', 'Settings'),
         ),
       ),
@@ -116,7 +132,12 @@ class _LobbyScreenState extends State<LobbyScreen> {
           ]),
         ),
         Row(children: [
-          for (final c in characters.where((c) => c.role == role)) Expanded(child: _card(c)),
+          for (final c in characters.where((c) => c.role == role))
+            Expanded(
+              child: _iconsReady
+                  ? _card(c)
+                  : const Padding(padding: EdgeInsets.only(right: 8), child: Shimmer(child: CardSkeleton())),
+            ),
         ]),
       ],
     ]);
@@ -160,7 +181,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
         Row(children: [
           charIcon(c.id, 48),
           const SizedBox(width: 8),
-          Text(charName(c.id), style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Rps.gold)),
+          Text(charName(c.id), style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Rps.goldText)),
           const SizedBox(width: 10),
           Chip(
             label: Text(roleName(c.role)),
@@ -187,7 +208,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
                     style: TextStyle(
                         fontWeight: FontWeight.w800,
                         fontSize: 12,
-                        color: sk.key == SkillKey.ult ? Rps.navyDeep : Rps.cream)),
+                        color: sk.key == SkillKey.ult ? Rps.onGold : Rps.cream)),
               ),
               const SizedBox(width: 6),
               skillIcon(sk.id, 26),
@@ -202,7 +223,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
               ),
             ]),
           ),
-        Text(tr('스킬 사용 · Q / E / C / V(궁극기)', 'Skills · Q / E / C / V (ultimate)'), style: const TextStyle(fontSize: 12, color: Rps.gold)),
+        Text(tr('스킬 사용 · Q / E / C / V(궁극기)', 'Skills · Q / E / C / V (ultimate)'), style: TextStyle(fontSize: 12, color: Rps.goldText)),
       ]),
     );
   }
@@ -247,7 +268,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
   Widget _matchPanel() {
     return Panel(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
-        Text(tr('맵', 'Map'), style: const TextStyle(fontWeight: FontWeight.w800, color: Rps.gold)),
+        Text(tr('맵', 'Map'), style: TextStyle(fontWeight: FontWeight.w800, color: Rps.goldText)),
         const SizedBox(height: 6),
         Wrap(spacing: 6, runSpacing: 6, children: [
           for (final m in maps)

@@ -3,12 +3,29 @@ import 'package:rps_shared/rps_shared.dart';
 import 'i18n.dart' as i18n;
 
 /// Palette taken from the RPS logo (navy disc, gold rim, cream banner, blue ribbon).
+/// Light/dark: [dark] switches the surface and text colours (navy*, cream,
+/// fg); accent colours (gold, blue, team, danger) are the same in both.
 abstract final class Rps {
-  static const navy = Color(0xFF1E2557);
-  static const navyDeep = Color(0xFF0D1233);
-  static const navyMid = Color(0xFF2B3A86);
+  /// Current theme; set from Settings.dark (saved on the server).
+  static bool dark = true;
+
+  // Surfaces: dark navy in dark mode, warm paper tones in light mode.
+  static Color get navy => dark ? const Color(0xFF1E2557) : const Color(0xFFE9E2D0);
+  static Color get navyDeep => dark ? const Color(0xFF0D1233) : const Color(0xFFF7F3EA);
+  static Color get navyMid => dark ? const Color(0xFF2B3A86) : const Color(0xFFD9CDB0);
+
+  /// Main text colour (cream on dark, navy ink on light).
+  static Color get cream => dark ? const Color(0xFFF4EEE2) : const Color(0xFF1A2050);
+
+  /// Secondary text / borders at [a] opacity of the main text colour.
+  static Color fg(double a) => cream.withValues(alpha: a);
+
+  /// Text on gold buttons/badges (always dark).
+  static const onGold = Color(0xFF0D1233);
   static const gold = Color(0xFFE8B04A);
-  static const cream = Color(0xFFF4EEE2);
+
+  /// Gold for text: deeper in light mode so it reads on paper tones.
+  static Color get goldText => dark ? gold : const Color(0xFF94640A);
   static const blue = Color(0xFF3F7BE0);
   static const teamA = Color(0xFFFF8A2A); // orange spawn (z+)
   static const teamB = Color(0xFF4D8CF0); // blue spawn (z-)
@@ -32,16 +49,19 @@ abstract final class Rps {
       };
 
   static ThemeData theme() {
+    final b = dark ? Brightness.dark : Brightness.light;
     final base = ThemeData(
       useMaterial3: true,
       fontFamily: 'NotoSansKR',
-      brightness: Brightness.dark,
+      brightness: b,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: navy,
-        brightness: Brightness.dark,
-        primary: gold,
+        seedColor: const Color(0xFF1E2557),
+        brightness: b,
+        primary: dark ? gold : const Color(0xFFB07A12),
+        onPrimary: onGold,
         secondary: blue,
         surface: navyDeep,
+        onSurface: cream,
       ),
       scaffoldBackgroundColor: Colors.transparent,
     );
@@ -50,7 +70,7 @@ abstract final class Rps {
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           backgroundColor: gold,
-          foregroundColor: navyDeep,
+          foregroundColor: onGold,
           textStyle: const TextStyle(fontWeight: FontWeight.w800, fontSize: 18, letterSpacing: 1),
           padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 18),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

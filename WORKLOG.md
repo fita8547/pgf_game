@@ -56,6 +56,16 @@
 - 화면 확인 도구: `python tool/cdp_shot.py URL 출력.png --wait 15 --shots 3 --at 5:"자바스크립트"`
 
 ## 기록
+- 2026-11-11 요구사항 5종:
+  1) 스플래시: 첫 화면(로고·진행막대·단계 문구). 엔진 → 서버 확인 → 서버 설정 불러오기 → 이미지 → 타이틀. (screens/splash_screen.dart)
+  2) 다크 모드(전체): 설정 > 다크 모드 스위치. 라이트는 종이 톤 표면 + 남색 글자, 금색 글자는 진하게(Rps.goldText).
+     Rps.navy/navyDeep/navyMid/cream 이 테마에 따라 바뀌는 getter, 보조 글자색 Rps.fg(a).
+  3) 글자 크기: 작게 0.85 / 보통 1.0 / 크게 1.15 / 아주 크게 1.3 (전체 textScaler).
+     2)·3)은 서버(B/E)에 저장: server/lib/src/user_settings.dart, GET/PUT /api/settings?cid=, 파일
+     server/data/user_settings.json(원자적 저장, 서버 재시작 후 유지). 브라우저는 랜덤 client id(rps.cid), 시작 시 서버 값 우선.
+  4) 네트워크 불가: 시작 시 /api/health 실패, 'offline' 이벤트, 10초마다 확인 2번 연속 실패 → 알림 창 → 확인 → 앱 종료 화면(+window.close).
+  5) 스켈레톤 UI: ui/skeleton.dart(Shimmer/Bone). 게임 로딩 화면 = HUD 스켈레톤, 로비 캐릭터 카드 = 아이콘 로딩 중 카드 스켈레톤.
+  테스트: server 6(설정 저장·재시작 유지·검증·HTTP), shared 101. 헤드리스로 스플래시/라이트/알림/종료/스켈레톤 캡처 확인.
 - 2026-11-11 부활 무적 6초(SimConfig.spawnProtect 5→6): 스폰룸을 나가도 유지, 적 피해와 군중제어(둔화·속박·수면·
   기절·취약·치유차단) 모두 무시. 적 스폰룸 피해·낙사는 그대로. HUD에 '부활 무적 n초' 표시. 테스트 101개.
 - 2026-11-11 방어구: 상점에서 경량 40(400₵)/중형 60(650₵)/중장 100(1000₵). 체력보다 먼저 피해를 받음(스킬 보호막

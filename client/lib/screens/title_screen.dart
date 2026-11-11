@@ -31,7 +31,7 @@ class _TitleScreenState extends State<TitleScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: RadialGradient(
           center: Alignment(0, -0.2),
           radius: 1.2,
@@ -50,8 +50,8 @@ class _TitleScreenState extends State<TitleScreen> {
               const SizedBox(height: 12),
               TextButton.icon(
                 onPressed: () => showSettings(context, Settings.I),
-                icon: const Icon(Icons.settings, color: Rps.cream),
-                label: Text(tr('설정', 'Settings'), style: const TextStyle(color: Rps.cream)),
+                icon: Icon(Icons.settings, color: Rps.cream),
+                label: Text(tr('설정', 'Settings'), style: TextStyle(color: Rps.cream)),
               ),
             ],
           );

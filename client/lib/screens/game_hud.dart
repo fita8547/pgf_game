@@ -164,8 +164,8 @@ class _CaptureBar extends StatelessWidget {
               style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900, color: Rps.team(t))),
           Text(t == mine ? tr('우리 팀', 'Allies') : tr('적 팀', 'Enemies'), style: const TextStyle(fontSize: 11)),
         ]);
-    final ownerColor = s.owner < 0 ? Colors.white54 : Rps.team(s.owner);
-    final capColor = s.capTeam < 0 ? Colors.white : Rps.team(s.capTeam);
+    final ownerColor = s.owner < 0 ? Rps.fg(0.54) : Rps.team(s.owner);
+    final capColor = s.capTeam < 0 ? Rps.cream : Rps.team(s.capTeam);
     return Panel(
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
       opacity: 0.7,
@@ -223,7 +223,7 @@ class _KillFeed extends StatelessWidget {
               child: isGun(e.weaponId)
                   ? Row(mainAxisSize: MainAxisSize.min, children: [
                       gunIcon(e.weaponId, 54, 20),
-                      if (e.head) const Text(' ◎', style: TextStyle(fontSize: 12, color: Rps.gold)),
+                      if (e.head) Text(' ◎', style: TextStyle(fontSize: 12, color: Rps.goldText)),
                     ])
                   : (skillImpls.containsKey(e.weaponId)
                       ? Row(mainAxisSize: MainAxisSize.min, children: [
@@ -258,7 +258,7 @@ class _Vitals extends StatelessWidget {
           const SizedBox(width: 6),
           Text(charName(c.id), style: const TextStyle(fontWeight: FontWeight.w800)),
           const SizedBox(width: 10),
-          Text('${p.credits} ₵', style: const TextStyle(color: Rps.gold, fontWeight: FontWeight.w700)),
+          Text('${p.credits} ₵', style: TextStyle(color: Rps.goldText, fontWeight: FontWeight.w700)),
         ]),
         const SizedBox(height: 6),
         Row(children: [
@@ -277,7 +277,7 @@ class _Vitals extends StatelessWidget {
                   value: (p.armor / 100).clamp(0, 1),
                   minHeight: 5,
                   color: _armorColor,
-                  backgroundColor: Colors.white12,
+                  backgroundColor: Rps.fg(0.12),
                   borderRadius: BorderRadius.circular(3),
                 ),
               ),
@@ -291,7 +291,7 @@ class _Vitals extends StatelessWidget {
             value: frac,
             minHeight: 8,
             color: frac > 0.35 ? Rps.cream : Rps.danger,
-            backgroundColor: Colors.white12,
+            backgroundColor: Rps.fg(0.12),
             borderRadius: BorderRadius.circular(4),
           ),
         ),
@@ -313,9 +313,9 @@ class _StatusChips extends StatelessWidget {
         'root': (tr('속박', 'Rooted'), const Color(0xFFB46BFF)),
         'sleep': (tr('수면', 'Asleep'), const Color(0xFFB46BFF)),
         'stun': (tr('기절', 'Stunned'), const Color(0xFFB46BFF)),
-        'amp': (tr('공격력↑', 'Damage↑'), Rps.gold),
-        'haste': (tr('가속', 'Haste'), Rps.gold),
-        'prot': (tr('받는 피해↓', 'Dmg taken↓'), Rps.gold),
+        'amp': (tr('공격력↑', 'Damage↑'), Rps.goldText),
+        'haste': (tr('가속', 'Haste'), Rps.goldText),
+        'prot': (tr('받는 피해↓', 'Dmg taken↓'), Rps.goldText),
         'vuln': (tr('받는 피해↑', 'Dmg taken↑'), Rps.danger),
         'invuln': (tr('무적', 'Invulnerable'), Colors.white),
         'undying': (tr('불사', 'Undying'), Colors.white),
@@ -342,7 +342,7 @@ class _StatusChips extends StatelessWidget {
       'deflect' => tr('튕겨내기', 'Deflect'),
       _ => null,
     };
-    if (mode != null) chips.add(('$mode ${(p.fx['modeT'] ?? 0).toStringAsFixed(1)}', Rps.gold));
+    if (mode != null) chips.add(('$mode ${(p.fx['modeT'] ?? 0).toStringAsFixed(1)}', Rps.goldText));
     if (p.fx.containsKey('linkTo')) chips.add((tr('치유 연결 중', 'Healing link'), const Color(0xFF7DFFB0)));
     if (chips.isEmpty) return const SizedBox.shrink();
     return Padding(
@@ -355,7 +355,7 @@ class _StatusChips extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(
                   color: c.withValues(alpha: 0.18), borderRadius: BorderRadius.circular(4), border: Border.all(color: c)),
-              child: Text(t, style: TextStyle(fontSize: 10, color: c)),
+              child: Text(t, style: TextStyle(fontSize: 10, color: Rps.dark ? c : Color.lerp(c, Colors.black, 0.6))),
             ),
         ]),
       ),
@@ -388,13 +388,13 @@ class _SkillSlot extends StatelessWidget {
         margin: const EdgeInsets.only(right: 6),
         padding: const EdgeInsets.symmetric(vertical: 3),
         decoration: BoxDecoration(
-          color: ready ? (ult ? Rps.gold.withValues(alpha: 0.25) : Colors.white12) : Colors.black26,
+          color: ready ? (ult ? Rps.gold.withValues(alpha: 0.25) : Rps.fg(0.12)) : Colors.black26,
           borderRadius: BorderRadius.circular(6),
-          border: Border.all(color: ready ? (ult ? Rps.gold : Colors.white54) : Colors.white12),
+          border: Border.all(color: ready ? (ult ? Rps.gold : Rps.fg(0.54)) : Rps.fg(0.12)),
         ),
         child: Column(children: [
           skillIcon(sk.id, 30, dim: !ready),
-          Text(label, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: ready ? Rps.cream : Colors.white38)),
+          Text(label, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: ready ? Rps.cream : Rps.fg(0.38))),
           Text(
             impl == null
                 ? tr('준비중', 'N/A')
@@ -403,7 +403,7 @@ class _SkillSlot extends StatelessWidget {
                     : (cd > 0 && charges == 0)
                         ? cd.toStringAsFixed(cd < 3 ? 1 : 0)
                         : (maxC > 1 ? '×$charges' : tr('준비', 'Ready')),
-            style: TextStyle(fontSize: 10, color: ready ? Rps.gold : Colors.white38),
+            style: TextStyle(fontSize: 10, color: ready ? Rps.goldText : Rps.fg(0.38)),
           ),
         ]),
       ),
@@ -438,14 +438,14 @@ class _Ammo extends StatelessWidget {
           SizedBox(
             width: 140,
             child: LinearProgressIndicator(
-                value: 1 - p.reloadTimer / g.stats.reloadTime, color: Rps.gold, backgroundColor: Colors.white12),
+                value: 1 - p.reloadTimer / g.stats.reloadTime, color: Rps.gold, backgroundColor: Rps.fg(0.12)),
           ),
         const SizedBox(height: 4),
         Text(
           isEn
               ? '1 primary${p.primary == null ? ' (none)' : ''}  2 sidearm  R reload  ${inSpawn ? 'B shop' : ''}'
               : '1 주무기${p.primary == null ? '(없음)' : ''}  2 보조  R 재장전  ${inSpawn ? 'B 상점' : ''}',
-          style: const TextStyle(fontSize: 11, color: Colors.white60),
+          style: TextStyle(fontSize: 11, color: Rps.fg(0.60)),
         ),
       ]),
     );
@@ -463,7 +463,7 @@ class _Banner extends StatelessWidget {
           borderRadius: BorderRadius.circular(6),
           border: Border.all(color: Rps.gold, width: 2),
         ),
-        child: Text(text, style: const TextStyle(color: Rps.navy, fontSize: 24, fontWeight: FontWeight.w900)),
+        child: Text(text, style: TextStyle(color: Rps.navy, fontSize: 24, fontWeight: FontWeight.w900)),
       );
 }
 
@@ -487,7 +487,7 @@ class _DeathInfo extends StatelessWidget {
           const SizedBox(height: 4),
           Text(tr('${p.respawnIn.ceil()}초 후 부활', 'Respawn in ${p.respawnIn.ceil()}s'), style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
           const SizedBox(height: 4),
-          Text(tr('B 캐릭터 변경', 'B change character'), style: const TextStyle(fontSize: 12, color: Rps.gold)),
+          Text(tr('B 캐릭터 변경', 'B change character'), style: TextStyle(fontSize: 12, color: Rps.goldText)),
         ]),
       ),
     );
@@ -523,7 +523,7 @@ class _ObjectiveMarker extends StatelessWidget {
     if (o == null) return const SizedBox.shrink();
     final (x, y, dist, on) = o;
     if (on && dist < s.map.captureRadius) return const SizedBox.shrink();
-    final color = s.owner < 0 ? Rps.cream : (s.owner == g.me!.team ? Rps.teamB : Rps.danger);
+    final color = s.owner < 0 ? const Color(0xFFF4EEE2) : (s.owner == g.me!.team ? Rps.teamB : Rps.danger);
     return IgnorePointer(
       child: Stack(children: [
         Positioned(

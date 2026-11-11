@@ -62,13 +62,20 @@ Q/E/C 스킬 · V 궁극기 · R 재장전 · 1/2/휠 무기 · B 상점(스폰�
 폰·태블릿(터치)은 자동으로 화면 버튼이 나온다: 왼쪽 엄지 이동, 오른쪽 드래그 시점, 발사 버튼을 누른 채 끌면 조준하며 사격.
 가로 화면 권장. PC에서 확인하려면 주소에 `?touch`.
 
+## 앱 기능
+- **스플래시**: 시작 시 로고와 진행 상황(엔진 → 서버 확인 → 설정 → 이미지).
+- **다크 모드 / 글자 크기**: 설정에서 변경. 서버(`/api/settings`)에 저장되어 서버·브라우저를 다시 켜도 유지된다.
+  저장 파일: `server/data/user_settings.json` (서버 옵션 `--data`로 위치 변경).
+- **네트워크 불가 시**: 서버에 연결할 수 없으면 알림을 띄우고 확인을 누르면 앱을 종료한다.
+- **스켈레톤 UI**: 게임 로딩 중 HUD 모양, 로비 캐릭터 카드 로딩 중 회색 블록이 반짝인다.
+
 ## 언어
 설정 > 언어에서 한국어/English. 화면 문구와 영어 콘텐츠 이름은 `client/lib/ui/i18n.dart`.
 
 ## 테스트
 ```sh
 cd shared && dart test     # 게임 규칙·스킬·맵·봇 경기 (100개)
-cd server && dart test     # 서버 접속·입력 검사 (3개)
+cd server && dart test     # 서버 접속·입력 검사, 설정 저장 API (6개)
 cd client && flutter analyze
 ```
 화면 확인용 헤드리스 캡처: `python client/tool/cdp_shot.py "http://localhost:8090/?screen=game&fakelock&debug" out.png --wait 12`
