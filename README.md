@@ -11,7 +11,7 @@ Flutter Web(UI) + three.js(3D) 클라이언트, Dart 서버, 공용 Dart 게임 
 | ![타이틀](docs/screenshots/title.png) | ![로비 · 캐릭터 선택](docs/screenshots/lobby.png) |
 | 타이틀 | 로비: 역할별 캐릭터·스킬·맵 선택 |
 | ![상점](docs/screenshots/shop.png) | ![부활 대기](docs/screenshots/respawn.png) |
-| 상점: 총·탄약 보충·방어구 | 사망 후 부활 대기 (킬캠 흑백 화면) |
+| 상점: 총·탄약 보충·방어구 | 사망 후 부활 대기 (화면이 흑백으로 바뀜) |
 | ![경기 시작 전](docs/screenshots/spawn.png) | |
 | 스폰룸에서 경기 시작 대기 | |
 
