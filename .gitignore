@@ -58,3 +58,4 @@ app.*.map.json
 
 # Python caches from asset scripts
 __pycache__/
+/image/
