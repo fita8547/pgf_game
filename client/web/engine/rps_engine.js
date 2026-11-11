@@ -9,10 +9,11 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { Audio } from './audio.js';
+import { Input } from './input.js';
 
 const BASE = 'game/';
 const DEBUG = new URLSearchParams(location.search).has('debug');
-const FAKE_LOCK = new URLSearchParams(location.search).has('fakelock');
 const loader = new GLTFLoader();
 const gltfCache = new Map();
 
@@ -45,161 +46,6 @@ const MAP_LOOK = {
   neon_rooftops: { sky: 0x1a1036, fog: [45, 150], sun: 0.5, hemi: 0.7 },
   jungle_temple: { sky: 0x9cc7a2, fog: [40, 120], sun: 1.4, hemi: 1.1 },
 };
-
-class Audio {
-  constructor() {
-    this.ctx = null;
-    this.buffers = new Map();
-    this.sfxVolume = 0.8;
-    this.musicVolume = 0.35;
-    this.music = null;
-    this.listener = { x: 0, y: 0, z: 0, yaw: 0 };
-    // Browsers only start audio from a user gesture. Sounds are triggered by
-    // the game loop, never directly by a click, so unlock on every gesture.
-    const unlock = () => this.ensure();
-    for (const ev of ['pointerdown', 'mousedown', 'keydown', 'touchstart']) {
-      window.addEventListener(ev, unlock, { capture: true, passive: true });
-    }
-    // Soft click for menu interaction (not while playing with a locked mouse).
-    window.addEventListener('pointerup', () => {
-      if (document.pointerLockElement == null) this.play('ui_click', 0.35);
-    }, { capture: true, passive: true });
-  }
-
-  ensure() {
-    if (!this.ctx) {
-      this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-      this.sfxGain = this.ctx.createGain();
-      this.sfxGain.gain.value = this.sfxVolume;
-      this.sfxGain.connect(this.ctx.destination);
-      this.musicGain = this.ctx.createGain();
-      this.musicGain.gain.value = this.musicVolume;
-      this.musicGain.connect(this.ctx.destination);
-    }
-    if (this.ctx.state === 'suspended') this.ctx.resume();
-    return this.ctx;
-  }
-
-  async buffer(path) {
-    if (!this.buffers.has(path)) {
-      const ctx = this.ensure();
-      this.buffers.set(path, fetch(BASE + path)
-        .then((r) => { if (!r.ok) throw new Error(path); return r.arrayBuffer(); })
-        .then((b) => ctx.decodeAudioData(b))
-        .catch((e) => { console.warn('audio', path, e); return null; }));
-    }
-    return this.buffers.get(path);
-  }
-
-  preload(names) { for (const n of names) this.buffer(`sfx/${n}.mp3`); }
-
-  // Positional when pos is given: distance attenuation + stereo pan.
-  async play(name, vol = 1, rate = 1, pos = null) {
-    const ctx = this.ensure();
-    const buf = await this.buffer(`sfx/${name}.mp3`);
-    if (!buf) return;
-    const src = ctx.createBufferSource();
-    src.buffer = buf;
-    src.playbackRate.value = rate;
-    const g = ctx.createGain();
-    let node = g;
-    if (pos) {
-      const l = this.listener;
-      const dx = pos[0] - l.x, dy = pos[1] - l.y, dz = pos[2] - l.z;
-      const d = Math.hypot(dx, dy, dz);
-      vol *= 1 / (1 + Math.max(0, d - 2) * 0.12);
-      // Right vector of the listener: (cos yaw, 0, sin yaw).
-      const pan = d < 0.01 ? 0 : (dx * Math.cos(l.yaw) + dz * Math.sin(l.yaw)) / d;
-      const p = ctx.createStereoPanner();
-      p.pan.value = Math.max(-1, Math.min(1, pan * 0.8));
-      g.connect(p);
-      node = p;
-    }
-    g.gain.value = vol;
-    src.connect(g);
-    node.connect(this.sfxGain);
-    src.start();
-  }
-
-  async playMusic(mapId) {
-    this.stopMusic();
-    const ctx = this.ensure();
-    const ogg = document.createElement('audio').canPlayType('audio/ogg; codecs="vorbis"');
-    const buf = await this.buffer(`music/${mapId}.${ogg ? 'ogg' : 'mp3'}`);
-    if (!buf) return;
-    const src = ctx.createBufferSource();
-    src.buffer = buf;
-    src.loop = true;
-    src.connect(this.musicGain);
-    src.start();
-    this.music = src;
-  }
-
-  stopMusic() {
-    if (this.music) { try { this.music.stop(); } catch (_) { /* already stopped */ } }
-    this.music = null;
-  }
-
-  setVolumes(sfx, music) {
-    this.sfxVolume = sfx;
-    this.musicVolume = music;
-    if (this.ctx) {
-      this.sfxGain.gain.value = sfx;
-      this.musicGain.gain.value = music;
-    }
-  }
-}
-
-class Input {
-  constructor(canvas) {
-    this.keys = new Set();
-    this.buttons = 0;
-    this.dx = 0;
-    this.dy = 0;
-    this.wheel = 0;
-    this.canvas = canvas;
-    this.pressedQueue = [];
-    window.addEventListener('keydown', (e) => {
-      if (!this.keys.has(e.code)) this.pressedQueue.push(e.code);
-      this.keys.add(e.code);
-      if (this.locked() && ['Tab', 'Space', 'KeyF', 'Backquote'].includes(e.code)) e.preventDefault();
-    }, true);
-    window.addEventListener('keyup', (e) => this.keys.delete(e.code), true);
-    window.addEventListener('blur', () => { this.keys.clear(); this.buttons = 0; });
-    window.addEventListener('mousemove', (e) => {
-      if (!this.locked()) return;
-      this.dx += e.movementX;
-      this.dy += e.movementY;
-    });
-    window.addEventListener('mousedown', (e) => { if (this.locked()) this.buttons |= 1 << e.button; }, true);
-    window.addEventListener('mouseup', (e) => { this.buttons &= ~(1 << e.button); }, true);
-    window.addEventListener('wheel', (e) => { if (this.locked()) this.wheel += Math.sign(e.deltaY); }, { passive: true });
-    window.addEventListener('contextmenu', (e) => { if (this.locked()) e.preventDefault(); });
-  }
-
-  // ?fakelock (dev): behave as if the pointer were locked, for automated tests.
-  locked() { return FAKE_LOCK || document.pointerLockElement != null; }
-
-  lock() {
-    const el = document.body;
-    if (!this.locked() && el.requestPointerLock) {
-      const p = el.requestPointerLock({ unadjustedMovement: true });
-      if (p && p.catch) p.catch(() => el.requestPointerLock());
-    }
-  }
-
-  unlock() { if (this.locked()) document.exitPointerLock(); }
-
-  poll() {
-    const out = {
-      dx: this.dx, dy: this.dy, wheel: this.wheel, buttons: this.buttons,
-      keys: [...this.keys].join(','), pressed: this.pressedQueue.join(','), locked: this.locked(),
-    };
-    this.dx = this.dy = this.wheel = 0;
-    this.pressedQueue.length = 0;
-    return out;
-  }
-}
 
 class Engine {
   constructor() {
@@ -262,9 +108,7 @@ class Engine {
     this.players = new Map();
     this.projectiles = new Map();
     this.deployables = new Map();
-    this.links = new THREE.LineSegments(new THREE.BufferGeometry(),
-      new THREE.LineBasicMaterial({ color: 0x7dffb0, transparent: true, opacity: 0.85 }));
-    this.links.frustumCulled = false;
+
     this.fx = [];
     this.vm = null;
     this.vmVisible = true;
@@ -949,37 +793,6 @@ class Engine {
     }
   }
 
-  // flat [id, kind, x, y, z, ...]; kind 0 rocket, 1 recon dart, 2 sticky charge.
-  setProjectiles(flat) {
-    const seen = new Set();
-    for (let i = 0; i + 4 < flat.length; i += 5) {
-      const id = flat[i], kind = flat[i + 1];
-      seen.add(id);
-      let m = this.projectiles.get(id);
-      if (!m) {
-        m = new THREE.Group();
-        if (kind === 0) {
-          m.add(new THREE.Mesh(new THREE.SphereGeometry(0.12, 10, 8),
-            new THREE.MeshStandardMaterial({ color: 0xffb347, emissive: 0xff7a1a, emissiveIntensity: 4 })));
-        } else {
-          const file = kind === 1 ? 'glb/skills/pebble/recon_pebble.glb' : 'glb/skills/pebble/sticky_charge.glb';
-          const scale = kind === 1 ? 0.5 : 0.8;
-          loadGltf(file).then((g) => { const c = g.scene.clone(true); c.scale.setScalar(scale); m.add(c); });
-        }
-        this.dynamic.add(m);
-        this.projectiles.set(id, m);
-      }
-      const nx = flat[i + 2], ny = flat[i + 3], nz = flat[i + 4];
-      // Face the direction of travel (models point +Z).
-      const dx = nx - m.position.x, dz = nz - m.position.z;
-      if (dx * dx + dz * dz > 1e-6) m.rotation.y = Math.atan2(dx, dz);
-      m.position.set(nx, ny, nz);
-    }
-    for (const [id, m] of this.projectiles) {
-      if (!seen.has(id)) { this.dynamic.remove(m); this.projectiles.delete(id); }
-    }
-  }
-
   // Capture zone: ground ring + soft light pillar in the owner's colour.
   setCaptureZone(x, y, z, r, color, contested) {
     if (!this.zone) {
@@ -1286,7 +1099,7 @@ class Engine {
     if (this.beams) { for (const b of this.beams) this.dynamic.remove(b); this.beams = []; }
     for (const f of this.fx) { (f.scene || this.dynamic).remove(f.obj); if (f.mixer) this.mixers.delete(f.mixer); }
     this.fx.length = 0;
-    this.setProjectiles([]);
+    for (const [id, m] of this.projectiles) { this.dynamic.remove(m); this.projectiles.delete(id); }
   }
 }
 
