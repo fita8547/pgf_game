@@ -203,6 +203,26 @@ void main() {
     expect(p.slot, 0);
   });
 
+  test('6 s spawn invulnerability, also outside the spawn room, also vs crowd control', () {
+    final sim = arena();
+    final s = place(sim, sim.addPlayer('s', 'pebble', teamId: 1), 0, -10);
+    final v = sim.addPlayer('v', 'gem', teamId: 0);
+    expect(v.spawnProtect, 6);
+    place(sim, v, 0, 0)..spawnProtect = 6;
+    sim.update(dt);
+    expect(v.spawnProtect, greaterThan(5.9), reason: 'not cancelled by leaving spawn');
+    sim.applyDamage(v, 100, s, 'pistol', false);
+    sim.addFx(v, 'root', 2);
+    expect(v.hp, v.maxHp);
+    expect(v.fx.containsKey('root'), isFalse);
+    for (var i = 0; i < (6 / dt).round(); i++) {
+      sim.update(dt);
+    }
+    expect(v.spawnProtect, 0);
+    sim.applyDamage(v, 10, s, 'pistol', false);
+    expect(v.hp, lessThan(v.maxHp));
+  });
+
   test('spawn protection and the enemy spawn room', () {
     final sim = arena();
     final s = place(sim, sim.addPlayer('s', 'pebble', teamId: 1), 0, 18);

@@ -85,7 +85,7 @@ class _GameScreenState extends State<GameScreen> {
                       tr('B 상점 열기 · ${p.credits} ₵ · 스폰룸: 사격 불가 · 체력 회복',
                               'B open shop · ${p.credits} ₵ · Spawn room: no shooting · healing') +
                           (p.spawnProtect > 0
-                              ? tr(' · 보호 ${p.spawnProtect.ceil()}초', ' · protected ${p.spawnProtect.ceil()}s')
+                              ? tr(' · 무적 ${p.spawnProtect.ceil()}초', ' · invulnerable ${p.spawnProtect.ceil()}s')
                               : ''),
                       style: const TextStyle(fontSize: 13, color: Rps.gold)),
                 ),

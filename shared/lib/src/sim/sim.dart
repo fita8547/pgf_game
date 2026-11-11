@@ -47,7 +47,7 @@ class SimConfig {
     this.captureTime = 8,
     this.holdToWin = 100,
     this.timeLimit = 0,
-    this.spawnProtect = 5,
+    this.spawnProtect = 6,
     this.spawnRegen = 60,
     this.enemySpawnDps = 150,
     this.botSkill = 0.6,
@@ -812,10 +812,9 @@ class GameSim {
       p.sinceDamaged += dt;
       _tickSkills(p, dt);
       _tickFx(p, dt);
-      if (p.spawnProtect > 0) {
-        p.spawnProtect -= dt;
-        if (!map.inSpawnRoom(p.team, p.pos)) p.spawnProtect = 0;
-      }
+      // Invulnerable for spawnProtect seconds after (re)spawning, even
+      // outside the spawn room (user request 2026-11-11: 6 s).
+      if (p.spawnProtect > 0) p.spawnProtect = math.max(0, p.spawnProtect - dt);
       if (!authoritative) continue;
       if (map.inSpawnRoom(p.team, p.pos) && p.hp < p.maxHp) heal(p, cfg.spawnRegen * dt, null);
       if (p.pos.y < map.killY) {
@@ -1100,6 +1099,8 @@ extension SimEffects on GameSim {
   /// Applies/refreshes a timed effect; [vals] ride along (kept at the max).
   void addFx(Player p, String key, double seconds, [Map<String, double> vals = const {}]) {
     if (!p.alive) return;
+    // Spawn invulnerability also ignores crowd control.
+    if (p.spawnProtect > 0 && _harmfulFx.contains(key)) return;
     final fresh = !p.fx.containsKey(key);
     p.fx[key] = math.max(p.fx[key] ?? 0, seconds);
     for (final e in vals.entries) {
@@ -1111,9 +1112,11 @@ extension SimEffects on GameSim {
     }
   }
 
+  static const _harmfulFx = {'slow', 'slowMul', 'root', 'sleep', 'stun', 'vuln', 'vulnMul', 'antiheal'};
+
   /// Removes harmful effects (cleanse).
   void cleanse(Player p) {
-    for (final k in const ['slow', 'slowMul', 'root', 'sleep', 'stun', 'vuln', 'vulnMul', 'antiheal']) {
+    for (final k in _harmfulFx) {
       p.fx.remove(k);
     }
   }

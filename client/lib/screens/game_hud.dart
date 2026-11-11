@@ -329,6 +329,9 @@ class _StatusChips extends StatelessWidget {
     for (final e in _labels.entries) {
       if ((p.fx[e.key] ?? 0) > 0) chips.add(('${e.value.$1} ${p.fx[e.key]!.toStringAsFixed(1)}', e.value.$2));
     }
+    if (p.alive && p.spawnProtect > 0) {
+      chips.add(('${tr('부활 무적', 'Spawn invulnerable')} ${p.spawnProtect.toStringAsFixed(1)}', Colors.white));
+    }
     final sh = p.fx['shield'] ?? 0;
     if (sh > 0) chips.add(('${tr('보호막', 'Shield')} ${sh.ceil()}', const Color(0xFF6FC3FF)));
     final mode = switch (p.mode) {
