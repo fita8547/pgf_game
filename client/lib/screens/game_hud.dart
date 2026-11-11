@@ -1,5 +1,7 @@
 part of 'game_screen.dart';
 
+const Color _armorColor = Color(0xFF8FD3FF);
+
 // In-game HUD pieces: crosshair, scope, damage vignette, capture bar,
 // kill feed, vitals, skill slots, ammo, banners, objective marker.
 
@@ -160,7 +162,7 @@ class _CaptureBar extends StatelessWidget {
     Widget score(int t) => Column(children: [
           Text('${(s.score[t] * 100).floor()}%',
               style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900, color: Rps.team(t))),
-          Text(t == mine ? '우리 팀' : '적 팀', style: const TextStyle(fontSize: 11)),
+          Text(t == mine ? tr('우리 팀', 'Allies') : tr('적 팀', 'Enemies'), style: const TextStyle(fontSize: 11)),
         ]);
     final ownerColor = s.owner < 0 ? Colors.white54 : Rps.team(s.owner);
     final capColor = s.capTeam < 0 ? Colors.white : Rps.team(s.capTeam);
@@ -186,7 +188,7 @@ class _CaptureBar extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           Text('$mm:$ss', style: const TextStyle(fontWeight: FontWeight.w700)),
-          Text('거점 ${s.onPoint[mine]} : ${s.onPoint[other]}', style: const TextStyle(fontSize: 11)),
+          Text('${tr('거점', 'On point')} ${s.onPoint[mine]} : ${s.onPoint[other]}', style: const TextStyle(fontSize: 11)),
         ]),
         const SizedBox(width: 18),
         score(other),
@@ -215,7 +217,7 @@ class _KillFeed extends StatelessWidget {
           ),
           child: Row(mainAxisSize: MainAxisSize.min, children: [
             if (e.killer.isNotEmpty)
-              Text(e.killer, style: TextStyle(color: Rps.team(e.killerTeam), fontWeight: FontWeight.w700)),
+              Text(playerName(e.killer), style: TextStyle(color: Rps.team(e.killerTeam), fontWeight: FontWeight.w700)),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 6),
               child: isGun(e.weaponId)
@@ -231,7 +233,7 @@ class _KillFeed extends StatelessWidget {
                         ])
                       : Text('[${e.weapon}]', style: const TextStyle(fontSize: 12))),
             ),
-            Text(e.victim, style: TextStyle(color: Rps.team(e.victimTeam), fontWeight: FontWeight.w700)),
+            Text(playerName(e.victim), style: TextStyle(color: Rps.team(e.victimTeam), fontWeight: FontWeight.w700)),
           ]),
         ),
     ]);
@@ -254,7 +256,7 @@ class _Vitals extends StatelessWidget {
           const SizedBox(width: 4),
           roleIcon(c.role, 18),
           const SizedBox(width: 6),
-          Text(c.name, style: const TextStyle(fontWeight: FontWeight.w800)),
+          Text(charName(c.id), style: const TextStyle(fontWeight: FontWeight.w800)),
           const SizedBox(width: 10),
           Text('${p.credits} ₵', style: const TextStyle(color: Rps.gold, fontWeight: FontWeight.w700)),
         ]),
@@ -263,6 +265,26 @@ class _Vitals extends StatelessWidget {
           Text('${p.hp.ceil()}', style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w900)),
           Text(' / ${p.maxHp.round()}', style: const TextStyle(fontSize: 14)),
         ]),
+        if (p.armor > 0)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 3),
+            child: Row(children: [
+              const Icon(Icons.shield, size: 14, color: _armorColor),
+              const SizedBox(width: 4),
+              SizedBox(
+                width: 160,
+                child: LinearProgressIndicator(
+                  value: (p.armor / 100).clamp(0, 1),
+                  minHeight: 5,
+                  color: _armorColor,
+                  backgroundColor: Colors.white12,
+                  borderRadius: BorderRadius.circular(3),
+                ),
+              ),
+              const SizedBox(width: 6),
+              Text('${p.armor.ceil()}', style: const TextStyle(fontSize: 12, color: _armorColor, fontWeight: FontWeight.w800)),
+            ]),
+          ),
         SizedBox(
           width: 220,
           child: LinearProgressIndicator(
@@ -286,20 +308,20 @@ class _StatusChips extends StatelessWidget {
   const _StatusChips(this.p);
   final Player p;
 
-  static const _labels = {
-    'slow': ('둔화', Rps.blue),
-    'root': ('속박', Color(0xFFB46BFF)),
-    'sleep': ('수면', Color(0xFFB46BFF)),
-    'stun': ('기절', Color(0xFFB46BFF)),
-    'amp': ('공격력↑', Rps.gold),
-    'haste': ('가속', Rps.gold),
-    'prot': ('받는 피해↓', Rps.gold),
-    'vuln': ('받는 피해↑', Rps.danger),
-    'invuln': ('무적', Colors.white),
-    'undying': ('불사', Colors.white),
-    'antiheal': ('치유 차단', Rps.danger),
-    'healboost': ('치유 증가', Color(0xFF7DFFB0)),
-  };
+  static Map<String, (String, Color)> get _labels => {
+        'slow': (tr('둔화', 'Slowed'), Rps.blue),
+        'root': (tr('속박', 'Rooted'), const Color(0xFFB46BFF)),
+        'sleep': (tr('수면', 'Asleep'), const Color(0xFFB46BFF)),
+        'stun': (tr('기절', 'Stunned'), const Color(0xFFB46BFF)),
+        'amp': (tr('공격력↑', 'Damage↑'), Rps.gold),
+        'haste': (tr('가속', 'Haste'), Rps.gold),
+        'prot': (tr('받는 피해↓', 'Dmg taken↓'), Rps.gold),
+        'vuln': (tr('받는 피해↑', 'Dmg taken↑'), Rps.danger),
+        'invuln': (tr('무적', 'Invulnerable'), Colors.white),
+        'undying': (tr('불사', 'Undying'), Colors.white),
+        'antiheal': (tr('치유 차단', 'Anti-heal'), Rps.danger),
+        'healboost': (tr('치유 증가', 'Heal boost'), const Color(0xFF7DFFB0)),
+      };
 
   @override
   Widget build(BuildContext context) {
@@ -308,17 +330,17 @@ class _StatusChips extends StatelessWidget {
       if ((p.fx[e.key] ?? 0) > 0) chips.add(('${e.value.$1} ${p.fx[e.key]!.toStringAsFixed(1)}', e.value.$2));
     }
     final sh = p.fx['shield'] ?? 0;
-    if (sh > 0) chips.add(('보호막 ${sh.ceil()}', const Color(0xFF6FC3FF)));
+    if (sh > 0) chips.add(('${tr('보호막', 'Shield')} ${sh.ceil()}', const Color(0xFF6FC3FF)));
     final mode = switch (p.mode) {
-      'shuriken' => '표창 ×${(p.fx['modeAmmo'] ?? 0).toInt()}',
-      'twin' => '쌍날 개방',
-      'roll' => '구르기: 이속↑ 받는 피해 -50% · 사격 불가 (E로 해제)',
-      'guard' => '가시 방패 (Q로 해제)',
-      'deflect' => '튕겨내기',
+      'shuriken' => '${tr('표창', 'Shuriken')} ×${(p.fx['modeAmmo'] ?? 0).toInt()}',
+      'twin' => tr('쌍날 개방', 'Twin Edge'),
+      'roll' => tr('구르기: 이속↑ 받는 피해 -50% · 사격 불가 (E로 해제)', 'Rolling: faster, -50% damage taken, no shooting (E to stop)'),
+      'guard' => tr('가시 방패 (Q로 해제)', 'Spike Guard (Q to stop)'),
+      'deflect' => tr('튕겨내기', 'Deflect'),
       _ => null,
     };
     if (mode != null) chips.add(('$mode ${(p.fx['modeT'] ?? 0).toStringAsFixed(1)}', Rps.gold));
-    if (p.fx.containsKey('linkTo')) chips.add(('치유 연결 중', const Color(0xFF7DFFB0)));
+    if (p.fx.containsKey('linkTo')) chips.add((tr('치유 연결 중', 'Healing link'), const Color(0xFF7DFFB0)));
     if (chips.isEmpty) return const SizedBox.shrink();
     return Padding(
       padding: const EdgeInsets.only(top: 6),
@@ -357,7 +379,7 @@ class _SkillSlot extends StatelessWidget {
     final maxC = impl?.maxCharges ?? 1;
     final label = skillKeyLabel(sk.key);
     return Tooltip(
-      message: '${sk.name}: ${sk.desc}',
+      message: '${skillName(sk)}: ${skillDesc(sk)}',
       child: Container(
         width: 52,
         margin: const EdgeInsets.only(right: 6),
@@ -372,12 +394,12 @@ class _SkillSlot extends StatelessWidget {
           Text(label, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: ready ? Rps.cream : Colors.white38)),
           Text(
             impl == null
-                ? '준비중'
+                ? tr('준비중', 'N/A')
                 : ult
                     ? '${(frac * 100).floor()}%'
                     : (cd > 0 && charges == 0)
                         ? cd.toStringAsFixed(cd < 3 ? 1 : 0)
-                        : (maxC > 1 ? '×$charges' : '준비'),
+                        : (maxC > 1 ? '×$charges' : tr('준비', 'Ready')),
             style: TextStyle(fontSize: 10, color: ready ? Rps.gold : Colors.white38),
           ),
         ]),
@@ -407,7 +429,7 @@ class _Ammo extends StatelessWidget {
         Row(mainAxisSize: MainAxisSize.min, children: [
           gunIcon(g.id, 80, 30),
           const SizedBox(width: 6),
-          Text(g.name, style: const TextStyle(fontWeight: FontWeight.w700)),
+          Text(gunName(g.id), style: const TextStyle(fontWeight: FontWeight.w700)),
         ]),
         if (p.reloadTimer > 0)
           SizedBox(
@@ -417,7 +439,9 @@ class _Ammo extends StatelessWidget {
           ),
         const SizedBox(height: 4),
         Text(
-          '1 주무기${p.primary == null ? '(없음)' : ''}  2 보조  R 재장전  ${inSpawn ? 'B 상점' : ''}',
+          isEn
+              ? '1 primary${p.primary == null ? ' (none)' : ''}  2 sidearm  R reload  ${inSpawn ? 'B shop' : ''}'
+              : '1 주무기${p.primary == null ? '(없음)' : ''}  2 보조  R 재장전  ${inSpawn ? 'B 상점' : ''}',
           style: const TextStyle(fontSize: 11, color: Colors.white60),
         ),
       ]),
@@ -454,13 +478,13 @@ class _DeathInfo extends StatelessWidget {
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           if (k != null)
             Text.rich(TextSpan(children: [
-              TextSpan(text: k.name, style: TextStyle(color: Rps.team(k.team), fontWeight: FontWeight.w800)),
-              TextSpan(text: ' (${k.character.name}, ${k.gun.name}) 에게 당했습니다'),
+              TextSpan(text: playerName(k.name), style: TextStyle(color: Rps.team(k.team), fontWeight: FontWeight.w800)),
+              TextSpan(text: tr(' (${charName(k.charId)}, ${gunName(k.gunId)}) 에게 당했습니다', ' (${charName(k.charId)}, ${gunName(k.gunId)}) got you')),
             ])),
           const SizedBox(height: 4),
-          Text('${p.respawnIn.ceil()}초 후 부활', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
+          Text(tr('${p.respawnIn.ceil()}초 후 부활', 'Respawn in ${p.respawnIn.ceil()}s'), style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
           const SizedBox(height: 4),
-          const Text('B 캐릭터 변경', style: TextStyle(fontSize: 12, color: Rps.gold)),
+          Text(tr('B 캐릭터 변경', 'B change character'), style: const TextStyle(fontSize: 12, color: Rps.gold)),
         ]),
       ),
     );

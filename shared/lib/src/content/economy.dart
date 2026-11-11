@@ -19,3 +19,28 @@ abstract final class Economy {
   /// your banked credits). Set false to keep loadouts across lives.
   static const bool losePrimaryOnDeath = true;
 }
+
+/// Armour sold in the shop (user request 2026-11-11: 100 / 60 / 40).
+/// Armour soaks damage before HP (after skill shields) and is lost on death.
+/// Buying replaces your armour with that tier's full amount.
+class ArmorDef {
+  final String id;
+  final String name;
+  final String nameEn;
+  final double amount;
+  final int cost;
+  const ArmorDef(this.id, this.name, this.nameEn, this.amount, this.cost);
+}
+
+const List<ArmorDef> armors = [
+  ArmorDef('armor_light', '경량 방어구', 'Light Armor', 40, 400),
+  ArmorDef('armor_medium', '중형 방어구', 'Medium Armor', 60, 650),
+  ArmorDef('armor_heavy', '중장 방어구', 'Heavy Armor', 100, 1000),
+];
+
+ArmorDef? armorById(String id) {
+  for (final a in armors) {
+    if (a.id == id) return a;
+  }
+  return null;
+}

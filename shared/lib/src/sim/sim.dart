@@ -236,15 +236,24 @@ class GameSim {
   /// Buys [gunId] (replaces the gun in that slot). Only alive, in own spawn.
   /// Buying the gun you already hold refills its ammo at [refillCost].
   String? buy(Player p, String gunId) {
-    if (!isGun(gunId)) return 'unknown gun';
+    final armor = armorById(gunId);
+    if (!isGun(gunId) && armor == null) return 'unknown item';
     if (phase == Phase.ended) return 'match over';
-    if (!p.alive || !map.inSpawnRoom(p.team, p.pos)) return '상점은 스폰룸에서만 열립니다';
+    if (!p.alive || !map.inSpawnRoom(p.team, p.pos)) return 'shop_room';
+    if (armor != null) {
+      if (p.armor >= armor.amount) return 'armor_full';
+      if (p.credits < armor.cost) return 'no_credits';
+      p.credits -= armor.cost;
+      p.armor = armor.amount;
+      events.add({'e': 'buy', 'p': p.id, 'g': armor.id});
+      return null;
+    }
     final g = gunById(gunId);
     final current = g.slot == GunSlot.primary ? p.primary : p.secondary;
     final refill = current == gunId;
-    if (refill && ammoFull(p, g)) return '탄약이 이미 가득 찼습니다';
+    if (refill && ammoFull(p, g)) return 'ammo_full';
     final cost = refill ? refillCost(g) : g.stats.cost;
-    if (p.credits < cost) return '크레딧이 부족합니다';
+    if (p.credits < cost) return 'no_credits';
     p.credits -= cost;
     if (g.slot == GunSlot.primary) {
       p.primary = gunId;
@@ -684,6 +693,23 @@ class GameSim {
         return;
       }
     }
+    // Then bought armour (counts as damage dealt for ult/assists).
+    if (victim.armor > 0) {
+      final soak = math.min(victim.armor, amount);
+      victim.armor -= soak;
+      amount -= soak;
+      if (attacker != null && attacker.id != victim.id) {
+        victim.damageFrom[attacker.id] = (victim.damageFrom[attacker.id] ?? 0) + soak;
+        attacker.damageDealt += soak;
+        attacker.ult += soak;
+      }
+      if (amount <= 0) {
+        if (attacker != null && attacker.id != victim.id) {
+          events.add({'e': 'hit', 's': attacker.id, 'v': victim.id, 'a': r(soak, 1), 'h': head, 'sh': 1, 'w': weapon});
+        }
+        return;
+      }
+    }
     victim.fx.remove('sleep');
     var dealt = math.min(amount, victim.hp);
     if (has(victim, 'undying')) dealt = math.min(dealt, math.max(0, victim.hp - 1));
@@ -709,6 +735,7 @@ class GameSim {
       if (d.owner == victim.id && (skillImpls[d.kind]?.diesWithOwner ?? false)) removeDeployable(d, destroyed: true);
     }
     victim.fx.clear();
+    victim.armor = 0;
     victim.mode = '';
     for (final q in players.values) {
       if (q.fx['linkTo'] == victim.id) {

@@ -148,6 +148,30 @@ void main() {
     expect(sim.map.inSpawnRoom(1, v.pos), isTrue);
   });
 
+  test('armour: bought in spawn, soaks damage before HP, lost on death', () {
+    final sim = arena();
+    final p = sim.addPlayer('p', 'pebble', teamId: 0);
+    final e = sim.addPlayer('e', 'pebble', teamId: 1);
+    p.credits = 2000;
+    expect(sim.buy(p, 'armor_heavy'), isNull);
+    expect(p.armor, 100);
+    expect(p.credits, 1000);
+    expect(sim.buy(p, 'armor_light'), 'armor_full');
+    place(sim, p, 0, 0);
+    p.spawnProtect = 0;
+    final mul = e.character.stats.damageDealt * p.character.stats.damageTaken;
+    sim.applyDamage(p, 50 / mul, e, 'pistol', false);
+    expect(p.armor, closeTo(50, 0.01));
+    expect(p.hp, p.maxHp);
+    sim.applyDamage(p, 80 / mul, e, 'pistol', false);
+    expect(p.armor, 0);
+    expect(p.hp, closeTo(p.maxHp - 30, 0.01));
+    final row = Player.fromNet(p.toNet());
+    expect(row.armor, 0);
+    sim.applyDamage(p, 9999, e, 'pistol', false);
+    expect(p.armor, 0);
+  });
+
   test('buying the gun you hold refills its ammo at half price', () {
     final sim = arena();
     final p = sim.addPlayer('p', 'pebble', teamId: 0);

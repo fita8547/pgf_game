@@ -1,8 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:web/web.dart' as web;
 
 /// Player settings, kept in localStorage.
 class Settings {
   Settings._();
+
+  /// Bumped when the language changes; the app rebuilds on it.
+  static final ValueNotifier<int> langChanged = ValueNotifier(0);
   static final Settings I = Settings._()..load();
 
   /// Radians per mouse pixel.
@@ -14,6 +18,9 @@ class Settings {
   String mapId = 'rps_arena';
   double botSkill = 0.5;
   String name = '플레이어';
+
+  /// UI language: 'ko' or 'en'.
+  String lang = 'ko';
 
   /// Last online server (empty = the host that served this page).
   String server = '';
@@ -35,6 +42,7 @@ class Settings {
       mapId = s.getItem('rps.map') ?? mapId;
       name = s.getItem('rps.name') ?? name;
       server = s.getItem('rps.server') ?? server;
+      lang = s.getItem('rps.lang') ?? (web.window.navigator.language.startsWith('ko') ? 'ko' : 'en');
       final q = int.tryParse(s.getItem('rps.quality') ?? '');
       qualitySaved = q != null;
       quality = q ?? quality;
@@ -55,6 +63,7 @@ class Settings {
       s.setItem('rps.map', mapId);
       s.setItem('rps.name', name);
       s.setItem('rps.server', server);
+      s.setItem('rps.lang', lang);
       s.setItem('rps.quality', '$quality');
     } catch (_) {}
   }

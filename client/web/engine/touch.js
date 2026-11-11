@@ -52,6 +52,11 @@ const BUTTONS = [
   ['score', '점수', 'hold', 'left:132px;top:10px;width:56px;height:38px', 'Tab', 'sq'],
 ];
 
+const LABELS_EN = {
+  fire: 'FIRE', fire2: 'FIRE', ads: 'ADS', jump: 'JUMP', crouch: 'DUCK', reload: 'R',
+  swap: 'SWAP', v: 'ULT', shop: 'SHOP', score: 'SCORE',
+};
+
 export class TouchControls {
   constructor(input) {
     this.input = input;
@@ -83,7 +88,7 @@ export class TouchControls {
       b.textContent = label;
       b.dataset.id = id;
       root.appendChild(b);
-      this.btn[id] = { el: b, kind, code };
+      this.btn[id] = { el: b, kind, code, ko: label };
     }
     document.body.appendChild(root);
 
@@ -99,8 +104,19 @@ export class TouchControls {
   setVisible(v) {
     if (v === this.visible) return;
     this.visible = v;
+    if (v) this._labels();
     this.root.style.display = v ? 'block' : 'none';
     if (!v) this.reset();
+  }
+
+  // Button text follows the game's language setting (localStorage rps.lang).
+  _labels() {
+    let en = false;
+    try { en = localStorage.getItem('rps.lang') === 'en'; } catch (_) {}
+    for (const id in this.btn) {
+      const l = LABELS_EN[id];
+      if (l) this.btn[id].el.textContent = en ? l : this.btn[id].ko;
+    }
   }
 
   reset() {

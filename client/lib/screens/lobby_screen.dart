@@ -5,6 +5,7 @@ import '../engine/engine.dart';
 import '../game/net_client.dart';
 import '../ui/settings.dart';
 import '../ui/settings_dialog.dart';
+import '../ui/i18n.dart';
 import '../ui/theme.dart';
 
 class LobbyScreen extends StatefulWidget {
@@ -20,7 +21,7 @@ class LobbyScreen extends StatefulWidget {
 class _LobbyScreenState extends State<LobbyScreen> {
   final s = Settings.I;
   String previewGun = 'rifle';
-  late final TextEditingController _name = TextEditingController(text: s.name);
+  late final TextEditingController _name = TextEditingController(text: playerName(s.name));
   late final TextEditingController _server = TextEditingController(text: s.server);
 
   @override
@@ -32,7 +33,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
 
   void _saveFields() {
     final n = _name.text.trim();
-    s.name = n.isEmpty ? '플레이어' : (n.length > 16 ? n.substring(0, 16) : n);
+    s.name = n.isEmpty ? tr('플레이어', 'Player') : (n.length > 16 ? n.substring(0, 16) : n);
     s.server = _server.text.trim();
     s.save();
   }
@@ -92,7 +93,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
         child: IconButton(
           onPressed: () => showSettings(context, s),
           icon: const Icon(Icons.settings, color: Rps.cream),
-          tooltip: '설정',
+          tooltip: tr('설정', 'Settings'),
         ),
       ),
       Positioned(right: 24, bottom: 20, width: 460, child: _matchPanel()),
@@ -108,9 +109,9 @@ class _LobbyScreenState extends State<LobbyScreen> {
           child: Row(children: [
             roleIcon(role, 22),
             const SizedBox(width: 6),
-            Text(role.label, style: TextStyle(color: Rps.role(role), fontWeight: FontWeight.w800)),
+            Text(roleName(role), style: TextStyle(color: Rps.role(role), fontWeight: FontWeight.w800)),
             const SizedBox(width: 8),
-            Text(roleStats[role]!.traits,
+            Text(roleTraits(role),
                 style: TextStyle(color: Rps.cream.withValues(alpha: 0.6), fontSize: 12)),
           ]),
         ),
@@ -141,8 +142,8 @@ class _LobbyScreenState extends State<LobbyScreen> {
             const SizedBox(width: 6),
             Expanded(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(c.name, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15)),
-                Text('${c.info.race} · ${c.info.sex}',
+                Text(charName(c.id), style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15)),
+                Text(charOrigin(c.info),
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 11, color: Rps.cream.withValues(alpha: 0.7))),
               ]),
@@ -159,10 +160,10 @@ class _LobbyScreenState extends State<LobbyScreen> {
         Row(children: [
           charIcon(c.id, 48),
           const SizedBox(width: 8),
-          Text(c.name, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Rps.gold)),
+          Text(charName(c.id), style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Rps.gold)),
           const SizedBox(width: 10),
           Chip(
-            label: Text(c.role.label),
+            label: Text(roleName(c.role)),
             avatar: roleIcon(c.role, 18),
             visualDensity: VisualDensity.compact,
           ),
@@ -193,15 +194,15 @@ class _LobbyScreenState extends State<LobbyScreen> {
               const SizedBox(width: 6),
               Expanded(
                 child: Text.rich(TextSpan(children: [
-                  TextSpan(text: '${sk.name}  ', style: const TextStyle(fontWeight: FontWeight.w700)),
+                  TextSpan(text: '${skillName(sk)}  ', style: const TextStyle(fontWeight: FontWeight.w700)),
                   TextSpan(
-                      text: '${sk.desc} (${sk.cdText})',
+                      text: '${skillDesc(sk)} (${skillCd(sk)})',
                       style: TextStyle(color: Rps.cream.withValues(alpha: 0.75), fontSize: 13)),
                 ])),
               ),
             ]),
           ),
-        const Text('스킬 사용 · Q / E / C / V(궁극기)', style: TextStyle(fontSize: 12, color: Rps.gold)),
+        Text(tr('스킬 사용 · Q / E / C / V(궁극기)', 'Skills · Q / E / C / V (ultimate)'), style: const TextStyle(fontSize: 12, color: Rps.gold)),
       ]),
     );
   }
@@ -211,13 +212,13 @@ class _LobbyScreenState extends State<LobbyScreen> {
     final s = c.stats;
     String pct(double v) => '${(v * 100).round()}%';
     return [
-      '체력 ${c.maxHp.round()}',
-      '받는 피해 ${pct(s.damageTaken)}',
-      '주는 피해 ${pct(s.damageDealt)}',
-      if (s.skillPower != 1) '스킬 피해 ${pct(s.skillPower)}',
-      if (s.skillCooldown != 1) '쿨타임 ${pct(s.skillCooldown)}',
-      if (s.healPower != 1) '치유 ${pct(s.healPower)}',
-      '속도 ${c.speed}',
+      '${tr('체력', 'HP')} ${c.maxHp.round()}',
+      '${tr('받는 피해', 'Dmg taken')} ${pct(s.damageTaken)}',
+      '${tr('주는 피해', 'Dmg dealt')} ${pct(s.damageDealt * c.damageMul)}',
+      if (s.skillPower != 1) '${tr('스킬 피해', 'Skill dmg')} ${pct(s.skillPower)}',
+      if (s.skillCooldown != 1) '${tr('쿨타임', 'Cooldown')} ${pct(s.skillCooldown)}',
+      if (s.healPower != 1) '${tr('치유', 'Healing')} ${pct(s.healPower)}',
+      '${tr('속도', 'Speed')} ${c.speed}',
     ].join(' · ');
   }
 
@@ -225,13 +226,13 @@ class _LobbyScreenState extends State<LobbyScreen> {
     return Panel(
       padding: const EdgeInsets.all(12),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Text('총 미리보기 (게임 안 상점에서 구매)', style: TextStyle(fontSize: 13)),
+        Text(tr('총 미리보기 (게임 안 상점에서 구매)', 'Gun preview (buy them in the in-game shop)'), style: const TextStyle(fontSize: 13)),
         const SizedBox(height: 6),
         Wrap(spacing: 6, runSpacing: 6, children: [
           for (final g in guns)
             ChoiceChip(
               avatar: gunIcon(g.id, 34, 13),
-              label: Text(g.name, style: const TextStyle(fontSize: 12)),
+              label: Text(gunName(g.id), style: const TextStyle(fontSize: 12)),
               selected: previewGun == g.id,
               onSelected: (_) {
                 setState(() => previewGun = g.id);
@@ -246,12 +247,12 @@ class _LobbyScreenState extends State<LobbyScreen> {
   Widget _matchPanel() {
     return Panel(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
-        const Text('맵', style: TextStyle(fontWeight: FontWeight.w800, color: Rps.gold)),
+        Text(tr('맵', 'Map'), style: const TextStyle(fontWeight: FontWeight.w800, color: Rps.gold)),
         const SizedBox(height: 6),
         Wrap(spacing: 6, runSpacing: 6, children: [
           for (final m in maps)
             ChoiceChip(
-              label: Text(m.name),
+              label: Text(mapName(m.id)),
               selected: s.mapId == m.id,
               onSelected: (_) {
                 setState(() => s.mapId = m.id);
@@ -259,20 +260,14 @@ class _LobbyScreenState extends State<LobbyScreen> {
               },
             ),
         ]),
-        if (s.mapId == 'neon_rooftops')
-          const Padding(
-            padding: EdgeInsets.only(top: 6),
-            child: Text('※ 네온 옥상은 다리 입구가 막혀 있어(에셋 문제) 봇이 이동하지 못합니다.',
-                style: TextStyle(fontSize: 12, color: Rps.danger)),
-          ),
         const SizedBox(height: 10),
         Row(children: [
-          const Text('봇 난이도'),
+          Text(tr('봇 난이도', 'Bot skill')),
           Expanded(
             child: Slider(
               value: s.botSkill,
               divisions: 4,
-              label: ['매우 쉬움', '쉬움', '보통', '어려움', '매우 어려움'][(s.botSkill * 4).round()],
+              label: (isEn ? ['Very easy', 'Easy', 'Normal', 'Hard', 'Very hard'] : ['매우 쉬움', '쉬움', '보통', '어려움', '매우 어려움'])[(s.botSkill * 4).round()],
               onChanged: (v) => setState(() => s.botSkill = v),
               onChangeEnd: (_) => s.save(),
             ),
@@ -283,7 +278,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
           Expanded(
             child: TextField(
               controller: _name,
-              decoration: const InputDecoration(labelText: '닉네임', isDense: true),
+              decoration: InputDecoration(labelText: tr('닉네임', 'Nickname'), isDense: true),
               onChanged: (_) => _saveFields(),
             ),
           ),
@@ -293,7 +288,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
             child: TextField(
               controller: _server,
               decoration: InputDecoration(
-                  labelText: '서버 주소 (비우면 이 페이지의 서버)', hintText: NetClient.defaultUrl(), isDense: true),
+                  labelText: tr('서버 주소 (비우면 이 페이지의 서버)', 'Server address (empty = this page\'s server)'), hintText: NetClient.defaultUrl(), isDense: true),
               onChanged: (_) => _saveFields(),
             ),
           ),
@@ -306,7 +301,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
                 _saveFields();
                 widget.onPlay();
               },
-              child: const Text('봇 연습'),
+              child: Text(tr('봇 연습', 'Practice vs bots')),
             ),
           ),
           const SizedBox(width: 10),
@@ -317,12 +312,12 @@ class _LobbyScreenState extends State<LobbyScreen> {
                 _saveFields();
                 widget.onPlayOnline();
               },
-              child: const Text('온라인 참가'),
+              child: Text(tr('온라인 참가', 'Join online')),
             ),
           ),
         ]),
         const SizedBox(height: 4),
-        Text('봇 연습: 이 맵·난이도로 5대5 · 온라인: 서버의 맵 순환을 따름',
+        Text(tr('봇 연습: 이 맵·난이도로 5대5 · 온라인: 서버의 맵 순환을 따름', 'Practice: 5v5 on this map and bot skill · Online: follows the server\'s map rotation'),
             style: TextStyle(fontSize: 11, color: Rps.cream.withValues(alpha: 0.6))),
       ]),
     );

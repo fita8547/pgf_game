@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:rps_shared/rps_shared.dart';
 
 import '../engine/engine.dart';
+import '../ui/i18n.dart';
 import '../ui/settings.dart';
 import 'net_client.dart';
 
@@ -128,7 +129,7 @@ class GameController extends ChangeNotifier {
   late MapDef def;
 
   bool loading = true;
-  String status = '맵 불러오는 중...';
+  String status = tr('맵 불러오는 중...', 'Loading map...');
   String? error;
 
   double yaw = 0, pitch = 0;
@@ -169,7 +170,7 @@ class GameController extends ChangeNotifier {
   Future<void> _init() async {
     try {
       def = mapById(settings.mapId);
-      status = '맵 불러오는 중... (${def.name})';
+      status = tr('맵 불러오는 중... (${mapName(def.id)})', 'Loading map... (${mapName(def.id)})');
       notifyListeners();
       final bytes = await Engine.fetchBytes(def.file);
       final map = GameMap.fromGlb(def, bytes);
@@ -182,7 +183,7 @@ class GameController extends ChangeNotifier {
       yaw = p.yaw;
       await _prepareScene(s, p);
     } catch (e, st) {
-      error = '불러오기 실패: $e';
+      error = tr('불러오기 실패: $e', 'Failed to load: $e');
       debugPrint('$e\n$st');
       notifyListeners();
     }
@@ -190,7 +191,7 @@ class GameController extends ChangeNotifier {
 
   Future<void> _prepareScene(GameSim s, Player p) async {
     {
-      status = '모델 불러오는 중...';
+      status = tr('모델 불러오는 중...', 'Loading models...');
       notifyListeners();
       final models = <String>{
         for (final q in s.players.values) 'glb/characters/${q.charId}.glb',
@@ -224,7 +225,7 @@ class GameController extends ChangeNotifier {
   // ------------------------------------------------------------ online --
   Future<void> _initOnline() async {
     try {
-      status = '서버 연결 중... $serverUrl';
+      status = tr('서버 연결 중... $serverUrl', 'Connecting... $serverUrl');
       notifyListeners();
       final n = net = NetClient(serverUrl!);
       await n.connect();
@@ -235,7 +236,7 @@ class GameController extends ChangeNotifier {
       if (w['t'] == 'err') throw StateError(w['m'] as String);
       await _loadWorld(w['map'] as String, w['id'] as int);
     } catch (e, st) {
-      error = '온라인 접속 실패: $e';
+      error = tr('온라인 접속 실패: $e', 'Could not join online: $e');
       debugPrint('$e\n$st');
       notifyListeners();
     }
@@ -245,7 +246,7 @@ class GameController extends ChangeNotifier {
     loading = true;
     engine.setTick(null);
     def = mapById(mapId);
-    status = '맵 불러오는 중... (${def.name})';
+    status = tr('맵 불러오는 중... (${mapName(def.id)})', 'Loading map... (${mapName(def.id)})');
     notifyListeners();
     final map = GameMap.fromGlb(def, await Engine.fetchBytes(def.file));
     final s = GameSim(map, authoritative: false);
@@ -275,11 +276,12 @@ class GameController extends ChangeNotifier {
         if (sim == null) break; // first welcome is handled by _initOnline
         if (m['map'] != def.id || m['id'] != _myId) _loadWorld(m['map'] as String, m['id'] as int);
       case 'err' || 'msg':
-        _toast('${m['m']}');
+        final join = m['join'];
+        _toast(join != null ? tr('$join 님이 참가했습니다', '${playerName('$join')} joined') : errText('${m['m']}'));
       case 'pong':
         ping = DateTime.now().millisecondsSinceEpoch - (m['c'] as num).toInt();
       case 'closed':
-        error = '서버 연결이 끊겼습니다 (${m['m']})';
+        error = tr('서버 연결이 끊겼습니다 (${m['m']})', 'Disconnected from server (${m['m']})');
         engine.setTick(null);
         notifyListeners();
     }
@@ -327,7 +329,7 @@ class GameController extends ChangeNotifier {
       return;
     }
     if (!shopOpen && !(p.alive && s.map.inSpawnRoom(p.team, p.pos))) {
-      _toast('상점은 스폰룸에서만 열립니다');
+      _toast(errText('shop_room'));
       return;
     }
     shopOpen = !shopOpen;
@@ -353,7 +355,7 @@ class GameController extends ChangeNotifier {
     }
     charPickerOpen = false;
     engine.input.lock();
-    _toast('${characterById(id).name}(으)로 변경');
+    _toast(tr('${charName(id)}(으)로 변경', 'Switched to ${charName(id)}'));
     notifyListeners();
   }
 
@@ -397,7 +399,7 @@ class GameController extends ChangeNotifier {
       return null;
     }
     final err = s.buy(p, gunId);
-    if (err != null) _toast(err);
+    if (err != null) _toast(errText(err));
     notifyListeners();
     return err;
   }
@@ -504,7 +506,7 @@ class GameController extends ChangeNotifier {
     }
     final ultReady = p.alive && s.ultReady(p);
     if (ultReady && !_ultWasReady) {
-      _banner('궁극기 준비! (V) ${p.character.info.skill(SkillKey.ult).name}');
+      _banner(tr('궁극기 준비! (V) ', 'Ultimate ready! (V) ') + skillName(p.character.info.skill(SkillKey.ult)));
       engine.sfx('ult_ready', vol: 0.8);
     }
     _ultWasReady = ultReady;

@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import '../content/economy.dart';
 import '../content/guns.dart';
 import '../math.dart';
 import '../world/collision.dart';
@@ -223,7 +224,19 @@ class BotBrain {
   }
 
   void _shop(GameSim sim, Player p) {
-    if (p.primary != null || !sim.map.inSpawnRoom(p.team, p.pos)) return;
+    if (!sim.map.inSpawnRoom(p.team, p.pos)) return;
+    if (p.primary != null) {
+      // Armed: spare credits go into armour, best tier affordable.
+      if (p.armor <= 0 && rng.nextDouble() < 0.02) {
+        for (final a in armors.reversed) {
+          if (p.credits >= a.cost + 200) {
+            sim.buy(p, a.id);
+            break;
+          }
+        }
+      }
+      return;
+    }
     final options = _primaryWishlist.where((g) => gunById(g).stats.cost <= p.credits).toList();
     if (options.isEmpty) {
       // Only well-off bots bother with the revolver.

@@ -106,7 +106,7 @@ class Room {
       case 'hello':
         if (c.player != null) return;
         if (m['v'] != Net.version) {
-          c.send({'t': 'err', 'm': '버전이 맞지 않습니다. 새로고침 해주세요.'});
+          c.send({'t': 'err', 'm': '버전이 맞지 않습니다. 새로고침 해주세요. / Version mismatch, please refresh.'});
           return;
         }
         var name = '${m['name'] ?? '플레이어'}'.trim();
@@ -114,7 +114,7 @@ class Room {
         final ch = '${m['char']}';
         c.player = _join(name, isCharacter(ch) ? ch : characters.first.id);
         c.send({'t': 'welcome', 'id': c.player!.id, 'map': mapId, 'tick': sim.tick, 'hz': Net.tickHz});
-        _broadcast({'t': 'msg', 'm': '$name 님이 참가했습니다'});
+        _broadcast({'t': 'msg', 'm': '$name 님이 참가했습니다', 'join': name});
         log('joined $name (${c.addr}) team ${c.player!.team}');
       case 'in':
         final p = c.player;
@@ -133,7 +133,7 @@ class Room {
         final p = c.player;
         if (p == null) return;
         final err = sim.buy(p, '${m['g']}');
-        if (err != null) c.send({'t': 'err', 'm': err});
+        if (err != null) c.send({'t': 'err', 'm': err, 'code': err});
       case 'char':
         final p = c.player;
         if (p == null) return;

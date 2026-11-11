@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rps_shared/rps_shared.dart';
+import 'i18n.dart' as i18n;
 
 /// Palette taken from the RPS logo (navy disc, gold rim, cream banner, blue ribbon).
 abstract final class Rps {
@@ -14,7 +15,7 @@ abstract final class Rps {
   static const danger = Color(0xFFE5484D);
 
   static Color team(int t) => t == 0 ? teamA : teamB;
-  static String teamName(int t) => t == 0 ? 'A팀' : 'B팀';
+  static String teamName(int t) => i18n.teamName(t);
 
   static Color role(Role r) => switch (r) {
         Role.defender => const Color(0xFF8C9BB0),

@@ -35,9 +35,18 @@ class RpsApp extends StatefulWidget {
 class _RpsAppState extends State<RpsApp> {
   Screen screen = Screen.title;
 
+  void _onLang() => setState(() {});
+
+  @override
+  void dispose() {
+    Settings.langChanged.removeListener(_onLang);
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
+    Settings.langChanged.addListener(_onLang);
     // Dev shortcuts: ?screen=lobby | ?screen=game[&map=<id>][&char=<id>]
     final q = Uri.base.queryParameters;
     if (q['map'] != null) Settings.I.mapId = q['map']!;

@@ -50,9 +50,12 @@ Q/E/C 스킬 · V 궁극기 · R 재장전 · 1/2/휠 무기 · B 상점(스폰�
 폰·태블릿(터치)은 자동으로 화면 버튼이 나온다: 왼쪽 엄지 이동, 오른쪽 드래그 시점, 발사 버튼을 누른 채 끌면 조준하며 사격.
 가로 화면 권장. PC에서 확인하려면 주소에 `?touch`.
 
+## 언어
+설정 > 언어에서 한국어/English. 화면 문구와 영어 콘텐츠 이름은 `client/lib/ui/i18n.dart`.
+
 ## 테스트
 ```sh
-cd shared && dart test     # 게임 규칙·스킬·맵·봇 경기 (98개)
+cd shared && dart test     # 게임 규칙·스킬·맵·봇 경기 (100개)
 cd server && dart test     # 서버 접속·입력 검사 (3개)
 cd client && flutter analyze
 ```
@@ -61,7 +64,7 @@ cd client && flutter analyze
 
 ## 수치 조정 위치
 - 역할(체력·받는/주는 피해·스킬 강도): `shared/lib/src/content/roles.dart`
-- 총: `shared/lib/src/content/guns.dart` · 돈: `economy.dart` · 경기 규칙: `SimConfig` (`shared/lib/src/sim/sim.dart`)
+- 총: `shared/lib/src/content/guns.dart` · 돈·방어구: `economy.dart` · 경기 규칙: `SimConfig` (`shared/lib/src/sim/sim.dart`)
 - 스킬: `shared/lib/src/sim/skills_*.dart` · 봇: `shared/lib/src/sim/bot.dart`
 
 ## 에셋 수정 후

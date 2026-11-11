@@ -4,6 +4,8 @@ import 'dart:js_interop';
 import 'package:rps_shared/rps_shared.dart';
 import 'package:web/web.dart' as web;
 
+import '../ui/i18n.dart';
+
 /// WebSocket connection to rps_server.
 class NetClient {
   NetClient(this.url);
@@ -40,13 +42,13 @@ class NetClient {
     }).toJS);
     ws.addEventListener('close', ((web.CloseEvent e) {
       open = false;
-      closedReason = e.reason.isEmpty ? '연결 종료 (${e.code})' : e.reason;
-      if (!c.isCompleted) c.completeError(StateError('서버에 연결할 수 없습니다: $url'));
+      closedReason = e.reason.isEmpty ? tr('연결 종료 (${e.code})', 'Connection closed (${e.code})') : e.reason;
+      if (!c.isCompleted) c.completeError(StateError(tr('서버에 연결할 수 없습니다: $url', 'Cannot reach server: $url')));
       _messages.add({'t': 'closed', 'm': closedReason});
     }).toJS);
     return c.future.timeout(const Duration(seconds: 6), onTimeout: () {
       ws.close();
-      throw StateError('서버 응답 없음: $url');
+      throw StateError(tr('서버 응답 없음: $url', 'No response from server: $url'));
     });
   }
 

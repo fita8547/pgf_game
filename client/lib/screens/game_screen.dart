@@ -7,6 +7,7 @@ import '../engine/engine.dart';
 import '../game/game_controller.dart';
 import '../ui/settings.dart';
 import '../ui/settings_dialog.dart';
+import '../ui/i18n.dart';
 import '../ui/theme.dart';
 
 part 'game_hud.dart';
@@ -65,7 +66,7 @@ class _GameScreenState extends State<GameScreen> {
               left: 0,
               right: 0,
               child: Center(
-                child: Text(p.reserve > 0 ? 'R 재장전' : '탄약 없음 · 1/2 무기 교체',
+                child: Text(p.reserve > 0 ? tr('R 재장전', 'R reload') : tr('탄약 없음 · 1/2 무기 교체', 'Out of ammo · 1/2 switch weapon'),
                     style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Rps.danger, shadows: [
                       Shadow(blurRadius: 4, color: Colors.black),
                     ])),
@@ -81,8 +82,11 @@ class _GameScreenState extends State<GameScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   opacity: 0.6,
                   child: Text(
-                      'B 상점 열기 · ${p.credits} ₵ · 스폰룸: 사격 불가 · 체력 회복'
-                      '${p.spawnProtect > 0 ? ' · 보호 ${p.spawnProtect.ceil()}초' : ''}',
+                      tr('B 상점 열기 · ${p.credits} ₵ · 스폰룸: 사격 불가 · 체력 회복',
+                              'B open shop · ${p.credits} ₵ · Spawn room: no shooting · healing') +
+                          (p.spawnProtect > 0
+                              ? tr(' · 보호 ${p.spawnProtect.ceil()}초', ' · protected ${p.spawnProtect.ceil()}s')
+                              : ''),
                       style: const TextStyle(fontSize: 13, color: Rps.gold)),
                 ),
               ),
@@ -93,7 +97,7 @@ class _GameScreenState extends State<GameScreen> {
             Positioned(
                 top: 14,
                 left: 16,
-                child: Text('온라인 · ${g.ping}ms', style: const TextStyle(fontSize: 12, color: Colors.white70))),
+                child: Text('${tr('온라인', 'Online')} · ${g.ping}ms', style: const TextStyle(fontSize: 12, color: Colors.white70))),
           Positioned(left: 20, bottom: 20, child: _Vitals(p)),
           Positioned(right: 20, bottom: 20, child: _Ammo(p, s)),
           if (g.bannerTime > 0 && g.banner != null)
@@ -106,7 +110,7 @@ class _GameScreenState extends State<GameScreen> {
                 top: 200,
                 left: 0,
                 right: 0,
-                child: Center(child: _Banner('${(s.cfg.pregame - s.phaseTime).ceil()}초 후 시작'))),
+                child: Center(child: _Banner(tr('${(s.cfg.pregame - s.phaseTime).ceil()}초 후 시작', 'Starting in ${(s.cfg.pregame - s.phaseTime).ceil()}s')))),
           if (g.shopOpen) Center(child: _Shop(g)),
           if (g.charPickerOpen && !p.alive) Center(child: _CharPicker(g)),
           if (g.scoreboard) Center(child: _Scoreboard(s, p)),
@@ -120,7 +124,7 @@ class _GameScreenState extends State<GameScreen> {
   Widget _center(Widget c, {bool back = false}) => Center(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           c,
-          if (back) TextButton(onPressed: widget.onLeave, child: const Text('로비로')),
+          if (back) TextButton(onPressed: widget.onLeave, child: Text(tr('로비로', 'To lobby'))),
         ]),
       );
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../engine/engine.dart';
 import '../ui/settings.dart';
 import '../ui/settings_dialog.dart';
+import '../ui/i18n.dart';
 import '../ui/theme.dart';
 
 class TitleScreen extends StatefulWidget {
@@ -45,12 +46,12 @@ class _TitleScreenState extends State<TitleScreen> {
             children: [
               Image.asset('assets/logo/main.png', height: h * 0.62, filterQuality: FilterQuality.medium),
               SizedBox(height: h * 0.03),
-              FilledButton(onPressed: _start, child: const Text('게임 시작')),
+              FilledButton(onPressed: _start, child: Text(tr('게임 시작', 'Start'))),
               const SizedBox(height: 12),
               TextButton.icon(
                 onPressed: () => showSettings(context, Settings.I),
                 icon: const Icon(Icons.settings, color: Rps.cream),
-                label: const Text('설정', style: TextStyle(color: Rps.cream)),
+                label: Text(tr('설정', 'Settings'), style: const TextStyle(color: Rps.cream)),
               ),
             ],
           );

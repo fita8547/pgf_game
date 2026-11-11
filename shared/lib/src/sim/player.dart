@@ -25,6 +25,9 @@ class Player {
   double adsT = 0;
 
   double hp = 0;
+
+  /// Bought armour; soaks damage before HP, lost on death.
+  double armor = 0;
   bool alive = false;
   double respawnIn = 0;
   double spawnProtect = 0;
@@ -142,6 +145,7 @@ class Player {
         r(ult, 1), kills, deaths, assists, headshots, r(damageDealt, 0), r(captureTime, 1),
         r(skillCd[0], 2), r(skillCd[1], 2), r(skillCd[2], 2), ...skillCharges, r(revealed, 2),
         {for (final e in fx.entries) if (!_serverOnlyFx.hasMatch(e.key)) e.key: r(e.value, 3)}, mode,
+        r(armor, 1),
       ];
 
   static Player fromNet(List l) {
@@ -205,5 +209,6 @@ class Player {
         ..addAll({for (final e in (l[51] as Map).entries) e.key as String: (e.value as num).toDouble()});
       mode = l[52] as String;
     }
+    armor = l.length > 53 ? d(53) : 0;
   }
 }

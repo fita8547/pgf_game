@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:rps_shared/rps_shared.dart';
 
 import '../engine/engine.dart';
 import '../game/game_controller.dart';
+import '../ui/i18n.dart';
 import '../ui/theme.dart';
 
 class ResultScreen extends StatelessWidget {
@@ -15,7 +15,7 @@ class ResultScreen extends StatelessWidget {
     Engine.I.js.hideAll();
     final r = result;
     final won = r.winner == r.myTeam;
-    final title = r.winner < 0 ? '무승부' : (won ? '승리!' : '패배');
+    final title = r.winner < 0 ? tr('무승부', 'Draw') : (won ? tr('승리!', 'Victory!') : tr('패배', 'Defeat'));
     final mm = (r.seconds ~/ 60), ss = (r.seconds.toInt() % 60).toString().padLeft(2, '0');
     return Container(
       decoration: const BoxDecoration(
@@ -28,7 +28,7 @@ class ResultScreen extends StatelessWidget {
             Text(title,
                 style: TextStyle(
                     fontSize: 56, fontWeight: FontWeight.w900, color: won ? Rps.gold : Rps.cream, letterSpacing: 4)),
-            Text('${mapById(r.mapId).name} · $mm:$ss · '
+            Text('${mapName(r.mapId)} · $mm:$ss · '
                 '${(r.score[r.myTeam] * 100).floor()}% : ${(r.score[1 - r.myTeam] * 100).floor()}%'),
             const SizedBox(height: 16),
             Panel(
@@ -40,8 +40,8 @@ class ResultScreen extends StatelessWidget {
                     child: Row(children: [
                       Container(width: 6, height: 18, color: Rps.team(row.team)),
                       const SizedBox(width: 8),
-                      Expanded(child: Text(row.name)),
-                      SizedBox(width: 80, child: Text(characterById(row.charId).name)),
+                      Expanded(child: Text(playerName(row.name))),
+                      SizedBox(width: 80, child: Text(charName(row.charId))),
                       SizedBox(width: 100, child: Text('${row.kills} / ${row.deaths} / ${row.assists}')),
                       SizedBox(width: 60, child: Text('${row.damage}', textAlign: TextAlign.right)),
                     ]),
@@ -49,7 +49,7 @@ class ResultScreen extends StatelessWidget {
               ]),
             ),
             const SizedBox(height: 16),
-            FilledButton(onPressed: onContinue, child: const Text('로비로')),
+            FilledButton(onPressed: onContinue, child: Text(tr('로비로', 'To lobby'))),
           ]),
         ),
       ),
