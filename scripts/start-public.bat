@@ -18,7 +18,7 @@ if not exist "%CF%" (
 rem Server (skip if something already listens on the port)
 netstat -ano | findstr /R /C:":%PORT% .*LISTENING" >nul
 if errorlevel 1 (
-  start "RPS server" cmd /k "cd /d "%ROOT%\server" && "%DART%" run bin/server.dart --port %PORT%"
+  start "RPS server" "%ROOT%\scripts\server-forever.bat" %PORT%
   timeout /t 8 /nobreak >nul
 ) else (
   echo Server already running on port %PORT%.
