@@ -27,7 +27,7 @@
 - [ ] 5-1 실제로 플레이해 보고 수치 조정 (총·스킬·체력·경제 모두 임시값)
 - [x] 5-2 에셋 버그 수정 (사용자가 new-modeling으로 전달) → 네온 테스트 skip 해제, 5개 맵 전부 통과
 - [ ] 5-3 스킬 전용 효과음 (지금은 폭발·사격음 재사용), 1인칭에서 표창/쌍날 모드 전용 뷰모델
-- [~] 5-4 git: 로컬 저장소 만들고 커밋 완료(main 1개 + chore/maintenance). GitHub 업로드는 사용자가 직접 push 필요
+- [x] 5-4 git: GitHub https://github.com/fita8547/pgf_game (main, 공개 레포) 업로드 완료
 
 ### 4. 콘텐츠
 - [x] 4-1a 스킬 구조 + 페블 4개 (shared/lib/src/sim/skills.dart, 테스트 7개)
@@ -56,6 +56,7 @@
 - 화면 확인 도구: `python tool/cdp_shot.py URL 출력.png --wait 15 --shots 3 --at 5:"자바스크립트"`
 
 ## 기록
+- 2026-11-11 GitHub 업로드: fita8547/pgf_game main 브랜치(공개). 이후 작업도 커밋 후 push.
 - 유지보수(사용자 요청 '쭉 해줘'): git 초기화(.gitattributes, 생성물·new-modeling·백업 제외, 커밋 계정은 GitHub
   noreply 메일), README 새로 작성, 에셋 복사 도구가 크기 같은 수정도 감지, 돌진·도약 스킬 클라이언트 예측(온라인
   튐 감소), 스냅샷에서 서버 전용 값 제외, 프로토콜 버전 2, 큰 파일 분리(엔진→audio/input 모듈, 컨트롤러→
