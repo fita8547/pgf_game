@@ -557,7 +557,8 @@ class Runner:
         time.sleep(1.5)
         js = ("localStorage.clear();localStorage.setItem('rps.lang','ko');localStorage.setItem('rps.char','pebble');"
               "localStorage.setItem('rps.quality','0');localStorage.setItem('rps.map','rps_arena');"
-              "localStorage.setItem('rps.sfx','1');localStorage.setItem('rps.music','0.6');")
+              "localStorage.setItem('rps.sfx','1');localStorage.setItem('rps.music','0.6');"
+              "localStorage.setItem('rps.bot','0');")
         for k, v in (extra_storage or {}).items():
             js += f'localStorage.setItem({json.dumps(k)},{json.dumps(v)});'
         d.eval(js + 'true')
@@ -712,17 +713,23 @@ class Runner:
         p0 = d.state()['game']['pos']
         jx, jy = w * 0.18, h * 0.72
         RAD_PER_PX = 1.7 * 0.0022  # touch look scale x default sensitivity
-        for _ in range(8):
-            g = d.state()['game']
-            if not g['inSpawn']:
-                break
-            x, z = g['pos'][0], g['pos'][2]
-            want = math.atan2(-x, z)  # forward = (sin yaw, -cos yaw) -> face the origin
-            delta = (want - g['yaw'] + math.pi) % (2 * math.pi) - math.pi
-            if abs(delta) > 0.1:
-                px = max(-300, min(300, delta / RAD_PER_PX))
-                d.hold(w * 0.55, h * 0.45, 0.1, dx=px)
-            d.hold(jx, jy, 3.0, dy=-60)
+        def walk_out():
+            # Respawn first if a bot got us, then walk in short steps and stop
+            # right outside the spawn room (the middle of the map is a fight).
+            d.wait(lambda s: s['game'].get('alive'), 20, 'alive (respawn)')
+            for _ in range(10):
+                g = d.state()['game']
+                if not g['inSpawn']:
+                    return
+                x, z = g['pos'][0], g['pos'][2]
+                want = math.atan2(-x, z)  # forward = (sin yaw, -cos yaw) -> face the origin
+                delta = (want - g['yaw'] + math.pi) % (2 * math.pi) - math.pi
+                if abs(delta) > 0.1:
+                    px = max(-300, min(300, delta / RAD_PER_PX))
+                    d.hold(w * 0.55, h * 0.45, 0.1, dx=px)
+                d.hold(jx, jy, 1.5, dy=-60)
+
+        walk_out()
         g = d.state()['game']
         moved = ((g['pos'][0] - p0[0]) ** 2 + (g['pos'][2] - p0[2]) ** 2) ** 0.5
         notes.append(f'조이스틱 이동 거리 {moved:.1f} m · 스폰룸 밖: {not g["inSpawn"]}')
@@ -738,19 +745,26 @@ class Runner:
         check(abs(yaw1 - yaw0) > 0.05, '드래그로 시점이 돌지 않음')
 
         # 5) fire (needs to be outside the spawn room)
-        g = d.state()['game']
-        if g['inSpawn']:
-            notes.append('경고: 아직 스폰룸 안이라 사격 검사는 건너뜀')
-        else:
-            f = d.dom_center('#rps-touch [data-id="fire"]')
+        f = d.dom_center('#rps-touch [data-id="fire"]')
+        fired = False
+        for attempt in range(3):
+            g = d.state()['game']
+            if not g['alive'] or g['inSpawn']:
+                notes.append('사격 전에 쓰러졌거나 스폰룸 안이라 부활 후 다시 나감')
+                walk_out()
+                g = d.state()['game']
             d.hold(f['x'], f['y'], 1.2)
             g2 = d.state()['game']
-            notes.append(f'사격: 발사 수 {g["shotSeq"]}→{g2["shotSeq"]}, 탄창 {g["mag"]}→{g2["mag"]}')
-            check(g2['shotSeq'] > g['shotSeq'], '발사 버튼으로 총이 나가지 않음')
-            d.shot('fire', '발사 버튼으로 사격')
+            if g2['shotSeq'] > g['shotSeq']:
+                fired = True
+                break
+        notes.append(f'사격: 발사 수 {g["shotSeq"]}→{g2["shotSeq"]}, 탄창 {g["mag"]}→{g2["mag"]}')
+        check(fired, '발사 버튼으로 총이 나가지 않음')
+        d.shot('fire', '발사 버튼으로 사격')
 
         # 6) skill Q (Pebble: gravel blink, 3 charges). Blink needs room in
         #    front; if we face a wall it fails (by design), so turn and retry.
+        d.wait(lambda s: s['game'].get('alive'), 20, 'alive before skill')
         q = d.dom_center('#rps-touch [data-id="q"]')
         g = d.state()['game']
         used = False

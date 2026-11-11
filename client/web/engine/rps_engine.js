@@ -1058,7 +1058,8 @@ class Engine {
   // 0.35 s merge (shotgun pellets, damage over time).
   // kind: 0 body, 1 head, 2 shield
   damageNumber(victimId, x, y, z, amount, kind) {
-    this.dmgNums ??= new Map();
+    this.dmgNums ??= new Map(); // latest number per victim (for merging)
+    this.dmgAll ??= new Set(); // every number still on screen
     const now = performance.now();
     let n = this.dmgNums.get(victimId);
     if (n && now - n.born < 350 && n.kind === kind) {
@@ -1078,7 +1079,10 @@ class Engine {
     sprite.position.set(x + (Math.random() - 0.5) * 0.4, y, z + (Math.random() - 0.5) * 0.4);
     this.dynamic.add(sprite);
     n = { sprite, canvas, tex, amount, kind, born: now, life: 0.9, max: 0.9, y0: sprite.position.y };
+    // The previous number for this victim keeps fading out on its own (it
+    // used to be dropped from the map here and stayed on screen forever).
     this.dmgNums.set(victimId, n);
+    this.dmgAll.add(n);
     this._drawDamage(n);
   }
 
@@ -1098,8 +1102,8 @@ class Engine {
   }
 
   _updateDamage(dt) {
-    if (!this.dmgNums) return;
-    for (const [id, n] of this.dmgNums) {
+    if (!this.dmgAll) return;
+    for (const n of this.dmgAll) {
       n.life -= dt;
       const t = 1 - n.life / n.max;
       n.sprite.position.y = n.y0 + t * 0.7;
@@ -1112,7 +1116,8 @@ class Engine {
         this.dynamic.remove(n.sprite);
         n.tex.dispose();
         n.sprite.material.dispose();
-        this.dmgNums.delete(id);
+        this.dmgAll.delete(n);
+        for (const [id, m] of this.dmgNums) if (m === n) this.dmgNums.delete(id);
       }
     }
   }
