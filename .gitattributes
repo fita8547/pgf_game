@@ -1,0 +1,10 @@
+# Text is stored with LF; binary assets are never touched.
+* text=auto eol=lf
+*.glb binary
+*.png binary
+*.mp3 binary
+*.ogg binary
+*.wav binary
+*.otf binary
+*.ttf binary
+*.zip binary

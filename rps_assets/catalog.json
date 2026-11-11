@@ -1,0 +1,961 @@
+{
+ "roles": [
+  "디펜서",
+  "어택",
+  "힐러",
+  "컨트롤러"
+ ],
+ "guns": [
+  {
+   "id": "pistol",
+   "name": "피스톨 P9",
+   "class": "권총",
+   "tris": 2636,
+   "file": "glb/guns/pistol.glb",
+   "fp": "glb/fp_rigs/pistol.glb",
+   "anims": [
+    "idle",
+    "fire",
+    "reload",
+    "draw"
+   ],
+   "parts": 27,
+   "ads": {
+    "hold": [
+     0.105,
+     -0.125,
+     -0.33
+    ],
+    "sight": [
+     0.0,
+     0.0675,
+     0.026
+    ],
+    "ads_fov": 58,
+    "eye": 0.24,
+    "scope": false,
+    "overlay": false
+   }
+  },
+  {
+   "id": "revolver",
+   "name": "리볼버 R6",
+   "class": "권총",
+   "tris": 2420,
+   "file": "glb/guns/revolver.glb",
+   "fp": "glb/fp_rigs/revolver.glb",
+   "anims": [
+    "idle",
+    "fire",
+    "reload",
+    "draw"
+   ],
+   "parts": 20,
+   "ads": {
+    "hold": [
+     0.105,
+     -0.13,
+     -0.33
+    ],
+    "sight": [
+     0.0,
+     0.069,
+     0.014
+    ],
+    "ads_fov": 56,
+    "eye": 0.24,
+    "scope": false,
+    "overlay": false
+   }
+  },
+  {
+   "id": "smg",
+   "name": "SMG 버즈",
+   "class": "기관단총",
+   "tris": 3388,
+   "file": "glb/guns/smg.glb",
+   "fp": "glb/fp_rigs/smg.glb",
+   "anims": [
+    "idle",
+    "fire",
+    "reload",
+    "draw"
+   ],
+   "parts": 48,
+   "ads": {
+    "hold": [
+     0.1,
+     -0.13,
+     -0.3
+    ],
+    "sight": [
+     0.0,
+     0.1,
+     0.04
+    ],
+    "ads_fov": 54,
+    "eye": 0.16,
+    "scope": false,
+    "overlay": false
+   }
+  },
+  {
+   "id": "rifle",
+   "name": "돌격소총 AR-K",
+   "class": "소총",
+   "tris": 7040,
+   "file": "glb/guns/rifle.glb",
+   "fp": "glb/fp_rigs/rifle.glb",
+   "anims": [
+    "idle",
+    "fire",
+    "reload",
+    "draw"
+   ],
+   "parts": 102,
+   "ads": {
+    "hold": [
+     0.11,
+     -0.14,
+     -0.27
+    ],
+    "sight": [
+     0.0,
+     0.135,
+     0.075
+    ],
+    "ads_fov": 36,
+    "eye": 0.09,
+    "scope": true,
+    "overlay": false
+   }
+  },
+  {
+   "id": "shotgun",
+   "name": "펌프 샷건 M12",
+   "class": "산탄총",
+   "tris": 2400,
+   "file": "glb/guns/shotgun.glb",
+   "fp": "glb/fp_rigs/shotgun.glb",
+   "anims": [
+    "idle",
+    "fire",
+    "reload",
+    "draw"
+   ],
+   "parts": 22,
+   "ads": {
+    "hold": [
+     0.11,
+     -0.14,
+     -0.29
+    ],
+    "sight": [
+     0.0,
+     0.08,
+     0.05
+    ],
+    "ads_fov": 60,
+    "eye": 0.2,
+    "scope": false,
+    "overlay": false
+   }
+  },
+  {
+   "id": "sniper",
+   "name": "저격소총 LR-50",
+   "class": "저격총",
+   "tris": 6632,
+   "file": "glb/guns/sniper.glb",
+   "fp": "glb/fp_rigs/sniper.glb",
+   "anims": [
+    "idle",
+    "fire",
+    "reload",
+    "draw"
+   ],
+   "parts": 66,
+   "ads": {
+    "hold": [
+     0.11,
+     -0.15,
+     -0.3
+    ],
+    "sight": [
+     0.0,
+     0.13,
+     0.18
+    ],
+    "ads_fov": 10,
+    "eye": 0.08,
+    "scope": true,
+    "overlay": true
+   }
+  },
+  {
+   "id": "launcher",
+   "name": "로켓 런처 RX",
+   "class": "중화기",
+   "tris": 2672,
+   "file": "glb/guns/launcher.glb",
+   "fp": "glb/fp_rigs/launcher.glb",
+   "anims": [
+    "idle",
+    "fire",
+    "reload",
+    "draw"
+   ],
+   "parts": 21,
+   "ads": {
+    "hold": [
+     0.15,
+     -0.13,
+     -0.22
+    ],
+    "sight": [
+     -0.075,
+     0.185,
+     -0.205
+    ],
+    "ads_fov": 48,
+    "eye": 0.12,
+    "scope": true,
+    "overlay": false
+   }
+  }
+ ],
+ "characters": [
+  {
+   "id": "boulder",
+   "name": "볼더",
+   "role": "디펜서",
+   "race": "오크",
+   "sex": "남",
+   "tris": 14306,
+   "arms_tris": 2980,
+   "file": "glb/characters/boulder.glb",
+   "fp_arms": "glb/fp_arms/boulder.glb",
+   "skills": [
+    {
+     "id": "rock_bulwark",
+     "key": "Q",
+     "name": "바위 방벽",
+     "desc": "전방에 큰 돌 방벽을 세워 탄을 막는다. 내구도 1200.",
+     "cd": "유지형",
+     "tris": 308,
+     "file": "glb/skills/boulder/rock_bulwark.glb"
+    },
+    {
+     "id": "landslide_charge",
+     "key": "E",
+     "name": "산사태 돌진",
+     "desc": "앞으로 질주하며 처음 닿은 적을 붙잡아 벽에 처박는다.",
+     "cd": "8초",
+     "tris": 320,
+     "file": "glb/skills/boulder/landslide_charge.glb"
+    },
+    {
+     "id": "magma_slug",
+     "key": "Shift",
+     "name": "용암 투척",
+     "desc": "적을 관통하는 용암 덩어리를 던진다.",
+     "cd": "6초",
+     "tris": 300,
+     "file": "glb/skills/boulder/magma_slug.glb"
+    },
+    {
+     "id": "earth_rift",
+     "key": "궁",
+     "name": "대지 균열",
+     "desc": "망치로 땅을 내리쳐 전방 부채꼴의 적을 쓰러뜨린다.",
+     "cd": "궁극기",
+     "tris": 346,
+     "file": "glb/skills/boulder/earth_rift.glb"
+    }
+   ],
+   "parts": 61
+  },
+  {
+   "id": "cardboard",
+   "name": "카드보드",
+   "role": "디펜서",
+   "race": "곰 수인",
+   "sex": "남",
+   "tris": 17804,
+   "arms_tris": 3052,
+   "file": "glb/characters/cardboard.glb",
+   "fp_arms": "glb/fp_arms/cardboard.glb",
+   "skills": [
+    {
+     "id": "box_fort",
+     "key": "Q",
+     "name": "상자 요새",
+     "desc": "주변을 감싸는 돔형 방벽을 던진다.",
+     "cd": "12초",
+     "tris": 1312,
+     "file": "glb/skills/cardboard/box_fort.glb"
+    },
+    {
+     "id": "crate_roll",
+     "key": "E",
+     "name": "상자 구르기",
+     "desc": "공 형태로 변해 빠르게 굴러가며 적을 들이받는다.",
+     "cd": "전환",
+     "tris": 1276,
+     "file": "glb/skills/cardboard/crate_roll.glb"
+    },
+    {
+     "id": "tape_hook",
+     "key": "Shift",
+     "name": "테이프 갈고리",
+     "desc": "테이프 갈고리로 적을 끌어온다.",
+     "cd": "8초",
+     "tris": 784,
+     "file": "glb/skills/cardboard/tape_hook.glb"
+    },
+    {
+     "id": "parcel_drop",
+     "key": "궁",
+     "name": "택배 폭격",
+     "desc": "주변에 폭발하는 소포 지뢰를 넓게 뿌린다.",
+     "cd": "궁극기",
+     "tris": 1660,
+     "file": "glb/skills/cardboard/parcel_drop.glb"
+    }
+   ],
+   "parts": 65
+  },
+  {
+   "id": "shear",
+   "name": "시어",
+   "role": "디펜서",
+   "race": "오크",
+   "sex": "여",
+   "tris": 19068,
+   "arms_tris": 2980,
+   "file": "glb/characters/shear.glb",
+   "fp_arms": "glb/fp_arms/shear.glb",
+   "skills": [
+    {
+     "id": "spike_guard",
+     "key": "Q",
+     "name": "가시 방패",
+     "desc": "막는 동안 받은 공격 방향으로 가시를 쏜다.",
+     "cd": "유지형",
+     "tris": 212,
+     "file": "glb/skills/shear/spike_guard.glb"
+    },
+    {
+     "id": "cleave_leap",
+     "key": "E",
+     "name": "절단 도약",
+     "desc": "도약한 뒤 착지 지점을 크게 벤다.",
+     "cd": "7초",
+     "tris": 1040,
+     "file": "glb/skills/shear/cleave_leap.glb"
+    },
+    {
+     "id": "blade_fence",
+     "key": "Shift",
+     "name": "칼날 울타리",
+     "desc": "적을 밀쳐내는 칼날 벽을 세운다.",
+     "cd": "12초",
+     "tris": 440,
+     "file": "glb/skills/shear/blade_fence.glb"
+    },
+    {
+     "id": "blade_rain",
+     "key": "궁",
+     "name": "칼날 폭우",
+     "desc": "넓은 범위에 칼날을 쏟아 적을 묶는다.",
+     "cd": "궁극기",
+     "tris": 1784,
+     "file": "glb/skills/shear/blade_rain.glb"
+    }
+   ],
+   "parts": 80
+  },
+  {
+   "id": "origami",
+   "name": "오리가미",
+   "role": "어택",
+   "race": "인간",
+   "sex": "여",
+   "tris": 17156,
+   "arms_tris": 2980,
+   "file": "glb/characters/origami.glb",
+   "fp_arms": "glb/fp_arms/origami.glb",
+   "skills": [
+    {
+     "id": "paper_updraft",
+     "key": "Q",
+     "name": "종이 상승",
+     "desc": "종이 바람을 타고 높이 도약한다.",
+     "cd": "8초",
+     "tris": 776,
+     "file": "glb/skills/origami/paper_updraft.glb"
+    },
+    {
+     "id": "paper_dash",
+     "key": "E",
+     "name": "접기 질주",
+     "desc": "바라보는 방향으로 짧게 대시한다. 처치 시 초기화.",
+     "cd": "10초",
+     "tris": 352,
+     "file": "glb/skills/origami/paper_dash.glb"
+    },
+    {
+     "id": "crane_scout",
+     "key": "Shift",
+     "name": "종이학 정찰",
+     "desc": "조종 가능한 종이학을 날려 맞춘 적을 표시한다.",
+     "cd": "30초",
+     "tris": 172,
+     "file": "glb/skills/origami/crane_scout.glb"
+    },
+    {
+     "id": "shuriken_storm",
+     "key": "궁",
+     "name": "표창 폭풍",
+     "desc": "정확한 종이 표창 5개를 얻는다. 처치하면 재충전.",
+     "cd": "궁극기",
+     "tris": 280,
+     "file": "glb/skills/origami/shuriken_storm.glb"
+    }
+   ],
+   "parts": 68
+  },
+  {
+   "id": "pebble",
+   "name": "페블",
+   "role": "어택",
+   "race": "인간",
+   "sex": "여",
+   "tris": 16892,
+   "arms_tris": 2500,
+   "file": "glb/characters/pebble.glb",
+   "fp_arms": "glb/fp_arms/pebble.glb",
+   "skills": [
+    {
+     "id": "gravel_blink",
+     "key": "Q",
+     "name": "자갈 점멸",
+     "desc": "이동 방향으로 짧게 순간이동한다. 3회 충전.",
+     "cd": "3초/충전",
+     "tris": 1158,
+     "file": "glb/skills/pebble/gravel_blink.glb"
+    },
+    {
+     "id": "rewind",
+     "key": "E",
+     "name": "되감기",
+     "desc": "3초 전 위치와 체력으로 되돌아간다.",
+     "cd": "12초",
+     "tris": 736,
+     "file": "glb/skills/pebble/rewind.glb"
+    },
+    {
+     "id": "recon_pebble",
+     "key": "Shift",
+     "name": "정찰 자갈",
+     "desc": "꽂힌 곳 주변 적 위치를 팀에 공개하는 화살.",
+     "cd": "25초",
+     "tris": 1380,
+     "file": "glb/skills/pebble/recon_pebble.glb"
+    },
+    {
+     "id": "sticky_charge",
+     "key": "궁",
+     "name": "점착 폭약",
+     "desc": "적이나 벽에 붙는 폭탄을 던져 큰 폭발을 일으킨다.",
+     "cd": "궁극기",
+     "tris": 704,
+     "file": "glb/skills/pebble/sticky_charge.glb"
+    }
+   ],
+   "parts": 64
+  },
+  {
+   "id": "snip",
+   "name": "스닙",
+   "role": "어택",
+   "race": "늑대 수인",
+   "sex": "남",
+   "tris": 17632,
+   "arms_tris": 3268,
+   "file": "glb/characters/snip.glb",
+   "fp_arms": "glb/fp_arms/snip.glb",
+   "skills": [
+    {
+     "id": "gale_cut",
+     "key": "Q",
+     "name": "질풍 절단",
+     "desc": "앞으로 돌진하며 벤다. 처치 시 쿨타임 초기화.",
+     "cd": "8초",
+     "tris": 296,
+     "file": "glb/skills/snip/gale_cut.glb"
+    },
+    {
+     "id": "deflect",
+     "key": "E",
+     "name": "튕겨내기",
+     "desc": "칼날을 회전시켜 날아오는 투사체를 되돌린다.",
+     "cd": "8초",
+     "tris": 760,
+     "file": "glb/skills/snip/deflect.glb"
+    },
+    {
+     "id": "phase_beacon",
+     "key": "Shift",
+     "name": "위상 비콘",
+     "desc": "비콘을 던지고, 다시 누르면 그 위치로 이동한다.",
+     "cd": "6초",
+     "tris": 792,
+     "file": "glb/skills/snip/phase_beacon.glb"
+    },
+    {
+     "id": "twin_edge",
+     "key": "궁",
+     "name": "쌍날 개방",
+     "desc": "가위를 둘로 나눠 강력한 근접 공격 모드에 들어간다.",
+     "cd": "궁극기",
+     "tris": 912,
+     "file": "glb/skills/snip/twin_edge.glb"
+    }
+   ],
+   "parts": 68
+  },
+  {
+   "id": "gem",
+   "name": "젬",
+   "role": "힐러",
+   "race": "여우 수인",
+   "sex": "여",
+   "tris": 16352,
+   "arms_tris": 2572,
+   "file": "glb/characters/gem.glb",
+   "fp_arms": "glb/fp_arms/gem.glb",
+   "skills": [
+    {
+     "id": "mend_crystal",
+     "key": "Q",
+     "name": "치유 결정",
+     "desc": "아군 머리 위에 붙어 지속 치유하는 결정.",
+     "cd": "대상 전환",
+     "tris": 592,
+     "file": "glb/skills/gem/mend_crystal.glb"
+    },
+    {
+     "id": "amp_shard",
+     "key": "E",
+     "name": "증폭 파편",
+     "desc": "설치한 파편 근처 아군의 공격력을 25% 올린다.",
+     "cd": "14초",
+     "tris": 88,
+     "file": "glb/skills/gem/amp_shard.glb"
+    },
+    {
+     "id": "cleanse_bell",
+     "key": "Shift",
+     "name": "정화의 종",
+     "desc": "아군 하나를 잠깐 무적으로 만들고 해로운 효과를 지운다.",
+     "cd": "14초",
+     "tris": 740,
+     "file": "glb/skills/gem/cleanse_bell.glb"
+    },
+    {
+     "id": "crystal_sanctum",
+     "key": "궁",
+     "name": "수정 성소",
+     "desc": "수정 나무를 세워 범위 아군을 크게 치유한다. 나무는 엄폐물 역할.",
+     "cd": "궁극기",
+     "tris": 1128,
+     "file": "glb/skills/gem/crystal_sanctum.glb"
+    }
+   ],
+   "parts": 69
+  },
+  {
+   "id": "needle",
+   "name": "니들",
+   "role": "힐러",
+   "race": "인간",
+   "sex": "여",
+   "tris": 19304,
+   "arms_tris": 2500,
+   "file": "glb/characters/needle.glb",
+   "fp_arms": "glb/fp_arms/needle.glb",
+   "skills": [
+    {
+     "id": "thread_tether",
+     "key": "Q",
+     "name": "치유 실",
+     "desc": "실을 연결한 아군을 계속 치유한다.",
+     "cd": "유지형",
+     "tris": 832,
+     "file": "glb/skills/needle/thread_tether.glb"
+    },
+    {
+     "id": "sleep_dart",
+     "key": "E",
+     "name": "수면 침",
+     "desc": "맞은 적을 몇 초 동안 잠재운다.",
+     "cd": "12초",
+     "tris": 264,
+     "file": "glb/skills/needle/sleep_dart.glb"
+    },
+    {
+     "id": "stitch_grenade",
+     "key": "Shift",
+     "name": "봉합 수류탄",
+     "desc": "아군 받는 치유 증가, 적 치유 차단.",
+     "cd": "10초",
+     "tris": 2100,
+     "file": "glb/skills/needle/stitch_grenade.glb"
+    },
+    {
+     "id": "nano_stitch",
+     "key": "궁",
+     "name": "나노 봉합",
+     "desc": "아군 하나의 공격력을 높이고 받는 피해를 줄인다.",
+     "cd": "궁극기",
+     "tris": 1216,
+     "file": "glb/skills/needle/nano_stitch.glb"
+    }
+   ],
+   "parts": 65
+  },
+  {
+   "id": "scroll",
+   "name": "스크롤",
+   "role": "힐러",
+   "race": "인간",
+   "sex": "남",
+   "tris": 20572,
+   "arms_tris": 2500,
+   "file": "glb/characters/scroll.glb",
+   "fp_arms": "glb/fp_arms/scroll.glb",
+   "skills": [
+    {
+     "id": "mending_seal",
+     "key": "Q",
+     "name": "치유 인장",
+     "desc": "바닥에 인장을 펼쳐 안에 있는 아군을 치유한다.",
+     "cd": "12초",
+     "tris": 1480,
+     "file": "glb/skills/scroll/mending_seal.glb"
+    },
+    {
+     "id": "ward_talisman",
+     "key": "E",
+     "name": "수호 부적",
+     "desc": "아군에게 붙어 일정량 피해를 대신 막는 부적.",
+     "cd": "8초",
+     "tris": 696,
+     "file": "glb/skills/scroll/ward_talisman.glb"
+    },
+    {
+     "id": "undying_lantern",
+     "key": "Shift",
+     "name": "불사의 등불",
+     "desc": "등불 범위 안의 아군은 3초간 쓰러지지 않는다.",
+     "cd": "22초",
+     "tris": 992,
+     "file": "glb/skills/scroll/undying_lantern.glb"
+    },
+    {
+     "id": "grand_scroll",
+     "key": "궁",
+     "name": "대두루마리",
+     "desc": "거대한 두루마리를 펼쳐 팀 전체에 보호막을 준다.",
+     "cd": "궁극기",
+     "tris": 540,
+     "file": "glb/skills/scroll/grand_scroll.glb"
+    }
+   ],
+   "parts": 64
+  },
+  {
+   "id": "inkwell",
+   "name": "잉크웰",
+   "role": "컨트롤러",
+   "race": "고양이 수인",
+   "sex": "여",
+   "tris": 18172,
+   "arms_tris": 2572,
+   "file": "glb/characters/inkwell.glb",
+   "fp_arms": "glb/fp_arms/inkwell.glb",
+   "skills": [
+    {
+     "id": "ink_cloud",
+     "key": "Q",
+     "name": "먹물 연막",
+     "desc": "원하는 곳에 시야를 막는 먹구름을 터뜨린다. 3회.",
+     "cd": "충전형",
+     "tris": 388,
+     "file": "glb/skills/inkwell/ink_cloud.glb"
+    },
+    {
+     "id": "ink_puddle",
+     "key": "E",
+     "name": "먹물 웅덩이",
+     "desc": "밟은 적을 느리게 하는 웅덩이.",
+     "cd": "16초",
+     "tris": 324,
+     "file": "glb/skills/inkwell/ink_puddle.glb"
+    },
+    {
+     "id": "ink_portal",
+     "key": "Shift",
+     "name": "먹물 통로",
+     "desc": "먼 지점에 먹물 문을 열고 순간이동한다.",
+     "cd": "30초",
+     "tris": 1096,
+     "file": "glb/skills/inkwell/ink_portal.glb"
+    },
+    {
+     "id": "brush_wall",
+     "key": "궁",
+     "name": "대붓 장벽",
+     "desc": "맵을 가르는 먹물 벽. 탄과 소리를 막는다.",
+     "cd": "궁극기",
+     "tris": 504,
+     "file": "glb/skills/inkwell/brush_wall.glb"
+    }
+   ],
+   "parts": 62
+  },
+  {
+   "id": "quake",
+   "name": "퀘이크",
+   "role": "컨트롤러",
+   "race": "인간",
+   "sex": "남",
+   "tris": 16364,
+   "arms_tris": 2500,
+   "file": "glb/characters/quake.glb",
+   "fp_arms": "glb/fp_arms/quake.glb",
+   "skills": [
+    {
+     "id": "rock_turret",
+     "key": "Q",
+     "name": "바위 포탑",
+     "desc": "적을 자동으로 쏘는 포탑을 설치한다.",
+     "cd": "10초",
+     "tris": 340,
+     "file": "glb/skills/quake/rock_turret.glb"
+    },
+    {
+     "id": "quake_trap",
+     "key": "E",
+     "name": "지진 덫",
+     "desc": "밟은 적을 1.5초 동안 묶는다.",
+     "cd": "10초",
+     "tris": 944,
+     "file": "glb/skills/quake/quake_trap.glb"
+    },
+    {
+     "id": "overheat",
+     "key": "Shift",
+     "name": "과열 용광로",
+     "desc": "잠시 방어력·공격 속도·이동 속도가 오른다.",
+     "cd": "12초",
+     "tris": 428,
+     "file": "glb/skills/quake/overheat.glb"
+    },
+    {
+     "id": "lava_flow",
+     "key": "궁",
+     "name": "용암 분출",
+     "desc": "주변에 용암 장판을 깔아 지속 피해를 준다.",
+     "cd": "궁극기",
+     "tris": 452,
+     "file": "glb/skills/quake/lava_flow.glb"
+    }
+   ],
+   "parts": 63
+  },
+  {
+   "id": "staple",
+   "name": "스테이플",
+   "role": "컨트롤러",
+   "race": "로봇",
+   "sex": "-",
+   "tris": 11256,
+   "arms_tris": 3860,
+   "file": "glb/characters/staple.glb",
+   "fp_arms": "glb/fp_arms/staple.glb",
+   "skills": [
+    {
+     "id": "staple_sentry",
+     "key": "Q",
+     "name": "철심 감시포",
+     "desc": "벽에 붙여 지나가는 적을 느리게 하고 쏘는 소형 포탑.",
+     "cd": "충전형",
+     "tris": 184,
+     "file": "glb/skills/staple/staple_sentry.glb"
+    },
+    {
+     "id": "wire_snare",
+     "key": "E",
+     "name": "철사 덫",
+     "desc": "건드린 적의 위치를 알리고 잠깐 묶는 철사.",
+     "cd": "12초",
+     "tris": 208,
+     "file": "glb/skills/staple/wire_snare.glb"
+    },
+    {
+     "id": "alarm_bot",
+     "key": "Shift",
+     "name": "알람봇",
+     "desc": "근처 적에게 받는 피해 증가 효과를 거는 로봇.",
+     "cd": "재설치",
+     "tris": 1364,
+     "file": "glb/skills/staple/alarm_bot.glb"
+    },
+    {
+     "id": "steel_lockdown",
+     "key": "궁",
+     "name": "강철 봉쇄",
+     "desc": "넓은 범위를 감지해 일정 시간 후 안의 적을 모두 묶는다.",
+     "cd": "궁극기",
+     "tris": 2924,
+     "file": "glb/skills/staple/steel_lockdown.glb"
+    }
+   ],
+   "parts": 50
+  }
+ ],
+ "maps": [
+  {
+   "id": "rps_arena",
+   "name": "RPS 아레나",
+   "size": "64 × 48 m",
+   "tris": 45692,
+   "file": "glb/maps/rps_arena.glb",
+   "desc": "3라인 대전 맵. 왼쪽 창고, 가운데 기념비 광장, 오른쪽 고가 다리. A팀 주황 / B팀 파랑 스폰.",
+   "fp_cam": {
+    "pos": [
+     -3.5,
+     1.65,
+     15.5
+    ],
+    "look": [
+     0,
+     1.5,
+     0
+    ]
+   }
+  },
+  {
+   "id": "desert_ruins",
+   "name": "사막 유적",
+   "size": "60 × 50 m",
+   "tris": 23606,
+   "file": "glb/maps/desert_ruins.glb",
+   "desc": "가운데 지구라트를 차지하는 맵. 양옆 아치 회랑과 부서진 기둥 사이로 측면 돌파. 모래언덕이 낮은 엄폐를 만들어요.",
+   "fp_cam": {
+    "pos": [
+     -3,
+     1.65,
+     19
+    ],
+    "look": [
+     0,
+     2.5,
+     0
+    ]
+   }
+  },
+  {
+   "id": "frost_harbor",
+   "name": "설원 항구",
+   "size": "64 × 50 m",
+   "tris": 35600,
+   "file": "glb/maps/frost_harbor.glb",
+   "desc": "컨테이너 미로와 얼어붙은 부두. 크레인 아래가 중앙 교전 지점이고, 부두 쪽은 길고 열린 저격 라인이에요.",
+   "fp_cam": {
+    "pos": [
+     -4,
+     1.65,
+     19
+    ],
+    "look": [
+     4,
+     2.0,
+     0
+    ]
+   }
+  },
+  {
+   "id": "neon_rooftops",
+   "name": "네온 옥상",
+   "size": "높이가 다른 옥상 9개",
+   "tris": 44348,
+   "file": "glb/maps/neon_rooftops.glb",
+   "desc": "빌딩 옥상을 다리로 연결한 수직 맵. 높은 옥상이 사선을 잡고, 다리가 병목이에요.",
+   "fp_cam": {
+    "pos": [
+     -2,
+     1.75,
+     25
+    ],
+    "look": [
+     0,
+     1.0,
+     0
+    ]
+   }
+  },
+  {
+   "id": "jungle_temple",
+   "name": "정글 사원",
+   "size": "60 × 52 m",
+   "tris": 22812,
+   "file": "glb/maps/jungle_temple.glb",
+   "desc": "맵을 가로지르는 강과 다리 3개. 강 위 계단식 사원이 고지대이고, 양옆 흔들다리는 빠른 우회로예요.",
+   "fp_cam": {
+    "pos": [
+     -3,
+     1.65,
+     19
+    ],
+    "look": [
+     0,
+     3.0,
+     0
+    ]
+   }
+  }
+ ],
+ "fx": [
+  {
+   "id": "death_cat",
+   "name": "사망 · 고양이 유령",
+   "tris": 11276,
+   "file": "glb/fx/death_cat.glb",
+   "anim": "death"
+  },
+  {
+   "id": "death_dog",
+   "name": "사망 · 강아지 유령",
+   "tris": 10536,
+   "file": "glb/fx/death_dog.glb",
+   "anim": "death"
+  },
+  {
+   "id": "kill_paw",
+   "name": "킬 배지 · 발바닥",
+   "tris": 3420,
+   "file": "glb/fx/kill_paw.glb",
+   "anim": "pop"
+  },
+  {
+   "id": "kill_headshot",
+   "name": "킬 배지 · 헤드샷",
+   "tris": 3068,
+   "file": "glb/fx/kill_headshot.glb",
+   "anim": "pop"
+  }
+ ]
+}
