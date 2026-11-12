@@ -292,6 +292,24 @@ void main() {
     expect(sim2.ultReady(p2), isFalse);
   });
 
+  test('touch (phone) players get a bigger hit area', () {
+    final (sim, p, e) = duel('pebble', 'gem', dist: 20);
+    final o = p.eye;
+    // 15 cm outside the torso.
+    final d = (Vec3(e.pos.x + 0.26 + 0.15, e.pos.y + 1.2, e.pos.z) - o).normalized();
+    expect(sim.traceShot(p, o, d, 100, -1, pad: GameSim.shotPad(p)).victim, isNull, reason: 'mouse: miss');
+    p.touch = true;
+    expect(sim.traceShot(p, o, d, 100, -1, pad: GameSim.shotPad(p)).victim, e, reason: 'touch: hit');
+    // Real shot through the gun path.
+    p.yaw = yawTo(o, o + d);
+    p.pitch = pitchTo(o, o + d);
+    final hp = e.hp;
+    e.spawnProtect = 0;
+    cast(sim, p, Btn.fire, yaw: p.yaw, pitch: p.pitch);
+    expect(e.hp, lessThan(hp), reason: 'touch shot lands');
+    expect(Player.fromNet(p.toNet()).touch, isTrue, reason: 'synced');
+  });
+
   test('sniper shots have a forgiving hit area, other guns do not', () {
     final (sim, p, e) = duel('pebble', 'gem', dist: 20);
     // Aimed 45 cm to the side of the target's chest: outside the real torso.

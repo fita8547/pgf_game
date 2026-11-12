@@ -6,7 +6,7 @@ import '../sim/input.dart';
 /// Wire protocol (JSON text frames over one WebSocket).
 ///
 /// Client -> server
-///   {t:'hello', v, name, char}          join (server picks the team)
+///   {t:'hello', v, name, char, touch}   join (server picks the team; touch = phone controls)
 ///   {t:'in', i:[[input.toNet()]...]}    input frames, oldest first
 ///   {t:'buy', g}  {t:'char', c}  {t:'ping', c:clientMs}
 /// Server -> client
@@ -22,8 +22,8 @@ abstract final class Net {
   static String encode(Map<String, Object?> m) => jsonEncode(m);
   static Map<String, dynamic> decode(String s) => jsonDecode(s) as Map<String, dynamic>;
 
-  static Map<String, Object?> hello(String name, String charId) =>
-      {'t': 'hello', 'v': version, 'name': name, 'char': charId};
+  static Map<String, Object?> hello(String name, String charId, {bool touch = false}) =>
+      {'t': 'hello', 'v': version, 'name': name, 'char': charId, 'touch': touch};
   static Map<String, Object?> inputs(List<PlayerInput> l) => {'t': 'in', 'i': [for (final i in l) i.toNet()]};
 }
 

@@ -100,7 +100,7 @@ class ShurikenStorm extends SkillImpl {
     p.fx['modeAmmo'] = ammo - 1;
     p.fireCooldown = 1 / rate;
     final o = p.eye, d = p.viewDir;
-    final hit = sim.traceShot(p, o, d, 80, inp.renderTick);
+    final hit = sim.traceShot(p, o, d, 80, inp.renderTick, pad: GameSim.shotPad(p));
     final end = o + d * hit.dist;
     if (!replay) {
       sim.events.add({

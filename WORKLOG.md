@@ -56,6 +56,9 @@
 - 화면 확인 도구: `python tool/cdp_shot.py URL 출력.png --wait 15 --shots 3 --at 5:"자바스크립트"`
 
 ## 기록
+- 2026-11-12 모바일(터치 조작) 판정 보정: 터치 플레이어의 사격은 모든 히트박스 반지름 +0.2m(GameSim.touchHitPad,
+  저격총은 +0.3m에 더해짐, 오리가미 궁 표창도). hello에 touch 보냄 → 서버가 Player.touch 설정(맵 바뀌어도 유지),
+  오프라인 봇전도 적용. Player.flags 128번 비트로 동기화.
 - 2026-11-12 요원 대사 영어: song/voice/voice_lines_en.txt(402줄 번역, id | 문장) → gen_voice.py가 json에 "en"으로 합치고
   song/voice/en/<요원>/<id>.mp3 생성(영어는 목소리 12개를 요원마다 따로). 게임 언어가 영어면 영어 음성·자막·이름.
   스닙 C 대사 "거기로 간다."(순간이동 시절) → "묶여 있어라." / "Stay put.".

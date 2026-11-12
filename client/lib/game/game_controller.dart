@@ -182,7 +182,7 @@ class GameController extends ChangeNotifier {
       final map = GameMap.fromGlb(def, bytes);
       final s = GameSim(map,
           cfg: SimConfig(botSkill: settings.botSkill), seed: DateTime.now().millisecondsSinceEpoch & 0x7fffffff);
-      final p = s.addPlayer(settings.name, settings.charId, teamId: 0);
+      final p = s.addPlayer(settings.name, settings.charId, teamId: 0)..touch = engine.input.isTouch();
       s.fillBots();
       sim = s;
       me = p;
@@ -237,7 +237,7 @@ class GameController extends ChangeNotifier {
       await n.connect();
       final welcome = n.messages.firstWhere((m) => m['t'] == 'welcome' || m['t'] == 'err');
       _netSub = n.messages.listen(_onNet);
-      n.send(Net.hello(settings.name, settings.charId));
+      n.send(Net.hello(settings.name, settings.charId, touch: engine.input.isTouch()));
       final w = await welcome.timeout(const Duration(seconds: 8));
       if (w['t'] == 'err') throw StateError(w['m'] as String);
       await _loadWorld(w['map'] as String, w['id'] as int);

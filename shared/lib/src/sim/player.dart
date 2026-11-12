@@ -16,6 +16,10 @@ class Player {
   bool isBot;
   bool connected = true;
 
+  /// Plays with touch controls (phone): their shots get a bigger hit area
+  /// ([GameSim.touchHitPad]).
+  bool touch = false;
+
   final Vec3 pos = Vec3.zero();
   final Vec3 vel = Vec3.zero();
   double yaw = 0, pitch = 0;
@@ -124,7 +128,8 @@ class Player {
       (isBot ? 8 : 0) |
       (ads ? 16 : 0) |
       (walking ? 32 : 0) |
-      (connected ? 64 : 0);
+      (connected ? 64 : 0) |
+      (touch ? 128 : 0);
 
   set flags(int f) {
     alive = f & 1 != 0;
@@ -134,6 +139,7 @@ class Player {
     ads = f & 16 != 0;
     walking = f & 32 != 0;
     connected = f & 64 != 0;
+    touch = f & 128 != 0;
   }
 
   /// Compact snapshot row. Order is the wire format: append only.

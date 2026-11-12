@@ -9,6 +9,9 @@ class Client {
   final String addr;
   final InputGuard guard = InputGuard();
   Player? player;
+
+  /// Touch controls (from hello): kept across map changes.
+  bool touch = false;
   Client(this.ws, this.addr);
 
   void send(Map<String, Object?> m) {
@@ -57,7 +60,7 @@ class Room {
     sim = GameSim(map, cfg: cfg, seed: DateTime.now().millisecondsSinceEpoch & 0x7fffffff);
     for (final c in old) {
       final p = c.player!;
-      c.player = _join(p.name, p.charId);
+      c.player = _join(p.name, p.charId)..touch = c.touch;
       c.send({'t': 'welcome', 'id': c.player!.id, 'map': id, 'tick': sim.tick, 'hz': Net.tickHz});
     }
     sim.fillBots();
@@ -112,7 +115,8 @@ class Room {
         var name = '${m['name'] ?? '플레이어'}'.trim();
         if (name.isEmpty || name.length > 16) name = name.isEmpty ? '플레이어' : name.substring(0, 16);
         final ch = '${m['char']}';
-        c.player = _join(name, isCharacter(ch) ? ch : characters.first.id);
+        c.touch = m['touch'] == true;
+        c.player = _join(name, isCharacter(ch) ? ch : characters.first.id)..touch = c.touch;
         c.send({'t': 'welcome', 'id': c.player!.id, 'map': mapId, 'tick': sim.tick, 'hz': Net.tickHz});
         _broadcast({'t': 'msg', 'm': '$name 님이 참가했습니다', 'join': name});
         log('joined $name (${c.addr}) team ${c.player!.team}');

@@ -563,7 +563,7 @@ class GameSim {
     final ends = <List<double>>[];
     for (var k = 0; k < s.pellets; k++) {
       final dir = _coneDir(p.yaw + ry, p.pitch + rp, spread, rr);
-      final hit = traceShot(p, origin, dir, s.range, renderTick, pad: s.hitPad);
+      final hit = traceShot(p, origin, dir, s.range, renderTick, pad: s.hitPad + shotPad(p));
       final end = origin + dir * hit.dist;
       ends.add([...end.toList(2), hit.victim != null ? (hit.part == HitPart.head ? 2 : 1) : (hit.wall ? 0 : -1)]);
       final v = hit.victim;
@@ -595,6 +595,11 @@ class GameSim {
   }
 
   /// First thing a bullet from [shooter] hits: enemy hitbox or world.
+  /// Touch (phone) players aim with a thumb: every hitbox radius is this much
+  /// bigger for their shots.
+  static const double touchHitPad = 0.2;
+  static double shotPad(Player p) => p.touch ? touchHitPad : 0;
+
   /// [pad]: extra metres on every hitbox radius (forgiving guns like the sniper).
   ShotHit traceShot(Player shooter, Vec3 o, Vec3 d, double range, double renderTick, {double pad = 0}) {
     final w = map.world.raycast(o, d, range, mask: Col.shot | Col.hit);
