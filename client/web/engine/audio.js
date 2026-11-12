@@ -11,7 +11,15 @@ export class Audio {
     this.buffers = new Map();
     this.sfxVolume = 0.8;
     this.musicVolume = 0.35;
+    this.voiceVolume = 0.9;
     this.music = null;
+    // Agent voice lines (voice/voice_lines.json + voice/<agent>/<id>.mp3).
+    this.voiceData = null; // Promise<json|null>
+    this.voiceActive = 0; // lines playing right now
+    this.voiceBusy = new Map(); // speaker key -> true while that speaker talks
+    this.voiceLast = new Map(); // agent/event -> last line id (no repeats)
+    this.caption = ''; // "seq|agent|text" of the latest line started
+    this.captionSeq = 0;
     this.playlist = null; // Promise<[{file, title}]>
     this.bgm = null; // { el, order, i } while the playlist plays
     this.listener = { x: 0, y: 0, z: 0, yaw: 0 };
@@ -40,6 +48,9 @@ export class Audio {
       this.musicGain = this.ctx.createGain();
       this.musicGain.gain.value = this.musicVolume;
       this.musicGain.connect(this.ctx.destination);
+      this.voiceGain = this.ctx.createGain();
+      this.voiceGain.gain.value = this.voiceVolume;
+      this.voiceGain.connect(this.ctx.destination);
     }
     if (this.ctx.state === 'suspended') this.ctx.resume();
     return this.ctx;
@@ -155,12 +166,98 @@ export class Audio {
     if (this.bgm) { this.bgm.wanted = false; this.bgm.el.pause(); }
   }
 
-  setVolumes(sfx, music) {
+  setVolumes(sfx, music, voice) {
     this.sfxVolume = sfx;
     this.musicVolume = music;
+    if (voice !== undefined && voice !== null) this.voiceVolume = voice;
     if (this.ctx) {
       this.sfxGain.gain.value = sfx;
       this.musicGain.gain.value = music;
+      this.voiceGain.gain.value = this.voiceVolume;
     }
   }
+
+  // ------------------------------------------------------------ voice --
+  loadVoices() {
+    if (!this.voiceData) {
+      this.voiceData = fetch(BASE + 'voice/voice_lines.json')
+        .then((r) => (r.ok ? r.json() : null))
+        .catch(() => null);
+    }
+    return this.voiceData;
+  }
+
+  // Says a random line of [agent] for [event] (voice_lines.json). [speaker]
+  // keys one talker (a player id): a speaker never talks over themselves.
+  // [important] lines (ult, match start, results) play even when two other
+  // lines are already going; the rest are dropped then. [pos]: positional.
+  async voice(agent, event, speaker, important, pos) {
+    const data = await this.loadVoices();
+    const lines = data && data.agents && data.agents[agent] && data.agents[agent].lines[event];
+    if (!lines || !lines.length) return;
+    const key = String(speaker);
+    if (this.voiceBusy.get(key)) return;
+    if (!important && this.voiceActive >= 2) return;
+    const lastKey = agent + '/' + event;
+    let pick = lines[Math.floor(Math.random() * lines.length)];
+    if (lines.length > 1 && pick.id === this.voiceLast.get(lastKey)) {
+      pick = lines[(lines.indexOf(pick) + 1) % lines.length];
+    }
+    this.voiceLast.set(lastKey, pick.id);
+    await this.sayLine(agent, pick, key, pos);
+  }
+
+  // Two-agent banter (voice_lines.json interactions): plays one whose agents
+  // are all in [agentsCsv], line after line. Returns true when one started.
+  async voiceTalk(agentsCsv) {
+    const data = await this.loadVoices();
+    const have = new Set(String(agentsCsv).split(','));
+    const all = ((data && data.interactions) || []).filter((it) => it.agents.every((a) => have.has(a)));
+    if (!all.length) return false;
+    const it = all[Math.floor(Math.random() * all.length)];
+    for (const l of it.lines) {
+      await this.sayLine(l.agent, l, 'talk:' + l.agent, null);
+      await new Promise((r) => setTimeout(r, 250));
+    }
+    return true;
+  }
+
+  // Plays one line file; resolves when it ends.
+  async sayLine(agent, line, key, pos) {
+    const ctx = this.ensure();
+    const buf = await this.buffer(`voice/${agent}/${line.id}.mp3`);
+    if (!buf) return;
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    const g = ctx.createGain();
+    let node = g;
+    let vol = 1;
+    if (pos) {
+      const l = this.listener;
+      const dx = pos[0] - l.x, dy = pos[1] - l.y, dz = pos[2] - l.z;
+      const d = Math.hypot(dx, dy, dz);
+      vol = 1 / (1 + Math.max(0, d - 4) * 0.08);
+      const pan = d < 0.01 ? 0 : (dx * Math.cos(l.yaw) + dz * Math.sin(l.yaw)) / d;
+      const p = ctx.createStereoPanner();
+      p.pan.value = Math.max(-1, Math.min(1, pan * 0.6));
+      g.connect(p);
+      node = p;
+    }
+    g.gain.value = vol;
+    src.connect(g);
+    node.connect(this.voiceGain);
+    this.voiceBusy.set(key, true);
+    this.voiceActive++;
+    this.captionSeq++;
+    this.caption = `${this.captionSeq}|${agent}|${line.text}`;
+    await new Promise((resolve) => {
+      src.onended = resolve;
+      src.start();
+    });
+    this.voiceActive--;
+    this.voiceBusy.delete(key);
+  }
+
+  // Latest line started, "seq|agent|text" (empty before the first one).
+  voiceCaption() { return this.caption; }
 }

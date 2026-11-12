@@ -14,6 +14,7 @@ import 'net_client.dart';
 
 part 'game_debug.dart';
 part 'game_events.dart';
+part 'game_voice.dart';
 
 class KillFeedEntry {
   int killerId = -1, victimId = -1;
@@ -151,6 +152,11 @@ class GameController extends ChangeNotifier {
   double damageDir = 0;
   String? banner;
   double bannerTime = 0;
+
+  /// Subtitle of the agent line playing now ("볼더: 막는다!").
+  String? caption;
+  double captionTime = 0;
+  final _VoiceState _voice = _VoiceState();
   int? killedBy;
   double ended = -1;
   void Function(MatchResult r)? onEnd;
@@ -508,11 +514,13 @@ class GameController extends ChangeNotifier {
       _banner(tr('궁극기 준비! (V) ', 'Ultimate ready! (V) ') + skillName(p.character.info.skill(SkillKey.ult)));
       engine.sfx('ult_ready', vol: 0.8);
     }
+    _voiceTick(s, p, ultReady && !_ultWasReady);
     _ultWasReady = ultReady;
 
     hitmarker = math.max(0, hitmarker - dt);
     damageFlash = math.max(0, damageFlash - dt);
     if (bannerTime > 0) bannerTime -= dt;
+    if (captionTime > 0) captionTime -= dt;
     if (toastTime > 0) toastTime -= dt;
     feed.removeWhere((e) => _t - e.time > 6);
     if (ended >= 0) {

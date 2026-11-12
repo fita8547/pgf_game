@@ -56,6 +56,12 @@
 - 화면 확인 도구: `python tool/cdp_shot.py URL 출력.png --wait 15 --shots 3 --at 5:"자바스크립트"`
 
 ## 기록
+- 2026-11-12 요원 대사: new-modeling/voice/voice_lines.json → song/voice/ 복사, song/voice/gen_voice.py(edge-tts, 한국어
+  목소리 3개 + 캐릭터별 높낮이·빠르기)로 402줄 mp3 생성. 녹음 파일을 같은 이름으로 넣으면 그게 쓰임.
+  게임: audio.js 대사 버스(음량 따로), 줄 고르기(연속 반복 없음), 동시 2줄 제한, 스킬은 위치 소리, 팀원 대화(interactions)
+  경기 시작 3.5초 뒤. game_voice.dart: 선택(로비)·경기 시작·부활·스킬·궁(아군/적 대사)·궁 준비·처치/연속처치·죽음·
+  체력 30%↓(12초 쿨)·재장전(25%)·거점 진입/점령/뺏김·승리/패배. 자막(이름: 대사). 설정에 "요원 대사" 음량(rps.voice).
+  아직 없음: thanks(치료받음)·call_help·enemy_spotted(핑 기능이 없음).
 - 2026-11-12 오리가미 궁(표창 모드) 중 처치 시 체력 70 회복(ShurikenStorm.healOnKill).
 - 2026-11-12 이스터에그: 오리가미가 저격총으로 처치 → 궁 100% + fx 'ultEncore'(궁 한 번 쓰면 바로 다시 100%, 2연속).
   죽으면 앙코르 사라짐(fx 초기화). 화면 배너 "이스터에그! 종이학 저격수".

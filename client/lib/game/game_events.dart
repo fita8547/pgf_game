@@ -53,6 +53,7 @@ extension _GameEvents on GameController {
           final gs = q.gun.stats;
           if (q.id == me.id) {
             js.vmPlayFor('reload', gs.reloadTime);
+            _voiceReload(me);
             engine.sfx('gun_${q.gunId}_reload', vol: 0.7, rate: 1.85 / gs.reloadTime);
           } else {
             js.playerAction(q.id, 'reload');
@@ -97,6 +98,8 @@ extension _GameEvents on GameController {
             engine.sfx(heal ? 'shield_up' : 'explosion_small', vol: 0.9, pos: [x, y, z]);
           }
         case 'spawn':
+          final sp = s.players[e['p']];
+          if (sp != null) _voiceSpawn(s, me, sp);
           if (e['p'] == me.id) {
             js.setGrayscale(false);
             killedBy = null;
@@ -168,19 +171,23 @@ extension _GameEvents on GameController {
             engine.sfx('dash', vol: 0.8, pos: q.id == me.id ? null : [q.pos.x, q.pos.y, q.pos.z]);
           }
           if (q != null && q.id == me.id && e['k'] == SkillKey.ult.index) _banner('${skillName(q.character.info.skill(SkillKey.ult))}!');
+          if (q != null) _voiceSkill(me, q, (e['k'] as num).toInt());
         case 'swing':
           if (e['s'] == me.id) js.vmModeAttack();
           engine.sfx('dash', vol: 0.5, rate: 1.3);
         case 'live':
           _banner(tr('전투 시작! 중앙 거점을 점령하세요', 'Fight! Capture the central point'));
+          _voiceLive(s, me);
         case 'captured':
           final t = e['t'] as int;
           _banner(t == me.team ? tr('거점 점령!', 'Point captured!') : tr('적이 거점을 점령했습니다', 'The enemy captured the point'));
           engine.sfx(t == me.team ? 'point_captured' : 'point_lost', vol: 0.9);
+          _voiceCaptured(me, t);
         case 'end':
           final w = e['w'] as int;
           _banner(w < 0 ? tr('무승부', 'Draw') : (w == me.team ? tr('승리!', 'Victory!') : tr('패배', 'Defeat')));
           js.matchEnd(w == me.team);
+          _voiceEnd(me, w);
           bannerTime = 99;
           ended = 0;
           engine.input.unlock();
@@ -193,6 +200,7 @@ extension _GameEvents on GameController {
     final k = e['k'] == null ? null : s.players[e['k']];
     final v = s.players[e['v']];
     if (v == null) return;
+    _voiceKill(me, k, v);
     final head = e['h'] == true;
     final w = (e['w'] as String?) ?? '';
     feed.insert(

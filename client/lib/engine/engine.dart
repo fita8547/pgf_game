@@ -71,7 +71,12 @@ extension type RpsAudio._(JSObject _) implements JSObject {
   external JSPromise<JSAny?> play(String name, double vol, double rate, JSArray<JSNumber>? pos);
   external JSPromise<JSAny?> playMusic(String mapId);
   external void stopMusic();
-  external void setVolumes(double sfx, double music);
+  external void setVolumes(double sfx, double music, double voice);
+
+  /// Agent voice line (see game_voice.dart). [pos]: positional, or null.
+  external JSPromise<JSAny?> voice(String agent, String event, int speaker, bool important, JSArray<JSNumber>? pos);
+  external JSPromise<JSAny?> voiceTalk(String agentsCsv);
+  external String voiceCaption();
 }
 
 extension type RpsInput._(JSObject _) implements JSObject {

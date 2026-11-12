@@ -55,6 +55,27 @@ class _GameScreenState extends State<GameScreen> {
           if (s.phase != Phase.ended) Positioned.fill(child: _ObjectiveMarker(g)),
           // Ink smoke blindness: the world goes dark (HUD drawn on top stays readable).
           if (p.alive && s.has(p, 'blind')) Positioned.fill(child: _Blind(p.fx['blind'] ?? 0)),
+          // Agent voice line subtitle.
+          if (g.caption != null && g.captionTime > 0)
+            Positioned(
+              bottom: 180,
+              left: 16,
+              right: 16,
+              child: IgnorePointer(
+                child: Center(
+                  child: Opacity(
+                    opacity: g.captionTime.clamp(0.0, 0.4) / 0.4,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                      decoration: BoxDecoration(color: Colors.black.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(6)),
+                      child: Text(g.caption!,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white)),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           if (p.alive && p.mag == 0 && p.reloadTimer <= 0)
             Positioned(
               top: MediaQuery.of(context).size.height / 2 + 40,

@@ -5,6 +5,7 @@
 // web/game/music/*.ogg  <- ../song/rps_music/ogg (+ mp3 fallback)
 // web/game/sfx/*.mp3    <- ../song/rps_sfx/mp3
 // web/game/music/bgm/   <- ../song/bgm/*.mp3 (BGM playlist, ascii names + list.json)
+// web/game/voice/       <- ../song/voice (agent lines: voice_lines.json + <agent>/<id>.mp3)
 // assets/logo/*.png     <- ../logo (resized for the UI)
 // assets/icons/**       <- ../rps_assets/icons (character/skill/gun/role)
 // web/favicon.png, web/icons/*  <- ../logo/앱아이콘_1024.png
@@ -43,6 +44,7 @@ void main() {
   copyDir('song/rps_music/ogg', 'web/game/music');
   copyDir('song/rps_music/mp3', 'web/game/music');
   copyDir('song/rps_sfx/mp3', 'web/game/sfx');
+  copyDir('song/voice', 'web/game/voice', where: (p) => p.endsWith('.mp3') || p == 'voice_lines.json');
   syncPlaylist(root);
   copyDir('rps_assets/icons', 'assets/icons', where: (p) => p.endsWith('.png'));
   stdout.writeln('copied $files files');

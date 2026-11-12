@@ -30,6 +30,9 @@ class Settings {
   double sensitivity = 0.0022;
   double sfxVolume = 0.8;
   double musicVolume = 0.3;
+
+  /// Agent voice lines.
+  double voiceVolume = 0.9;
   double fov = 70;
   String charId = 'pebble';
   String mapId = 'rps_arena';
@@ -53,6 +56,7 @@ class Settings {
       sensitivity = d('sens', sensitivity);
       sfxVolume = d('sfx', sfxVolume);
       musicVolume = d('music', musicVolume);
+      voiceVolume = d('voice', voiceVolume);
       fov = d('fov', fov);
       botSkill = d('bot', botSkill);
       charId = s.getItem('rps.char') ?? charId;
@@ -82,6 +86,7 @@ class Settings {
       s.setItem('rps.sens', '$sensitivity');
       s.setItem('rps.sfx', '$sfxVolume');
       s.setItem('rps.music', '$musicVolume');
+      s.setItem('rps.voice', '$voiceVolume');
       s.setItem('rps.fov', '$fov');
       s.setItem('rps.bot', '$botSkill');
       s.setItem('rps.char', charId);

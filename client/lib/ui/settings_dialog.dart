@@ -63,7 +63,7 @@ class _SettingsBodyState extends State<_SettingsBody> {
   @override
   Widget build(BuildContext context) {
     final s = widget.s;
-    void vol() => Engine.I.audio.setVolumes(s.sfxVolume, s.musicVolume);
+    void vol() => Engine.I.audio.setVolumes(s.sfxVolume, s.musicVolume, s.voiceVolume);
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,6 +88,10 @@ class _SettingsBodyState extends State<_SettingsBody> {
         }),
         _slider(tr('배경음악', 'Music'), s.musicVolume, 0, 1, (v) => '${(v * 100).round()}', (v) {
           s.musicVolume = v;
+          vol();
+        }),
+        _slider(tr('요원 대사', 'Agent voice'), s.voiceVolume, 0, 1, (v) => '${(v * 100).round()}', (v) {
+          s.voiceVolume = v;
           vol();
         }),
         Row(

@@ -70,6 +70,8 @@ class _LobbyScreenState extends State<LobbyScreen> {
     setState(() => s.charId = id);
     s.save();
     _show();
+    // The agent introduces themself (their "select" line).
+    Engine.I.audio.voice(id, 'select', -1, true, null);
   }
 
   @override

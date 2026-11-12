@@ -92,7 +92,7 @@ class _RpsAppState extends State<RpsApp> {
     final s = Settings.I;
     // Phones: start on low graphics unless the player picked something.
     if (Engine.I.input.isTouch() && !s.qualitySaved) s.quality = 0;
-    Engine.I.audio.setVolumes(s.sfxVolume, s.musicVolume);
+    Engine.I.audio.setVolumes(s.sfxVolume, s.musicVolume, s.voiceVolume);
     Engine.I.js.setQuality(s.quality);
 
     _step(0.4, tr('서버 연결 확인 중...', 'Checking the server...'));
