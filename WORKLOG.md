@@ -5,8 +5,6 @@
 ## 체크리스트
 
 ### 1. 공용 로직 `shared/` (완료)
-- 2026-11-12 밤 1:26 Windows 업데이트 자동 재부팅으로 서버 꺼짐. scripts/run-forever.ps1: 서버+터널을 창 없이 돌리고 꺼지면 재시작, 링크는 scripts/link.txt.
-  install-autostart.bat(로그인 시 자동 시작) / stop-forever.bat / uninstall-autostart.bat.
 - [x] 콘텐츠 표: 캐릭터 12, 총 7, 스킬 48(정보만), 맵 5, 역할 상성 +15%, 경제
 - [x] 맵 GLB → 충돌 박스, 스폰, 점령 지점, 계단 경사로, 내비 그래프
 - [x] 이동(버니합·끼임 방지), 사격(반동·거리 감소·헤드샷·샷건·로켓), 점령전+리스폰, 상점, 봇
@@ -58,6 +56,8 @@
 - 화면 확인 도구: `python tool/cdp_shot.py URL 출력.png --wait 15 --shots 3 --at 5:"자바스크립트"`
 
 ## 기록
+- 2026-11-12 밤 1:26 Windows 업데이트 자동 재부팅으로 서버 꺼짐. scripts/run-forever.ps1: 서버+터널을 창 없이 돌리고 꺼지면 재시작, 링크는 scripts/link.txt.
+  install-autostart.bat(로그인 시 자동 시작) / stop-forever.bat / uninstall-autostart.bat.
 - 2026-11-11 서버 상시 실행: scripts/server-forever.bat (서버가 꺼지면 3초 뒤 자동 재시작, 창 닫으면 종료),
   start-public.bat도 이걸로 서버를 켬. 원인: Claude 세션 안에서 켠 서버가 세션 종료와 함께 꺼져 터널이 8090 연결 거부.
   클라이언트 빌드 옵션 `--dart-define=STANDALONE=true`: 서버 없이 정적 페이지로 올릴 때용(서버 확인·온라인 참가 숨김,
