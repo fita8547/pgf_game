@@ -19,6 +19,15 @@ class Client {
   }
 }
 
+/// Picks the room for a new connection: the first room with a free seat,
+/// or the emptiest one when every room is full.
+Room pickRoom(List<Room> rooms) {
+  for (final r in rooms) {
+    if (r.clients.length < r.capacity) return r;
+  }
+  return rooms.reduce((a, b) => b.clients.length < a.clients.length ? b : a);
+}
+
 /// A match: authoritative sim at [Net.tickHz], bots fill empty slots, a new
 /// match starts on the next map when one ends.
 class Room {
@@ -36,7 +45,19 @@ class Room {
   final List<Map<String, Object?>> _pending = [];
   double _restartIn = -1;
 
-  Room({required this.assetsDir, required this.rotation, this.cfg = const SimConfig(), this.log = print});
+  /// Room number shown to players (1, 2, ...).
+  final int number;
+
+  Room({
+    required this.assetsDir,
+    required this.rotation,
+    this.cfg = const SimConfig(),
+    this.log = print,
+    this.number = 1,
+  });
+
+  /// Seats for humans before the room counts as full (both teams).
+  int get capacity => cfg.teamSize * 2;
 
   String get mapId => sim.map.def.id;
 
@@ -61,7 +82,7 @@ class Room {
     for (final c in old) {
       final p = c.player!;
       c.player = _join(p.name, p.charId)..touch = c.touch;
-      c.send({'t': 'welcome', 'id': c.player!.id, 'map': id, 'tick': sim.tick, 'hz': Net.tickHz});
+      c.send({'t': 'welcome', 'id': c.player!.id, 'map': id, 'tick': sim.tick, 'hz': Net.tickHz, 'room': number});
     }
     sim.fillBots();
     _pending.clear();
@@ -117,7 +138,7 @@ class Room {
         final ch = '${m['char']}';
         c.touch = m['touch'] == true;
         c.player = _join(name, isCharacter(ch) ? ch : characters.first.id)..touch = c.touch;
-        c.send({'t': 'welcome', 'id': c.player!.id, 'map': mapId, 'tick': sim.tick, 'hz': Net.tickHz});
+        c.send({'t': 'welcome', 'id': c.player!.id, 'map': mapId, 'tick': sim.tick, 'hz': Net.tickHz, 'room': number});
         _broadcast({'t': 'msg', 'm': '$name 님이 참가했습니다', 'join': name});
         log('joined $name (${c.addr}) team ${c.player!.team}');
       case 'in':

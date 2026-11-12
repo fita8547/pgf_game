@@ -3,7 +3,7 @@
 //
 //   cd server && dart run bin/server.dart [--port 8080] [--maps rps_arena,desert_ruins]
 //                                         [--web ../client/build/web] [--assets ../rps_assets]
-//                                         [--bots 0.5] [--team 5] [--data data/user_settings.json]
+//                                         [--bots 0.5] [--team 5] [--rooms 2] [--data data/user_settings.json]
 import 'dart:io';
 
 import 'package:rps_server/rps_server.dart';
@@ -19,12 +19,18 @@ Future<void> main(List<String> args) async {
   final web = opt('web', '../client/build/web');
   final assets = opt('assets', '../rps_assets');
   final rotation = opt('maps', 'rps_arena,desert_ruins,frost_harbor,jungle_temple').split(',');
-  final room = Room(
-    assetsDir: assets,
-    rotation: rotation,
-    cfg: SimConfig(botSkill: double.parse(opt('bots', '0.5')), teamSize: int.parse(opt('team', '5'))),
-    log: (m) => stdout.writeln('[${DateTime.now().toIso8601String().substring(11, 19)}] $m'),
-  )..start();
+  final cfg = SimConfig(botSkill: double.parse(opt('bots', '0.5')), teamSize: int.parse(opt('team', '5')));
+  // Each room is its own match; a new player goes to the first room with a free seat.
+  final rooms = [
+    for (var n = 1; n <= int.parse(opt('rooms', '2')); n++)
+      Room(
+        assetsDir: assets,
+        rotation: [...rotation.skip(n - 1), ...rotation.take(n - 1)], // rooms start on different maps
+        cfg: cfg,
+        number: n,
+        log: (m) => stdout.writeln('[${DateTime.now().toIso8601String().substring(11, 19)}] room $n: $m'),
+      )..start(),
+  ];
 
   final server = await HttpServer.bind(InternetAddress.anyIPv4, port);
   final statics = StaticFiles(web);
@@ -42,7 +48,7 @@ Future<void> main(List<String> args) async {
   await for (final req in server) {
     if (req.uri.path == Net.path && WebSocketTransformer.isUpgradeRequest(req)) {
       final addr = req.connectionInfo?.remoteAddress.address ?? '?';
-      WebSocketTransformer.upgrade(req).then((ws) => room.accept(ws, addr), onError: (_) {});
+      WebSocketTransformer.upgrade(req).then((ws) => pickRoom(rooms).accept(ws, addr), onError: (_) {});
     } else if (!await userSettings.handle(req)) {
       statics.serve(req);
     }
