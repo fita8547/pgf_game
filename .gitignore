@@ -62,3 +62,7 @@ __pycache__/
 /server/data/
 /ppt/
 /client/tool/integration/out/
+
+# run-forever.ps1 output
+scripts/logs/
+scripts/link.txt

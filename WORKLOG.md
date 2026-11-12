@@ -5,6 +5,8 @@
 ## 체크리스트
 
 ### 1. 공용 로직 `shared/` (완료)
+- 2026-11-12 밤 1:26 Windows 업데이트 자동 재부팅으로 서버 꺼짐. scripts/run-forever.ps1: 서버+터널을 창 없이 돌리고 꺼지면 재시작, 링크는 scripts/link.txt.
+  install-autostart.bat(로그인 시 자동 시작) / stop-forever.bat / uninstall-autostart.bat.
 - [x] 콘텐츠 표: 캐릭터 12, 총 7, 스킬 48(정보만), 맵 5, 역할 상성 +15%, 경제
 - [x] 맵 GLB → 충돌 박스, 스폰, 점령 지점, 계단 경사로, 내비 그래프
 - [x] 이동(버니합·끼임 방지), 사격(반동·거리 감소·헤드샷·샷건·로켓), 점령전+리스폰, 상점, 봇
