@@ -22,6 +22,10 @@ abstract final class Economy {
   /// Guns that cost nothing (buy again, refill) once bought in this match
   /// (user request 2026-11-12: sniper).
   static const Set<String> freeAfterFirstBuy = {'sniper'};
+
+  /// Share of the ultimate a kill with this gun charges (user request
+  /// 2026-11-12: sniper kill = 50%).
+  static const Map<String, double> ultOnKill = {'sniper': 0.5};
 }
 
 /// Armour sold in the shop (user request 2026-11-11: 100 / 60 / 40).

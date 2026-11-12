@@ -56,6 +56,7 @@
 - 화면 확인 도구: `python tool/cdp_shot.py URL 출력.png --wait 15 --shots 3 --at 5:"자바스크립트"`
 
 ## 기록
+- 2026-11-12 저격총으로 처치하면 궁극기 50% 충전(Economy.ultOnKill, 가득 이상은 안 넘음).
 - 2026-11-12 스테이플 감시자는 스테이플이 죽으면 사라짐(diesWithOwner). 저격총 판정 크게: 모든 히트박스 반지름 +0.3m
   (GunStats.hitPad). 저격총은 경기 중 한 번 사면 다시 사기·탄약 보충 무료(Economy.freeAfterFirstBuy, Player.unlocked,
   네트워크 54번 칸, 상점에 "무료"). 포탑(퀘이크 Q)·감시자 체력 40, 총알 전용 판정 상자 추가(Col.hit: 총알만 맞고

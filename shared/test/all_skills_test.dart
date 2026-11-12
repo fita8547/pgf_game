@@ -242,6 +242,25 @@ void main() {
     }
   });
 
+  test('a sniper kill charges 50% of the ultimate, other guns do not', () {
+    final (sim, p, e) = duel('pebble', 'gem', dist: 20);
+    final cost = p.character.stats.ultCost;
+    p.ult = 0;
+    sim.applyDamage(e, 9999, p, 'sniper', false);
+    expect(e.alive, isFalse);
+    // The damage itself also charges a little (capped by the victim's HP).
+    expect(p.ult, closeTo(cost * 0.5 + e.maxHp, 1));
+    final (sim2, p2, e2) = duel('pebble', 'gem', dist: 20);
+    p2.ult = 0;
+    sim2.applyDamage(e2, 9999, p2, 'rifle', false);
+    expect(p2.ult, lessThan(cost * 0.5));
+    // Never past full.
+    final (sim3, p3, e3) = duel('pebble', 'gem', dist: 20);
+    p3.ult = cost * 0.8;
+    sim3.applyDamage(e3, 9999, p3, 'sniper', false);
+    expect(p3.ult, closeTo(cost, 1e-6));
+  });
+
   test('sniper shots have a forgiving hit area, other guns do not', () {
     final (sim, p, e) = duel('pebble', 'gem', dist: 20);
     // Aimed 45 cm to the side of the target's chest: outside the real torso.

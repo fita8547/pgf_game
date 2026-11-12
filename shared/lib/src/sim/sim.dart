@@ -746,6 +746,11 @@ class GameSim {
       for (final sk in killer.character.info.skills) {
         skillImpls[sk.id]?.onKill(this, killer, victim);
       }
+      final share = Economy.ultOnKill[weapon];
+      if (share != null) {
+        final cost = killer.character.stats.ultCost;
+        killer.ult = math.max(killer.ult, math.min(cost, killer.ult + cost * share));
+      }
     }
     for (final d in [...deployables]) {
       if (d.owner == victim.id && (skillImpls[d.kind]?.diesWithOwner ?? false)) removeDeployable(d, destroyed: true);
