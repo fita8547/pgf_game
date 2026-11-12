@@ -1,5 +1,7 @@
 // Part of the RPS engine (see rps_engine.js).
-// Web Audio: sfx (with simple positional pan/attenuation) and looping music.
+// Web Audio: sfx (with simple positional pan/attenuation) and music: a
+// shuffled BGM playlist (music/bgm/list.json) when there is one, otherwise the
+// map's own looping track.
 // BASE is the folder the game assets are served from.
 const BASE = 'game/';
 
@@ -10,10 +12,16 @@ export class Audio {
     this.sfxVolume = 0.8;
     this.musicVolume = 0.35;
     this.music = null;
+    this.playlist = null; // Promise<[{file, title}]>
+    this.bgm = null; // { el, order, i } while the playlist plays
     this.listener = { x: 0, y: 0, z: 0, yaw: 0 };
     // Browsers only start audio from a user gesture. Sounds are triggered by
     // the game loop, never directly by a click, so unlock on every gesture.
-    const unlock = () => this.ensure();
+    const unlock = () => {
+      this.ensure();
+      // Autoplay may have refused the playlist before the first gesture.
+      if (this.bgm && this.bgm.el.paused && this.bgm.wanted) this.bgm.el.play().catch(() => {});
+    };
     for (const ev of ['pointerdown', 'mousedown', 'keydown', 'touchstart']) {
       window.addEventListener(ev, unlock, { capture: true, passive: true });
     }
@@ -78,7 +86,56 @@ export class Audio {
     src.start();
   }
 
+  loadPlaylist() {
+    if (!this.playlist) {
+      this.playlist = fetch(BASE + 'music/bgm/list.json')
+        .then((r) => (r.ok ? r.json() : []))
+        .then((l) => (Array.isArray(l) ? l.filter((t) => t && t.file) : []))
+        .catch(() => []);
+    }
+    return this.playlist;
+  }
+
+  // Plays the BGM playlist (shuffled, one song after another). Keeps playing
+  // across screens: calling it again while it plays changes nothing.
   async playMusic(mapId) {
+    const list = await this.loadPlaylist();
+    if (list.length) {
+      if (this.bgm) {
+        this.bgm.wanted = true;
+        if (this.bgm.el.paused) this.bgm.el.play().catch(() => {});
+        return;
+      }
+      this.stopMusic();
+      this.startPlaylist(list);
+      return;
+    }
+    this.playMapLoop(mapId);
+  }
+
+  startPlaylist(list) {
+    const ctx = this.ensure();
+    const order = [...list.keys()];
+    for (let i = order.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    // Streamed (not decoded into memory): full songs are several MB each.
+    const el = new window.Audio();
+    el.preload = 'auto';
+    ctx.createMediaElementSource(el).connect(this.musicGain);
+    const bgm = { el, order, i: 0, wanted: true };
+    const load = () => {
+      el.src = BASE + 'music/' + list[order[bgm.i % order.length]].file;
+      el.play().catch(() => {}); // retried on the next user gesture
+    };
+    el.addEventListener('ended', () => { bgm.i++; load(); });
+    el.addEventListener('error', () => { if (order.length > 1) { bgm.i++; setTimeout(load, 500); } });
+    this.bgm = bgm;
+    load();
+  }
+
+  async playMapLoop(mapId) {
     this.stopMusic();
     const ctx = this.ensure();
     const ogg = document.createElement('audio').canPlayType('audio/ogg; codecs="vorbis"');
@@ -95,6 +152,7 @@ export class Audio {
   stopMusic() {
     if (this.music) { try { this.music.stop(); } catch (_) { /* already stopped */ } }
     this.music = null;
+    if (this.bgm) { this.bgm.wanted = false; this.bgm.el.pause(); }
   }
 
   setVolumes(sfx, music) {

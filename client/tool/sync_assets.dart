@@ -4,9 +4,11 @@
 // web/game/glb/...      <- ../rps_assets/glb   (three.js loads these)
 // web/game/music/*.ogg  <- ../song/rps_music/ogg (+ mp3 fallback)
 // web/game/sfx/*.mp3    <- ../song/rps_sfx/mp3
+// web/game/music/bgm/   <- ../song/bgm/*.mp3 (BGM playlist, ascii names + list.json)
 // assets/logo/*.png     <- ../logo (resized for the UI)
 // assets/icons/**       <- ../rps_assets/icons (character/skill/gun/role)
 // web/favicon.png, web/icons/*  <- ../logo/앱아이콘_1024.png
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:image/image.dart' as img;
@@ -41,6 +43,7 @@ void main() {
   copyDir('song/rps_music/ogg', 'web/game/music');
   copyDir('song/rps_music/mp3', 'web/game/music');
   copyDir('song/rps_sfx/mp3', 'web/game/sfx');
+  syncPlaylist(root);
   copyDir('rps_assets/icons', 'assets/icons', where: (p) => p.endsWith('.png'));
   stdout.writeln('copied $files files');
 
@@ -70,4 +73,33 @@ void main() {
     }
     done.writeAsStringSync('icons generated from $icon; delete this file to regenerate');
   }
+}
+
+/// BGM playlist: every mp3 in song/bgm, copied under a URL-safe name, plus
+/// list.json ([{file, title}]) that the audio engine shuffles through.
+/// Drop an mp3 into song/bgm and re-run to add a song; delete it to remove.
+void syncPlaylist(Directory root) {
+  final src = Directory('${root.path}/song/bgm');
+  final out = Directory('web/game/music/bgm');
+  out.createSync(recursive: true);
+  final tracks = <Map<String, String>>[];
+  final keep = <String>{'list.json'};
+  if (src.existsSync()) {
+    final files = src.listSync().whereType<File>().where((f) => f.path.toLowerCase().endsWith('.mp3')).toList()
+      ..sort((a, b) => a.path.compareTo(b.path));
+    for (final f in files) {
+      final title = f.uri.pathSegments.last.replaceAll(RegExp(r'\.mp3$', caseSensitive: false), '');
+      var slug = title.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), '-').replaceAll(RegExp(r'^-|-$'), '');
+      if (slug.isEmpty || keep.contains('$slug.mp3')) slug = 'track${tracks.length + 1}';
+      final dst = File('${out.path}/$slug.mp3');
+      if (!dst.existsSync() || dst.lengthSync() != f.lengthSync()) f.copySync(dst.path);
+      keep.add('$slug.mp3');
+      tracks.add({'file': 'bgm/$slug.mp3', 'title': title});
+    }
+  }
+  for (final f in out.listSync().whereType<File>()) {
+    if (!keep.contains(f.uri.pathSegments.last)) f.deleteSync();
+  }
+  File('${out.path}/list.json').writeAsStringSync(const JsonEncoder.withIndent('  ').convert(tracks));
+  stdout.writeln('bgm playlist: ${tracks.length} tracks');
 }
