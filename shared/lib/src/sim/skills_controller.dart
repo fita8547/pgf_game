@@ -21,7 +21,7 @@ class InkCloud extends SkillImpl {
   @override
   int get maxCharges => 3;
   @override
-  double get cooldown => 14;
+  double get cooldown => 16; // x0.75 controller = 12 s per charge
 
   @override
   Use use(GameSim sim, Player p, PlayerInput inp) {
@@ -35,7 +35,7 @@ class InkCloud extends SkillImpl {
     final o = sim.players[pj.owner];
     if (o == null) return true;
     final g = sim.map.world.groundBelow(at.x, at.z, at.y + 0.5, maxDrop: 30) ?? at.y;
-    sim.deploy(o, 'ink_cloud', Vec3(at.x, g + 1.6, at.z), life: 12, radius: 4.5);
+    sim.deploy(o, 'ink_cloud', Vec3(at.x, g + 1.6, at.z), life: 6, radius: 4.5);
     return true;
   }
 

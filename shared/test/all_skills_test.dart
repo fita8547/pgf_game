@@ -417,6 +417,8 @@ void main() {
       expect(sim.deployables.single.kind, 'ink_cloud');
       expect(sim.has(e, 'blind'), isTrue);
       expect(sim.has(p, 'blind'), isFalse, reason: 'allies are not blinded');
+      expect(sim.deployables.single.life, lessThanOrEqualTo(6), reason: 'cloud lasts 6 s');
+      expect(p.skillCd[0], closeTo(12 - 1.5, 0.1), reason: 'recharge 12 s (16 x controller 0.75)');
       // Walk out of the cloud: the blindness wears off.
       place(sim, e, 0, -30);
       hold(sim, p, 2.5);
