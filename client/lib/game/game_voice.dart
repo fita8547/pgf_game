@@ -4,9 +4,9 @@ part of 'game_controller.dart';
 /// who hears it, and the subtitle under the crosshair. The engine picks the
 /// line, plays it on the "voice" volume bus and reports the caption.
 ///
-/// Heard by: own lines and allies' radio lines (kill, death, respawn...) for
-/// the team; skill shouts for everyone nearby (positional); ultimate lines
-/// for everyone (ally line vs enemy line).
+/// Heard by: only your own character's lines (user request 2026-11-12: other
+/// players' lines and teammate banter are not played). The event hooks for
+/// others stay so this can be widened again in [_say].
 class _VoiceState {
   final Map<int, double> lastSkill = {}; // speaker -> time of last skill shout
   final Map<int, double> lastKill = {}; // killer -> time of last kill
@@ -21,6 +21,7 @@ extension _GameVoice on GameController {
   /// [speaker] talks: line of [event] for their character. [pos]: heard from
   /// where they stand (null = radio / own voice).
   void _say(Player speaker, String event, {bool important = false, bool positional = false}) {
+    if (speaker.id != me?.id) return; // only your own character talks
     final pos = positional && speaker.id != me?.id ? [speaker.pos.x, speaker.pos.y + 1.5, speaker.pos.z] : null;
     engine.audio.voice(speaker.charId, event, speaker.id, important, pos == null ? null : [for (final v in pos) v.toJS].toJS);
   }
@@ -57,11 +58,6 @@ extension _GameVoice on GameController {
 
   void _voiceLive(GameSim s, Player me) {
     _say(me, 'match_start', important: true);
-    // A bit later: banter between two teammates, when their pair has some.
-    final team = {for (final q in s.players.values) if (q.team == me.team) q.charId}.join(',');
-    Future.delayed(const Duration(milliseconds: 3500), () {
-      if (!_disposed) engine.audio.voiceTalk(team);
-    });
   }
 
   void _voiceCaptured(Player me, int team) => _say(me, team == me.team ? 'point_captured' : 'point_losing', important: true);
