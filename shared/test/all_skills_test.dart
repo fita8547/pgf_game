@@ -124,14 +124,47 @@ void main() {
   });
 
   group('시어', () {
-    test('Q guard cuts frontal damage and spikes back', () {
+    // Shear at (0, 10) facing -z. Enemy placed [deg] degrees off the view, 5 m away.
+    (GameSim, Player, Player) guardAt(double deg) {
       final (sim, p, e) = duel('shear', 'pebble');
       cast(sim, p, Btn.skillQ);
       expect(p.mode, 'guard');
-      sim.applyDamage(p, 100, e, 'pistol', false);
-      // attack 135% x guard 25% x tank armour 75%
-      expect(p.hp, closeTo(300 - 100 * 1.35 * 0.25 * 0.75, 0.5));
-      expect(e.hp, lessThan(200));
+      final a = deg * math.pi / 180;
+      place(sim, e, 5 * math.sin(a), 10 - 5 * math.cos(a));
+      return (sim, p, e);
+    }
+    test('Q guard blocks everything inside 280 degrees and bounces it back', () {
+      for (final deg in [0.0, 60.0, -90.0, 135.0, -135.0]) {
+        final (sim, p, e) = guardAt(deg);
+        sim.applyDamage(p, 50, e, 'pistol', false);
+        expect(p.hp, p.maxHp, reason: 'blocked at $deg');
+        expect(e.hp, lessThan(e.maxHp), reason: 'bounced to the attacker at $deg');
+      }
+    });
+    test('Q guard: right behind still hurts', () {
+      for (final deg in [180.0, 150.0, -150.0]) {
+        final (sim, p, e) = guardAt(deg);
+        sim.applyDamage(p, 50, e, 'pistol', false);
+        expect(p.hp, lessThan(p.maxHp), reason: 'from behind at $deg');
+        expect(e.hp, e.maxHp, reason: 'no bounce at $deg');
+      }
+    });
+    test('Q guard: the bounce also hits allies close to the shield', () {
+      final (sim, p, e) = guardAt(0);
+      final near = place(sim, sim.addPlayer('near', 'gem', teamId: 0), 1.5, 10.5);
+      final far = place(sim, sim.addPlayer('far', 'gem', teamId: 0), 8, 10);
+      sim.applyDamage(p, 50, e, 'pistol', false);
+      expect(near.hp, lessThan(near.maxHp));
+      expect(far.hp, far.maxHp);
+      expect(p.hp, p.maxHp);
+    });
+    test('Q guard vs snip deflect: no endless bounce', () {
+      final (sim, p, e) = duel('shear', 'snip');
+      cast(sim, p, Btn.skillQ);
+      cast(sim, e, Btn.skillE, yaw: math.pi);
+      sim.applyDamage(p, 30, e, 'rifle', false);
+      expect(p.hp, p.maxHp);
+      expect(e.hp, e.maxHp, reason: 'the bounce is blocked by the deflect and stops there');
     });
     test('E leap lands and cleaves', () {
       final (sim, p, e) = duel('shear', 'gem', dist: 8);

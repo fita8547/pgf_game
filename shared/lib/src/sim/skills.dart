@@ -153,6 +153,10 @@ Vec3 _aimDir(Player p) => dirFromAngles(p.yaw, p.pitch);
 
 // ------------------------------------------------------------- 페블 (Pebble) --
 
+/// Damage sent back by a reflecting skill. Reflectors never reflect these,
+/// so two reflectors facing each other can't bounce damage forever.
+const Set<String> reflectedWeapons = {'deflect', 'spike_guard'};
+
 /// Unit ground direction of the held movement keys (WASD, diagonals too;
 /// same axes as the mover), or the look direction when none are held.
 /// Dash / charge / leap skills go this way.

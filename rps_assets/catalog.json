@@ -299,7 +299,7 @@
      "id": "crate_roll",
      "key": "E",
      "name": "상자 구르기",
-     "desc": "공 형태로 변해 빠르게 굴러가며 적을 들이받는다.",
+     "desc": "공 형태로 변해 빠르게 굴러가며 적을 들이받는다. 구르는 중 점프 후 착지하면 주변 적에게 피해.",
      "cd": "전환",
      "tris": 1276,
      "file": "glb/skills/cardboard/crate_roll.glb"
@@ -340,7 +340,7 @@
      "id": "spike_guard",
      "key": "Q",
      "name": "가시 방패",
-     "desc": "막는 동안 받은 공격 방향으로 가시를 쏜다.",
+     "desc": "등 뒤를 뺀 280°의 피해를 전부 막고 공격자에게 튕겨낸다. 가까이 있는 우리 팀도 튕긴 피해를 받는다.",
      "cd": "유지형",
      "tris": 212,
      "file": "glb/skills/shear/spike_guard.glb"

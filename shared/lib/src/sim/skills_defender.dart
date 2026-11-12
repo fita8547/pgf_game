@@ -312,10 +312,16 @@ class ParcelDrop extends SkillImpl {
 
 // ----------------------------------------------------------------- 시어 --
 
-/// Q 가시 방패: hold up a shield (toggle, max 4 s): frontal damage -75%,
-/// every blocked hit fires a spike back at the attacker.
+/// Q 가시 방패: hold up a shield (toggle, max 4 s). Damage from anywhere but
+/// right behind (280 of 360 degrees, centred on the view) is fully blocked
+/// and bounced back: the attacker takes it, and so do allies standing close
+/// to the shield (deliberate drawback).
 class SpikeGuard extends SkillImpl {
   const SpikeGuard();
+
+  /// Covered arc (degrees) and how far the bounce splashes onto allies.
+  static const double arc = 280, allyRadius = 3;
+  static final double _minCos = math.cos(arc / 2 * math.pi / 180);
   @override
   double get cooldown => 6;
   @override
@@ -335,11 +341,16 @@ class SpikeGuard extends SkillImpl {
   double modeDamaged(GameSim sim, Player victim, Player attacker, double amount, String weapon) {
     final to = attacker.pos - victim.pos;
     final l = to.lengthXZ;
-    if (l < 0.01) return amount;
     final f = _flatForward(victim);
-    if ((to.x * f.x + to.z * f.z) / l < 0.3) return amount; // from behind/side
-    if (weapon != 'spike_guard') sim.applyDamage(attacker, 12, victim, 'spike_guard', false);
-    return amount * 0.25;
+    if (l > 0.01 && (to.x * f.x + to.z * f.z) / l < _minCos) return amount; // right behind
+    if (!reflectedWeapons.contains(weapon)) {
+      sim.applyDamage(attacker, amount, victim, 'spike_guard', false);
+      for (final a in [...sim.alliesNear(victim.team, victim.pos, allyRadius)]) {
+        if (a.id != victim.id) sim.applyDamage(a, amount, attacker, 'spike_guard', false);
+      }
+      sim.events.add({'e': 'deflect', 'p': victim.id});
+    }
+    return 0;
   }
 
   @override

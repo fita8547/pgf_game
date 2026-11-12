@@ -199,7 +199,7 @@ class Deflect extends SkillImpl {
     final f = _flat(victim);
     if (l > 0.01 && (to.x * f.x + to.z * f.z) / l > 0.2) {
       // Never bounce a bounce (two snips deflecting each other).
-      if (weapon != 'deflect' && attacker.id != victim.id) {
+      if (!reflectedWeapons.contains(weapon) && attacker.id != victim.id) {
         sim.applyDamage(attacker, amount * returnMul, victim, 'deflect', false);
         sim.events.add({'e': 'deflect', 'p': victim.id});
       }
