@@ -6,7 +6,7 @@ Flutter Web(UI) + three.js(3D) 클라이언트, Dart 서버, 공용 Dart 게임 
 ![사막 유적 점령전](docs/screenshots/battle.png)
 
 ## 바로 플레이
-**게임 주소: https://pollution-lovers-building-buildings.trycloudflare.com/**
+**게임 주소: https://beginner-est-query-availability.trycloudflare.com/**
 (PC·폰 브라우저로 접속 → 게임 시작 → 로비에서 [온라인 참가] 또는 [봇 연습])
 
 <img src="docs/play-qr.png" width="160" alt="게임 주소 QR">
