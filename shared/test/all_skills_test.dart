@@ -261,6 +261,26 @@ void main() {
     expect(p3.ult, closeTo(cost, 1e-6));
   });
 
+  test('easter egg: origami sniper kill = full ult, cast twice in a row', () {
+    final (sim, p, e) = duel('origami', 'gem', dist: 20);
+    p.ult = 0;
+    sim.applyDamage(e, 9999, p, 'sniper', false);
+    expect(sim.ultReady(p), isTrue);
+    expect(sim.events.any((x) => x['e'] == 'easter'), isTrue);
+    cast(sim, p, Btn.ult);
+    expect(p.mode, 'shuriken');
+    expect(sim.ultReady(p), isTrue, reason: 'encore: ult back right away');
+    p.fx['modeAmmo'] = 0;
+    cast(sim, p, Btn.ult);
+    expect(p.fx['modeAmmo'], 5, reason: 'second cast refreshes the storm');
+    expect(sim.ultReady(p), isFalse, reason: 'only twice');
+    // Other characters / other guns: no easter egg.
+    final (sim2, p2, e2) = duel('pebble', 'gem', dist: 20);
+    p2.ult = 0;
+    sim2.applyDamage(e2, 9999, p2, 'sniper', false);
+    expect(sim2.ultReady(p2), isFalse);
+  });
+
   test('sniper shots have a forgiving hit area, other guns do not', () {
     final (sim, p, e) = duel('pebble', 'gem', dist: 20);
     // Aimed 45 cm to the side of the target's chest: outside the real torso.

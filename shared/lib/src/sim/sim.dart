@@ -423,7 +423,8 @@ class GameSim {
       if (res == Use.fail) continue;
       if (res == Use.spend) {
         if (k < 0) {
-          p.ult = 0;
+          // Encore (origami easter egg): the ult comes straight back once.
+          p.ult = p.fx.remove('ultEncore') != null ? p.character.stats.ultCost : 0;
         } else {
           p.skillCharges[k] = math.max(0, p.skillCharges[k] - 1);
           if (p.skillCd[k] <= 0) p.skillCd[k] = cd;
@@ -746,10 +747,17 @@ class GameSim {
       for (final sk in killer.character.info.skills) {
         skillImpls[sk.id]?.onKill(this, killer, victim);
       }
+      final cost = killer.character.stats.ultCost;
       final share = Economy.ultOnKill[weapon];
       if (share != null) {
-        final cost = killer.character.stats.ultCost;
         killer.ult = math.max(killer.ult, math.min(cost, killer.ult + cost * share));
+      }
+      // Easter egg: origami sniping someone = full ult, and the next ult can
+      // be cast twice in a row ('ultEncore' refills it once).
+      if (killer.charId == 'origami' && weapon == 'sniper') {
+        killer.ult = math.max(killer.ult, cost);
+        killer.fx['ultEncore'] = 1;
+        events.add({'e': 'easter', 'p': killer.id, 'k': 'origami_snipe'});
       }
     }
     for (final d in [...deployables]) {

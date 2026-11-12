@@ -56,6 +56,8 @@
 - 화면 확인 도구: `python tool/cdp_shot.py URL 출력.png --wait 15 --shots 3 --at 5:"자바스크립트"`
 
 ## 기록
+- 2026-11-12 이스터에그: 오리가미가 저격총으로 처치 → 궁 100% + fx 'ultEncore'(궁 한 번 쓰면 바로 다시 100%, 2연속).
+  죽으면 앙코르 사라짐(fx 초기화). 화면 배너 "이스터에그! 종이학 저격수".
 - 2026-11-12 저격총으로 처치하면 궁극기 50% 충전(Economy.ultOnKill, 가득 이상은 안 넘음).
 - 2026-11-12 스테이플 감시자는 스테이플이 죽으면 사라짐(diesWithOwner). 저격총 판정 크게: 모든 히트박스 반지름 +0.3m
   (GunStats.hitPad). 저격총은 경기 중 한 번 사면 다시 사기·탄약 보충 무료(Economy.freeAfterFirstBuy, Player.unlocked,

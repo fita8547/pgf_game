@@ -152,6 +152,11 @@ extension _GameEvents on GameController {
         case 'link':
           final q = s.players[e['t']];
           if (q != null) engine.sfx('heal_loop', vol: 0.5, pos: q.id == me.id ? null : [q.pos.x, q.pos.y, q.pos.z]);
+        case 'easter':
+          if (e['p'] == me.id && e['k'] == 'origami_snipe') {
+            _banner(tr('이스터에그! 종이학 저격수 - 궁극기 2연속 (V)', 'Easter egg! Paper sniper - double ultimate (V)'));
+            engine.sfx('ult_ready', vol: 0.9);
+          }
         case 'skill':
           final q = s.players[e['p']];
           final sid = e['id'] as String? ?? '';
