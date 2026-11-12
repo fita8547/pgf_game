@@ -200,6 +200,9 @@ class CrateRoll extends SkillImpl {
 
   /// Move speed x1.9 and 50% less damage taken while rolling.
   static const double speedMult = 1.9, damageReduction = 0.5;
+
+  /// Landing from a jump while rolling hits enemies around you (flat damage).
+  static const double slamDamage = 40, slamRadius = 3, minAirTime = 0.25;
   @override
   double get cooldown => 6;
   @override
@@ -219,6 +222,12 @@ class CrateRoll extends SkillImpl {
   bool modeFire(GameSim sim, Player p, PlayerInput inp, int pressed, double dt,
       {required bool predict, required bool replay}) {
     if (!sim.authoritative || predict) return true;
+    // Jump while rolling: landing slams the ground.
+    if (!p.onGround) {
+      p.fx['rollAir'] = (p.fx['rollAir'] ?? 0) + dt;
+    } else if ((p.fx.remove('rollAir') ?? 0) >= minAirTime) {
+      sim.splash(p.pos, slamRadius, slamDamage, p, p.team, 'crate_roll', minFrac: 1, selfMult: 0);
+    }
     for (final q in sim.enemiesNear(p.team, p.pos, 1.3, los: false)) {
       final key = 'bump${q.id}';
       if ((p.fx[key] ?? 0) > sim.time) continue;
@@ -234,7 +243,7 @@ class CrateRoll extends SkillImpl {
 
   @override
   void modeEnded(GameSim sim, Player p) {
-    p.fx.removeWhere((k, _) => k.startsWith('bump'));
+    p.fx.removeWhere((k, _) => k.startsWith('bump') || k == 'rollAir');
     sim.startCooldown(p, SkillKey.e, 6);
   }
 }

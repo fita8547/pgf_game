@@ -427,7 +427,6 @@ class GameController extends ChangeNotifier {
     }
 
     // Look: scale by zoom so ADS feels consistent.
-    final g = p.gun;
     final fov = _fov(p);
     final zoomScale = math.tan(fov * math.pi / 360) / math.tan(settings.fov * math.pi / 360);
     if (locked) {
@@ -500,7 +499,7 @@ class GameController extends ChangeNotifier {
       net?.send({'t': 'ping', 'c': DateTime.now().millisecondsSinceEpoch});
     }
     _footsteps(s, p, dt);
-    _render(s, p, g, dt);
+    _render(s, p, p.gun, dt); // gun after this frame's inputs (a slot switch may have just happened)
     if (p.alive && charPickerOpen) {
       charPickerOpen = false;
     }

@@ -55,6 +55,11 @@ const Map<String, double> characterDamage = {
   'origami': 1.5,
 };
 
+/// Per-character max HP overriding the role profile.
+const Map<String, double> characterHp = {
+  'cardboard': 500,
+};
+
 /// Everything the sim needs about a character: catalog info (art, skills)
 /// joined with role stats and body dimensions.
 class CharacterDef {
@@ -66,7 +71,7 @@ class CharacterDef {
   String get name => info.name;
   Role get role => info.role;
   RoleStats get stats => roleStats[info.role]!;
-  double get maxHp => stats.hp;
+  double get maxHp => characterHp[info.id] ?? stats.hp;
   double get speed => stats.speed;
   double get damageMul => characterDamage[info.id] ?? 1;
 }

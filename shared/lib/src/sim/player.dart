@@ -4,7 +4,7 @@ import '../content/guns.dart';
 import '../math.dart';
 
 /// fx keys that are server bookkeeping only (not sent in snapshots).
-final _serverOnlyFx = RegExp(r'^(bump|cut)\d+$|^(healed|dashedAt|grab)$');
+final _serverOnlyFx = RegExp(r'^(bump|cut)\d+$|^(healed|dashedAt|grab|rollAir)$');
 
 class Player {
   final int id;

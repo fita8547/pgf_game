@@ -56,6 +56,9 @@
 - 화면 확인 도구: `python tool/cdp_shot.py URL 출력.png --wait 15 --shots 3 --at 5:"자바스크립트"`
 
 ## 기록
+- 2026-11-12 카드보드 체력 500(characters.dart characterHp, 역할 기본값 덮어씀). E 구르기 중 점프 후 착지(체공 0.25초 이상) 시
+  반경 3m 적에게 40 고정 피해(CrateRoll.slam*). 총 교체 버그: 한 프레임 안에 교체되면 뷰모델이 이전 총 모델로 남아
+  보이는 총과 실제로 나가는 총이 달랐음 → game_controller가 입력 처리 후의 총으로 렌더.
 - 2026-11-12 밤 1:26 Windows 업데이트 자동 재부팅으로 서버 꺼짐. scripts/run-forever.ps1: 서버+터널을 창 없이 돌리고 꺼지면 재시작, 링크는 scripts/link.txt.
   install-autostart.bat(로그인 시 자동 시작) / stop-forever.bat / uninstall-autostart.bat.
 - 2026-11-11 서버 상시 실행: scripts/server-forever.bat (서버가 꺼지면 3초 뒤 자동 재시작, 창 닫으면 종료),

@@ -89,13 +89,24 @@ void main() {
       cast(sim, p, Btn.fire);
       expect(p.shotSeq, shots, reason: 'no shooting while rolling');
       sim.applyDamage(p, 100, e, 'rifle', false);
-      expect(p.hp, closeTo(300 - 100 * 0.9 * 0.5 * 0.75, 0.01), reason: 'roll halves damage on top of tank armour');
-      p.hp = 300;
+      expect(p.hp, closeTo(p.maxHp - 100 * 0.9 * 0.5 * 0.75, 0.01), reason: 'roll halves damage on top of tank armour');
+      p.hp = p.maxHp;
       hold(sim, p, 1, moveZ: 1);
       expect(e.hp, lessThan(200));
       cast(sim, p, Btn.skillE);
       expect(p.mode, '');
       expect(p.skillCd[1], greaterThan(5));
+    });
+    test('E roll: jump and land slams nearby enemies', () {
+      final (sim, p, e) = duel('cardboard', 'gem', dist: 2.5);
+      cast(sim, p, Btn.skillE);
+      hold(sim, p, 0.5);
+      expect(e.hp, e.maxHp, reason: 'no slam without a jump');
+      hold(sim, p, 0.05, btn: Btn.jump);
+      hold(sim, p, 1);
+      expect(p.mode, 'roll');
+      expect(e.hp, lessThan(e.maxHp));
+      expect(e.hp, greaterThan(e.maxHp - 60), reason: 'one slam only');
     });
     test('Shift hook pulls the enemy', () {
       final (sim, p, e) = duel('cardboard', 'gem', dist: 12);
