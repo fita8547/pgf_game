@@ -217,13 +217,13 @@ class StapleSentry extends SkillImpl {
   Use use(GameSim sim, Player p, PlayerInput inp) {
     final mine = sim.deployablesOf(p, 'staple_sentry').toList();
     if (mine.length >= 2) sim.removeDeployable(mine.first);
-    sim.deploy(p, 'staple_sentry', sim.aimPoint(p, 15, ground: false), hp: 120, life: 30, radius: 15);
+    sim.deploy(p, 'staple_sentry', sim.aimPoint(p, 15, ground: false), hp: 120, life: 30, radius: 12);
     return Use.spend;
   }
 
   @override
   void tickDeployable(GameSim sim, Deployable d, double dt) {
-    _autoShoot(sim, d, dt, damage: 8, interval: 0.3, slow: 0.7);
+    _autoShoot(sim, d, dt, damage: 6, interval: 0.4, slow: 0.8);
   }
 }
 
