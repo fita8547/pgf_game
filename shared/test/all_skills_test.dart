@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:rps_shared/rps_shared.dart';
 import 'package:test/test.dart';
 
@@ -161,6 +163,23 @@ void main() {
       }
       expect(top, greaterThan(3));
     });
+    test('E dash follows WASD, diagonals too', () {
+      for (final (mx, mz) in [(1.0, 0.0), (-1.0, 0.0), (0.0, -1.0), (1.0, 1.0)]) {
+        final (sim, p, _) = duel('origami', 'gem', dist: 30);
+        final start = p.pos.copy();
+        sim.processInput(p, PlayerInput(dt: dt, buttons: Btn.skillE, moveX: mx, moveZ: mz));
+        for (var i = 0; i < 24; i++) {
+          sim.processInput(p, PlayerInput(dt: dt, moveX: mx, moveZ: mz));
+          sim.update(dt);
+        }
+        final dx = p.pos.x - start.x, dz = p.pos.z - start.z;
+        // yaw 0: right = +x, forward = -z.
+        final l = math.sqrt(mx * mx + mz * mz);
+        expect(dx / math.sqrt(dx * dx + dz * dz), closeTo(mx / l, 0.1), reason: 'dir ($mx,$mz)');
+        expect(-dz / math.sqrt(dx * dx + dz * dz), closeTo(mz / l, 0.1), reason: 'dir ($mx,$mz)');
+        expect(math.sqrt(dx * dx + dz * dz), greaterThan(4), reason: 'dash, not walk ($mx,$mz)');
+      }
+    });
     test('E dash moves fast, kill resets', () {
       final (sim, p, e) = duel('origami', 'gem');
       cast(sim, p, Btn.skillE);
@@ -195,20 +214,28 @@ void main() {
       hold(sim, p, 0.5);
       expect(e.hp, lessThan(200 - 70));
     });
-    test('E deflect blocks frontal damage', () {
+    test('E deflect blocks frontal damage and returns it doubled', () {
       final (sim, p, e) = duel('snip', 'gem');
       cast(sim, p, Btn.skillE);
-      sim.applyDamage(p, 80, e, 'rifle', false);
+      sim.applyDamage(p, 40, e, 'rifle', false);
       expect(p.hp, p.maxHp);
+      // What snip would have taken (40 x gem 0.9 x snip taken 1.2), x2, x snip's attack 1.35.
+      expect(e.hp, closeTo(e.maxHp - 40 * 0.9 * 1.2 * 2 * 1.35, 0.5));
     });
-    test('Shift beacon then teleport', () {
-      final (sim, p, _) = duel('snip', 'gem', dist: 20);
-      cast(sim, p, Btn.skillShift, pitch: -0.2, seconds: 1.5);
-      expect(sim.deployables.single.kind, 'phase_beacon');
-      final at = sim.deployables.single.pos.copy();
-      cast(sim, p, Btn.skillShift);
-      expect(p.pos.distanceXZ(at), lessThan(0.5));
-      expect(p.skillCd[2], greaterThan(0));
+    test('E deflect: two snips deflecting each other do not loop', () {
+      final (sim, p, e) = duel('snip', 'snip');
+      cast(sim, p, Btn.skillE);
+      cast(sim, e, Btn.skillE, yaw: math.pi);
+      sim.applyDamage(p, 20, e, 'rifle', false);
+      expect(p.hp, p.maxHp);
+      expect(e.hp, e.maxHp, reason: 'the bounce is blocked by the other deflect, not bounced again');
+    });
+    test('Shift(C) beacon roots enemies where it lands', () {
+      final (sim, p, e) = duel('snip', 'gem', dist: 6);
+      cast(sim, p, Btn.skillShift, seconds: 0.6);
+      expect(sim.has(e, 'root'), isTrue);
+      expect(sim.deployables, isEmpty, reason: 'no teleport beacon any more');
+      expect(p.skillCd[2], greaterThan(5));
     });
     test('ult melee mode slashes', () {
       final (sim, p, e) = duel('snip', 'gem', dist: 2);
@@ -320,12 +347,29 @@ void main() {
   });
 
   group('잉크웰', () {
+    test('Q thrown smoke blinds enemies inside it', () {
+      final (sim, p, e) = duel('inkwell', 'gem', dist: 8);
+      cast(sim, p, Btn.skillQ, pitch: -0.05, seconds: 1.5);
+      expect(sim.deployables.single.kind, 'ink_cloud');
+      expect(sim.has(e, 'blind'), isTrue);
+      expect(sim.has(p, 'blind'), isFalse, reason: 'allies are not blinded');
+    });
     test('Q smoke blocks sight, 3 charges', () {
       final (sim, p, e) = duel('inkwell', 'gem', dist: 16);
       expect(sim.canSee(e, p.eye, fovCos: -1), isTrue);
-      cast(sim, p, Btn.skillQ, pitch: -0.1, seconds: 0.6);
+      cast(sim, p, Btn.skillQ, pitch: -0.1, seconds: 1.5);
       expect(sim.canSee(e, p.eye, fovCos: -1), isFalse);
       expect(p.skillCharges[0], 2);
+    });
+    test('E puddle hurts 10 per second', () {
+      final (sim, p, e) = duel('inkwell', 'gem', dist: 6);
+      cast(sim, p, Btn.skillE, pitch: -0.3, seconds: 1);
+      expect(sim.has(e, 'slow'), isTrue);
+      final hp = e.hp;
+      hold(sim, p, 1);
+      // 10/s x controller role (skill power) x healer damage taken.
+      final mul = p.character.stats.damageDealt * p.character.stats.skillPower * e.character.stats.damageTaken;
+      expect(hp - e.hp, closeTo(10 * mul, 0.6));
     });
     test('E puddle slows', () {
       final (sim, p, e) = duel('inkwell', 'gem', dist: 6);

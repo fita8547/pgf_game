@@ -66,10 +66,14 @@ class Projectile {
   /// Turns toward the owner's aim while flying (guided skills).
   bool steer = false;
 
+  /// Server-only: damage multiplier (deflected gun projectiles hit harder).
+  double damageMul = 1;
+
   /// Deflected: now belongs to [newOwner]'s team.
-  void reflect(int newOwner, int newTeam) {
+  void reflect(int newOwner, int newTeam, {double damageMul = 1}) {
     owner = newOwner;
     team = newTeam;
+    this.damageMul *= damageMul;
     hits.clear();
   }
 
@@ -975,8 +979,9 @@ class GameSim {
   void _explode(Projectile pj, Vec3 at, Player? direct) {
     final s = gunById(pj.gun).stats;
     final owner = players[pj.owner];
-    if (direct != null) applyDamage(direct, s.damage, owner, pj.gun, false);
-    splash(at, s.splashRadius, s.splashDamage, owner, pj.team, pj.gun, minFrac: 0.4, selfMult: s.selfDamageMult);
+    if (direct != null) applyDamage(direct, s.damage * pj.damageMul, owner, pj.gun, false);
+    splash(at, s.splashRadius, s.splashDamage * pj.damageMul, owner, pj.team, pj.gun,
+        minFrac: 0.4, selfMult: s.selfDamageMult);
   }
 
   /// Area damage with line-of-sight and linear falloff to [minFrac] at the
@@ -1112,7 +1117,7 @@ extension SimEffects on GameSim {
     }
   }
 
-  static const _harmfulFx = {'slow', 'slowMul', 'root', 'sleep', 'stun', 'vuln', 'vulnMul', 'antiheal'};
+  static const _harmfulFx = {'slow', 'slowMul', 'root', 'sleep', 'stun', 'vuln', 'vulnMul', 'antiheal', 'blind'};
 
   /// Removes harmful effects (cleanse).
   void cleanse(Player p) {

@@ -13,9 +13,11 @@ import 'skills.dart';
 
 // --------------------------------------------------------------- 잉크웰 --
 
-/// Q 먹물 연막: ink cloud at the aimed spot that blocks sight. 3 charges.
+/// Q 먹물 연막: thrown ink bomb; the cloud blocks sight and enemies inside
+/// it are blinded (screen goes dark, lingers a moment after leaving). 3 charges.
 class InkCloud extends SkillImpl {
   const InkCloud();
+  static const double blindLinger = 1;
   @override
   int get maxCharges => 3;
   @override
@@ -23,9 +25,27 @@ class InkCloud extends SkillImpl {
 
   @override
   Use use(GameSim sim, Player p, PlayerInput inp) {
-    final at = sim.aimPoint(p, 40);
-    sim.deploy(p, 'ink_cloud', Vec3(at.x, at.y + 1.6, at.z), life: 12, radius: 4.5);
+    final d = p.viewDir;
+    sim.addProjectile(p, 'ink_cloud', p.eye + d * 0.5, d * 20, life: 3, gravity: 12);
     return Use.spend;
+  }
+
+  @override
+  bool impact(GameSim sim, Projectile pj, Vec3 at, Player? hit) {
+    final o = sim.players[pj.owner];
+    if (o == null) return true;
+    final g = sim.map.world.groundBelow(at.x, at.z, at.y + 0.5, maxDrop: 30) ?? at.y;
+    sim.deploy(o, 'ink_cloud', Vec3(at.x, g + 1.6, at.z), life: 12, radius: 4.5);
+    return true;
+  }
+
+  @override
+  void tickDeployable(GameSim sim, Deployable d, double dt) {
+    final r = smokeRadius(d);
+    for (final q in sim.enemiesNear(d.team, d.pos, r + 0.4, los: false)) {
+      final c = Vec3(q.pos.x, q.pos.y + q.body.eye, q.pos.z);
+      if (c.distanceTo(d.pos) <= r + 0.4) sim.addFx(q, 'blind', blindLinger);
+    }
   }
 
   @override
@@ -57,7 +77,7 @@ class InkPuddle extends SkillImpl {
     for (final q in [...sim.enemiesNear(d.team, d.pos, d.radius, los: false)]) {
       if ((q.pos.y - d.pos.y).abs() > 1.5) continue;
       sim.addFx(q, 'slow', 0.3, {'slowMul': 0.5});
-      sim.applyDamage(q, 12 * dt, sim.players[d.owner], 'ink_puddle', false);
+      sim.applyDamage(q, 10 * dt, sim.players[d.owner], 'ink_puddle', false);
     }
   }
 }

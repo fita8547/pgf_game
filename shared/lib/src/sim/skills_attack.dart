@@ -13,6 +13,15 @@ import 'skills.dart';
 
 Vec3 _flat(Player p) => Vec3(math.sin(p.yaw), 0, -math.cos(p.yaw));
 
+/// Unit ground direction of the held movement keys (same axes as the mover),
+/// or the look direction when none are held.
+Vec3 _moveDir(Player p, PlayerInput inp) {
+  final sy = math.sin(p.yaw), cy = math.cos(p.yaw);
+  final x = cy * inp.moveX + sy * inp.moveZ, z = sy * inp.moveX - cy * inp.moveZ;
+  final l = math.sqrt(x * x + z * z);
+  return l < 0.1 ? _flat(p) : Vec3(x / l, 0, z / l);
+}
+
 // ------------------------------------------------------------- 오리가미 --
 
 /// Q 종이 상승: ride a paper updraft high into the air.
@@ -29,7 +38,8 @@ class PaperUpdraft extends SkillImpl {
   }
 }
 
-/// E 접기 질주: short dash where you look; a kill soon after resets it.
+/// E 접기 질주: short dash toward the held WASD direction (diagonals too;
+/// forward when no key is held); a kill soon after resets it.
 class PaperDash extends SkillImpl {
   const PaperDash();
   @override
@@ -37,7 +47,7 @@ class PaperDash extends SkillImpl {
 
   @override
   Use use(GameSim sim, Player p, PlayerInput inp) {
-    final f = _flat(p);
+    final f = _moveDir(p, inp);
     sim.dash(p, f.x * 22, f.z * 22, 0.25, SkillKey.e);
     p.fx['dashedAt'] = sim.time;
     return Use.spend;
@@ -162,9 +172,11 @@ class GaleCut extends SkillImpl {
 }
 
 /// E 튕겨내기: spin the blades for 1.5 s: frontal damage is blocked and
-/// projectiles that come close are sent back.
+/// returned to the attacker doubled; projectiles that come close are sent
+/// back (gun projectiles at double damage).
 class Deflect extends SkillImpl {
   const Deflect();
+  static const double returnMul = 2;
 
   @override
   Use use(GameSim sim, Player p, PlayerInput inp) {
@@ -182,7 +194,7 @@ class Deflect extends SkillImpl {
       // Send it back toward where we look, now owned by us.
       final speed = pj.vel.length;
       pj.vel.setFrom(p.viewDir * speed);
-      pj.reflect(p.id, p.team);
+      pj.reflect(p.id, p.team, damageMul: returnMul);
       sim.events.add({'e': 'deflect', 'p': p.id});
     }
     return true; // can't shoot while spinning
@@ -193,51 +205,43 @@ class Deflect extends SkillImpl {
     final to = attacker.pos - victim.pos;
     final l = to.lengthXZ;
     final f = _flat(victim);
-    if (l > 0.01 && (to.x * f.x + to.z * f.z) / l > 0.2) return 0;
+    if (l > 0.01 && (to.x * f.x + to.z * f.z) / l > 0.2) {
+      // Never bounce a bounce (two snips deflecting each other).
+      if (weapon != 'deflect' && attacker.id != victim.id) {
+        sim.applyDamage(attacker, amount * returnMul, victim, 'deflect', false);
+        sim.events.add({'e': 'deflect', 'p': victim.id});
+      }
+      return 0;
+    }
     return amount;
   }
 }
 
-/// Shift 위상 비콘: throw a beacon; press again to teleport to it.
+/// Shift(C) 속박 비콘: throw a beacon; enemies near where it lands (or the
+/// one it hits) are rooted in place.
 class PhaseBeacon extends SkillImpl {
   const PhaseBeacon();
+  static const double radius = 2.5, rootTime = 2;
   @override
-  bool recastable(GameSim sim, Player p) => sim.deployablesOf(p, 'phase_beacon').isNotEmpty;
+  double get cooldown => 10;
 
   @override
   Use use(GameSim sim, Player p, PlayerInput inp) {
-    final b = sim.deployablesOf(p, 'phase_beacon').firstOrNull;
-    if (b != null) {
-      final from = p.pos.copy();
-      if (!sim.mover.capsuleFree(b.pos.x, b.pos.y + 0.05, b.pos.z, h: p.height)) {
-        sim.removeDeployable(b);
-        return Use.spend;
-      }
-      p.pos.setFrom(b.pos);
-      p.vel.set(0, 0, 0);
-      sim.mover.placeOnGround(p);
-      sim.removeDeployable(b);
-      sim.events.add({'e': 'blink', 'p': p.id, 'a': from.toList(2), 'b': p.pos.toList(2)});
-      return Use.spend;
-    }
     final d = p.viewDir;
-    sim.addProjectile(p, 'phase_beacon', p.eye + d * 0.5, d * 20, life: 2.5, gravity: 12);
-    return Use.free;
+    sim.addProjectile(p, 'phase_beacon', p.eye + d * 0.5, d * 24, life: 2.5, gravity: 12);
+    return Use.spend;
   }
 
   @override
   bool impact(GameSim sim, Projectile pj, Vec3 at, Player? hit) {
     final o = sim.players[pj.owner];
     if (o == null) return true;
-    final g = sim.map.world.groundBelow(at.x, at.z, at.y + 0.3, maxDrop: 30) ?? at.y;
-    sim.deploy(o, 'phase_beacon', Vec3(at.x, g, at.z), hp: 50, life: 15);
+    sim.events.add({'e': 'explode', 'g': 'phase_beacon', 'p': at.toList(2), 'r': radius});
+    final caught = {...sim.enemiesNear(pj.team, at, radius, los: false), if (hit != null && hit.team != pj.team) hit};
+    for (final q in caught) {
+      sim.addFx(q, 'root', rootTime);
+    }
     return true;
-  }
-
-  @override
-  void removed(GameSim sim, Deployable d, {required bool destroyed}) {
-    final p = sim.players[d.owner];
-    if (p != null && (destroyed || d.life <= 0)) sim.startCooldown(p, SkillKey.shift, 6);
   }
 }
 

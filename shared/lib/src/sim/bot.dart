@@ -63,7 +63,7 @@ class BotBrain {
     Player? target;
     var bestD = double.infinity;
     for (final q in sim.players.values) {
-      if (!q.alive || q.team == p.team) continue;
+      if (!q.alive || q.team == p.team || sim.has(p, 'blind')) continue;
       final chest = Vec3(q.pos.x, q.pos.y + q.body.hips + 0.3, q.pos.z);
       final d = p.pos.distanceTo(q.pos);
       final aware = q.id == _target || p.sinceDamaged < 1.5;

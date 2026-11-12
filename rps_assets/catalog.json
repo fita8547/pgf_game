@@ -399,7 +399,7 @@
      "id": "paper_dash",
      "key": "E",
      "name": "접기 질주",
-     "desc": "바라보는 방향으로 짧게 대시한다. 처치 시 초기화.",
+     "desc": "WASD 방향(대각선 포함)으로 짧게 대시한다. 처치 시 초기화.",
      "cd": "10초",
      "tris": 352,
      "file": "glb/skills/origami/paper_dash.glb"
@@ -499,7 +499,7 @@
      "id": "deflect",
      "key": "E",
      "name": "튕겨내기",
-     "desc": "칼날을 회전시켜 날아오는 투사체를 되돌린다.",
+     "desc": "칼날을 회전시켜 정면 피해를 막고 2배로 되돌려 준다. 투사체도 되돌린다.",
      "cd": "8초",
      "tris": 760,
      "file": "glb/skills/snip/deflect.glb"
@@ -507,9 +507,9 @@
     {
      "id": "phase_beacon",
      "key": "Shift",
-     "name": "위상 비콘",
-     "desc": "비콘을 던지고, 다시 누르면 그 위치로 이동한다.",
-     "cd": "6초",
+     "name": "속박 비콘",
+     "desc": "비콘을 던져 떨어진 곳 주변의 적을 2초간 속박한다.",
+     "cd": "10초",
      "tris": 792,
      "file": "glb/skills/snip/phase_beacon.glb"
     },
@@ -690,7 +690,7 @@
      "id": "ink_cloud",
      "key": "Q",
      "name": "먹물 연막",
-     "desc": "원하는 곳에 시야를 막는 먹구름을 터뜨린다. 3회.",
+     "desc": "먹물탄을 던져 먹구름을 터뜨린다. 안에 있는 적은 시야가 어두워진다. 3회.",
      "cd": "충전형",
      "tris": 388,
      "file": "glb/skills/inkwell/ink_cloud.glb"
@@ -699,7 +699,7 @@
      "id": "ink_puddle",
      "key": "E",
      "name": "먹물 웅덩이",
-     "desc": "밟은 적을 느리게 하는 웅덩이.",
+     "desc": "밟은 적을 느리게 하고 초당 10 피해를 주는 웅덩이.",
      "cd": "16초",
      "tris": 324,
      "file": "glb/skills/inkwell/ink_puddle.glb"

@@ -494,6 +494,16 @@ class _DeathInfo extends StatelessWidget {
   }
 }
 
+/// Inkwell smoke: near-black screen, fading out over the last half second.
+class _Blind extends StatelessWidget {
+  const _Blind(this.left);
+  final double left;
+  @override
+  Widget build(BuildContext context) => IgnorePointer(
+        child: ColoredBox(color: const Color(0xFF05040A).withValues(alpha: 0.96 * (left / 0.5).clamp(0.0, 1.0))),
+      );
+}
+
 class _LowHp extends StatelessWidget {
   const _LowHp();
   @override

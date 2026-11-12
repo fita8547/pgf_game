@@ -237,7 +237,7 @@ const Map<String, GunStats> gunStats = {
   'sniper': GunStats(
     slot: GunSlot.primary,
     cost: 3800,
-    damage: 120,
+    damage: 1000,
     headMult: 2.5,
     fireRate: 0.75,
     auto: false,
@@ -278,7 +278,7 @@ const Map<String, GunStats> gunStats = {
     moveMult: 0.9,
     projectileSpeed: 35,
     splashRadius: 3.5,
-    splashDamage: 90,
+    splashDamage: 200,
   ),
 };
 

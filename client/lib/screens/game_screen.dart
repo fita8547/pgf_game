@@ -53,6 +53,8 @@ class _GameScreenState extends State<GameScreen> {
           if (p.alive && p.hp / p.maxHp < 0.35) const Positioned.fill(child: _LowHp()),
           if (p.alive && !g.scoped) Center(child: _Crosshair(g)),
           if (s.phase != Phase.ended) Positioned.fill(child: _ObjectiveMarker(g)),
+          // Ink smoke blindness: the world goes dark (HUD drawn on top stays readable).
+          if (p.alive && s.has(p, 'blind')) Positioned.fill(child: _Blind(p.fx['blind'] ?? 0)),
           if (p.alive && p.mag == 0 && p.reloadTimer <= 0)
             Positioned(
               top: MediaQuery.of(context).size.height / 2 + 40,
