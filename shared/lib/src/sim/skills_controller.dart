@@ -14,10 +14,10 @@ import 'skills.dart';
 // --------------------------------------------------------------- 잉크웰 --
 
 /// Q 먹물 연막: thrown ink bomb; the cloud blocks sight and enemies inside
-/// it are blinded (screen goes dark, lingers a moment after leaving). 3 charges.
+/// it are blinded (screen goes dark; vision returns 3 s after leaving). 3 charges.
 class InkCloud extends SkillImpl {
   const InkCloud();
-  static const double blindLinger = 1;
+  static const double blindLinger = 3;
   @override
   int get maxCharges => 3;
   @override

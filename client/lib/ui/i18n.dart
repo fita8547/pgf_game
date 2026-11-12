@@ -27,7 +27,7 @@ const _charEn = {
 
 /// (name, description, cooldown text)
 const _skillEn = {
-  'rock_bulwark': ('Rock Bulwark', 'Raise a big stone wall in front of you that blocks bullets. 1200 HP.', 'held'),
+  'rock_bulwark': ('Rock Bulwark', 'Raise a big stone wall in front of you that blocks bullets; players can walk through it. 1200 HP.', 'held'),
   'landslide_charge': ('Landslide Charge', 'Charge toward your WASD direction (diagonals too), grab the first enemy you hit and slam them into a wall.', '8s'),
   'magma_slug': ('Magma Slug', 'Throw a lump of lava that pierces enemies.', '6s'),
   'earth_rift': ('Earth Rift', 'Smash the ground with your hammer, knocking down enemies in a cone ahead.', 'ultimate'),
@@ -44,11 +44,11 @@ const _skillEn = {
   'crane_scout': ('Crane Scout', 'Fly a steerable paper crane; it hits and marks the first enemy it touches.', '30s'),
   'shuriken_storm': ('Shuriken Storm', 'Get 5 precise paper shurikens. Kills refund one.', 'ultimate'),
   'gravel_blink': ('Gravel Blink', 'Teleport a short way in your move direction. 3 charges.', '3s/charge'),
-  'rewind': ('Rewind', 'Return to your position and HP from 3 seconds ago.', '12s'),
+  'rewind': ('Rewind', 'Return to your position from 3 seconds ago at full HP.', '12s'),
   'recon_pebble': ('Recon Pebble', 'An arrow that reveals enemies around where it lands to your team.', '25s'),
   'sticky_charge': ('Sticky Charge', 'Throw a bomb that sticks to enemies or walls and explodes big.', 'ultimate'),
   'gale_cut': ('Gale Cut', 'Dash toward your WASD direction (diagonals too), slashing. Kills reset the cooldown.', '8s'),
-  'deflect': ('Deflect', 'Spin your blades: frontal damage is blocked and returned doubled; projectiles are sent back.', '8s'),
+  'deflect': ('Deflect', 'Spin your blades for 4 s: frontal damage is blocked and returned doubled; projectiles are sent back.', '8s'),
   'phase_beacon': ('Binding Beacon', 'Throw a beacon that roots enemies near where it lands for 2 s.', '10s'),
   'twin_edge': ('Twin Edge', 'Split your scissors in two for a powerful melee mode.', 'ultimate'),
   'mend_crystal': ('Mend Crystal', 'A crystal that floats over an ally and heals them over time.', 'retarget'),
@@ -63,7 +63,7 @@ const _skillEn = {
   'ward_talisman': ('Ward Talisman', 'A talisman on an ally that absorbs some damage for them.', '8s'),
   'undying_lantern': ('Undying Lantern', 'Allies in the lantern\'s range can\'t die for 3 seconds.', '22s'),
   'grand_scroll': ('Grand Scroll', 'Unroll a giant scroll that shields the whole team.', 'ultimate'),
-  'ink_cloud': ('Ink Cloud', 'Throw an ink bomb that bursts into a cloud; enemies inside are blinded. 3 charges.', 'charges'),
+  'ink_cloud': ('Ink Cloud', 'Throw an ink bomb that bursts into a cloud; enemies inside are blinded until 3 s after they leave. 3 charges.', 'charges'),
   'ink_puddle': ('Ink Puddle', 'A puddle that slows enemies who step in it and deals 10 damage per second.', '16s'),
   'ink_portal': ('Ink Portal', 'Open an ink door far away and teleport through it.', '30s'),
   'brush_wall': ('Brush Wall', 'An ink wall across the map that blocks bullets and sound.', 'ultimate'),

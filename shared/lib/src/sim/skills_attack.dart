@@ -163,7 +163,7 @@ class GaleCut extends SkillImpl {
   }
 }
 
-/// E 튕겨내기: spin the blades for 1.5 s: frontal damage is blocked and
+/// E 튕겨내기: spin the blades for 4 s: frontal damage is blocked and
 /// returned to the attacker doubled; projectiles that come close are sent
 /// back (gun projectiles at double damage).
 class Deflect extends SkillImpl {
@@ -172,7 +172,7 @@ class Deflect extends SkillImpl {
 
   @override
   Use use(GameSim sim, Player p, PlayerInput inp) {
-    sim.setMode(p, 'deflect', 1.5, SkillKey.e);
+    sim.setMode(p, 'deflect', 4, SkillKey.e);
     return Use.spend;
   }
 

@@ -25,8 +25,11 @@ Obb _wall(String name, Vec3 base, double yaw, double width, double height, doubl
 // ----------------------------------------------------------------- 볼더 --
 
 /// Q 바위 방벽: big stone wall in front (1200 HP). Press again to recall it.
+/// A "fake wall": its hit box is larger than the model and stops bullets,
+/// projectiles and sight, but players walk straight through it.
 class RockBulwark extends SkillImpl {
   const RockBulwark();
+  static const double width = 6, height = 3.4, depth = 1.0;
   @override
   double get cooldown => 8;
   @override
@@ -49,7 +52,7 @@ class RockBulwark extends SkillImpl {
   }
 
   @override
-  Obb? collider(Deployable d) => _wall('dp:${d.id}', d.pos, d.yaw, 4, 2.6, 0.6, Col.solid);
+  Obb? collider(Deployable d) => _wall('dp:${d.id}', d.pos, d.yaw, width, height, depth, Col.shot);
 
   @override
   void removed(GameSim sim, Deployable d, {required bool destroyed}) {

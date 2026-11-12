@@ -240,7 +240,7 @@
      "id": "rock_bulwark",
      "key": "Q",
      "name": "바위 방벽",
-     "desc": "전방에 큰 돌 방벽을 세워 탄을 막는다. 내구도 1200.",
+     "desc": "전방에 큰 돌 방벽을 세워 탄을 막는다. 사람은 통과할 수 있다. 내구도 1200.",
      "cd": "유지형",
      "tris": 308,
      "file": "glb/skills/boulder/rock_bulwark.glb"
@@ -449,7 +449,7 @@
      "id": "rewind",
      "key": "E",
      "name": "되감기",
-     "desc": "3초 전 위치와 체력으로 되돌아간다.",
+     "desc": "3초 전 위치로 되돌아가고 체력이 가득 찬다.",
      "cd": "12초",
      "tris": 736,
      "file": "glb/skills/pebble/rewind.glb"
@@ -499,7 +499,7 @@
      "id": "deflect",
      "key": "E",
      "name": "튕겨내기",
-     "desc": "칼날을 회전시켜 정면 피해를 막고 2배로 되돌려 준다. 투사체도 되돌린다.",
+     "desc": "4초간 칼날을 회전시켜 정면 피해를 막고 2배로 되돌려 준다. 투사체도 되돌린다.",
      "cd": "8초",
      "tris": 760,
      "file": "glb/skills/snip/deflect.glb"
@@ -690,7 +690,7 @@
      "id": "ink_cloud",
      "key": "Q",
      "name": "먹물 연막",
-     "desc": "먹물탄을 던져 먹구름을 터뜨린다. 안에 있는 적은 시야가 어두워진다. 3회.",
+     "desc": "먹물탄을 던져 먹구름을 터뜨린다. 안에 있는 적은 시야가 어두워지고, 벗어나면 3초 뒤 돌아온다. 3회.",
      "cd": "충전형",
      "tris": 388,
      "file": "glb/skills/inkwell/ink_cloud.glb"

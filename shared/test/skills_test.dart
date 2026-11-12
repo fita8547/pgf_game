@@ -56,9 +56,10 @@ void main() {
     expect(p.pos.z, lessThan(4));
   });
 
-  test('rewind returns to the position and HP of 3 s ago', () {
+  test('rewind returns to the position of 3 s ago at full HP', () {
     final sim = arena();
     final p = place(sim, sim.addPlayer('p', 'pebble', teamId: 0), 0, 10);
+    p.hp = 30; // hurt back then too: still comes back full
     run(sim, 0.5);
     for (var i = 0; i < 180; i++) {
       sim.processInput(p, PlayerInput(dt: dt, moveZ: 1));

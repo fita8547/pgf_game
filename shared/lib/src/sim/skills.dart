@@ -216,7 +216,7 @@ class GravelBlink extends SkillImpl {
   }
 }
 
-/// E 되감기: back to where you were 3 s ago, with the higher of then/now HP.
+/// E 되감기: back to where you were 3 s ago, at full HP.
 class Rewind extends SkillImpl {
   const Rewind();
   static const double back = 3;
@@ -229,7 +229,7 @@ class Rewind extends SkillImpl {
     final from = p.pos.copy();
     p.pos.set(s[1], s[2], s[3]);
     p.vel.set(0, 0, 0);
-    p.hp = math.min(p.maxHp, math.max(p.hp, s[4]));
+    p.hp = p.maxHp;
     p.history.clear();
     sim.mover.placeOnGround(p);
     sim.events.add({'e': 'rewind', 'p': p.id, 'a': from.toList(2), 'b': p.pos.toList(2)});

@@ -52,6 +52,17 @@ void main() {
       cast(sim, p, Btn.skillQ);
       expect(sim.deployables, isEmpty);
     });
+    test('Q bulwark is a fake wall: bigger hit box, players walk through', () {
+      final (sim, p, e) = duel('boulder', 'pebble', dist: 12);
+      cast(sim, p, Btn.skillQ);
+      final w = sim.deployables.single;
+      // Shot aimed 2.6 m to the side of the centre (outside the old 4 m wall) is still stopped.
+      final from = Vec3(e.pos.x + 2.6, e.eye.y, e.pos.z);
+      final hit = sim.traceShot(e, from, Vec3(0, 0, 1), 50, -1);
+      expect(hit.dep, w.id);
+      hold(sim, p, 1.5, moveZ: 1);
+      expect(p.pos.z, lessThan(w.pos.z - 1), reason: 'walked through the wall');
+    });
     test('E charge grabs and damages', () {
       final (sim, p, e) = duel('boulder', 'gem', dist: 4);
       cast(sim, p, Btn.skillE);
@@ -266,6 +277,15 @@ void main() {
       // What snip would have taken (40 x gem 0.9 x snip taken 1.2), x2, x snip's attack 1.35.
       expect(e.hp, closeTo(e.maxHp - 40 * 0.9 * 1.2 * 2 * 1.35, 0.5));
     });
+    test('E deflect lasts 4 s', () {
+      final (sim, p, e) = duel('snip', 'gem');
+      cast(sim, p, Btn.skillE, seconds: 3.8);
+      expect(p.mode, 'deflect');
+      sim.applyDamage(p, 40, e, 'rifle', false);
+      expect(p.hp, p.maxHp);
+      hold(sim, p, 0.4);
+      expect(p.mode, '');
+    });
     test('E deflect: two snips deflecting each other do not loop', () {
       final (sim, p, e) = duel('snip', 'snip');
       cast(sim, p, Btn.skillE);
@@ -399,8 +419,10 @@ void main() {
       expect(sim.has(p, 'blind'), isFalse, reason: 'allies are not blinded');
       // Walk out of the cloud: the blindness wears off.
       place(sim, e, 0, -30);
-      hold(sim, p, 1.5);
-      expect(sim.has(e, 'blind'), isFalse, reason: 'blind wears off after leaving');
+      hold(sim, p, 2.5);
+      expect(sim.has(e, 'blind'), isTrue, reason: 'still dark for a while after leaving');
+      hold(sim, p, 0.7);
+      expect(sim.has(e, 'blind'), isFalse, reason: 'vision back 3 s after leaving');
     });
     test('Q smoke blocks sight, 3 charges', () {
       final (sim, p, e) = duel('inkwell', 'gem', dist: 16);
