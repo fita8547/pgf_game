@@ -48,7 +48,7 @@ const _skillEn = {
   'recon_pebble': ('Recon Pebble', 'An arrow that reveals enemies around where it lands to your team.', '25s'),
   'sticky_charge': ('Sticky Charge', 'Throw a bomb that sticks to enemies or walls and explodes big.', 'ultimate'),
   'gale_cut': ('Gale Cut', 'Dash toward your WASD direction (diagonals too), slashing. Kills reset the cooldown.', '8s'),
-  'deflect': ('Deflect', 'Spin your blades for 4 s: frontal damage is blocked and returned doubled; projectiles are sent back.', '8s'),
+  'deflect': ('Deflect', 'Spin your blades for 4 s: damage from every side is blocked and returned doubled; projectiles are sent back. You can keep shooting.', '8s'),
   'phase_beacon': ('Binding Beacon', 'Throw a beacon that roots enemies near where it lands for 2 s.', '10s'),
   'twin_edge': ('Twin Edge', 'Split your scissors in two for a powerful melee mode.', 'ultimate'),
   'mend_crystal': ('Mend Crystal', 'A crystal that floats over an ally and heals them over time.', 'retarget'),

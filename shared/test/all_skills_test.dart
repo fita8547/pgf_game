@@ -277,6 +277,23 @@ void main() {
       // What snip would have taken (40 x gem 0.9 x snip taken 1.2), x2, x snip's attack 1.35.
       expect(e.hp, closeTo(e.maxHp - 40 * 0.9 * 1.2 * 2 * 1.35, 0.5));
     });
+    test('E deflect blocks from every side and still lets you shoot', () {
+      for (final deg in [0.0, 90.0, -90.0, 180.0, 135.0]) {
+        final (sim, p, e) = duel('snip', 'gem');
+        cast(sim, p, Btn.skillE);
+        final a = deg * math.pi / 180;
+        place(sim, e, 6 * math.sin(a), 10 - 6 * math.cos(a));
+        sim.applyDamage(p, 40, e, 'rifle', false);
+        expect(p.hp, p.maxHp, reason: 'blocked at $deg');
+        expect(e.hp, lessThan(e.maxHp), reason: 'returned at $deg');
+      }
+      final (sim, p, _) = duel('snip', 'gem');
+      cast(sim, p, Btn.skillE);
+      final shots = p.shotSeq;
+      cast(sim, p, Btn.fire, seconds: 0.2);
+      expect(p.mode, 'deflect');
+      expect(p.shotSeq, greaterThan(shots), reason: 'shooting while deflecting');
+    });
     test('E deflect lasts 4 s', () {
       final (sim, p, e) = duel('snip', 'gem');
       cast(sim, p, Btn.skillE, seconds: 3.8);

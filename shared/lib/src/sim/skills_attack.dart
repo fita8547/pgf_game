@@ -11,7 +11,6 @@ import 'skills.dart';
 // Attackers: 오리가미 (origami), 스닙 (snip). 페블 lives in skills.dart.
 // PLACEHOLDER numbers throughout - balance pass pending.
 
-Vec3 _flat(Player p) => Vec3(math.sin(p.yaw), 0, -math.cos(p.yaw));
 
 // ------------------------------------------------------------- 오리가미 --
 
@@ -163,9 +162,9 @@ class GaleCut extends SkillImpl {
   }
 }
 
-/// E 튕겨내기: spin the blades for 4 s: frontal damage is blocked and
-/// returned to the attacker doubled; projectiles that come close are sent
-/// back (gun projectiles at double damage).
+/// E 튕겨내기: spin the blades for 4 s: damage from every direction is
+/// blocked and returned to the attacker doubled; projectiles that come close
+/// are sent back (gun projectiles at double damage). You can keep shooting.
 class Deflect extends SkillImpl {
   const Deflect();
   static const double returnMul = 2;
@@ -179,7 +178,7 @@ class Deflect extends SkillImpl {
   @override
   bool modeFire(GameSim sim, Player p, PlayerInput inp, int pressed, double dt,
       {required bool predict, required bool replay}) {
-    if (!sim.authoritative || predict) return true;
+    if (!sim.authoritative || predict) return false; // the gun still works
     final c = Vec3(p.pos.x, p.pos.y + 1.1, p.pos.z);
     for (final pj in sim.projectiles) {
       if (pj.team == p.team || pj.stuck || pj.pos.distanceTo(c) > 2.2) continue;
@@ -189,23 +188,17 @@ class Deflect extends SkillImpl {
       pj.reflect(p.id, p.team, damageMul: returnMul);
       sim.events.add({'e': 'deflect', 'p': p.id});
     }
-    return true; // can't shoot while spinning
+    return false; // the gun still works while spinning
   }
 
   @override
   double modeDamaged(GameSim sim, Player victim, Player attacker, double amount, String weapon) {
-    final to = attacker.pos - victim.pos;
-    final l = to.lengthXZ;
-    final f = _flat(victim);
-    if (l > 0.01 && (to.x * f.x + to.z * f.z) / l > 0.2) {
-      // Never bounce a bounce (two snips deflecting each other).
-      if (!reflectedWeapons.contains(weapon) && attacker.id != victim.id) {
-        sim.applyDamage(attacker, amount * returnMul, victim, 'deflect', false);
-        sim.events.add({'e': 'deflect', 'p': victim.id});
-      }
-      return 0;
+    // Never bounce a bounce (two reflectors facing each other).
+    if (!reflectedWeapons.contains(weapon) && attacker.id != victim.id) {
+      sim.applyDamage(attacker, amount * returnMul, victim, 'deflect', false);
+      sim.events.add({'e': 'deflect', 'p': victim.id});
     }
-    return amount;
+    return 0;
   }
 }
 

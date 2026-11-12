@@ -261,7 +261,7 @@ const List<CharacterInfo> characterInfos = [
           id: "deflect",
           key: SkillKey.e,
           name: "튕겨내기",
-          desc: "4초간 칼날을 회전시켜 정면 피해를 막고 2배로 되돌려 준다. 투사체도 되돌린다.",
+          desc: "4초간 칼날을 회전시켜 모든 방향의 피해를 막고 2배로 되돌려 준다. 투사체도 되돌린다. 총은 계속 쏠 수 있다.",
           cdText: "8초",
           cooldown: 8,
           kind: CooldownKind.cooldown,
