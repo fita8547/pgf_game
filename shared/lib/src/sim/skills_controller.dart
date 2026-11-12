@@ -137,9 +137,13 @@ class RockTurret extends SkillImpl {
     for (final old in [...sim.deployablesOf(p, 'rock_turret')]) {
       sim.removeDeployable(old);
     }
-    sim.deploy(p, 'rock_turret', sim.aimPoint(p, 8), hp: 250, life: 25, radius: 25);
+    sim.deploy(p, 'rock_turret', sim.aimPoint(p, 8), hp: 40, life: 25, radius: 25);
     return Use.spend;
   }
+
+  /// Bullets can hit (and break) it.
+  @override
+  Obb? collider(Deployable d) => _gadgetBox(d);
 
   @override
   void tickDeployable(GameSim sim, Deployable d, double dt) {
@@ -208,6 +212,10 @@ class LavaFlow extends SkillImpl {
 /// Q 철심 감시포: small sentry that slows and plinks enemies. 2 charges.
 class StapleSentry extends SkillImpl {
   const StapleSentry();
+
+  /// Sentries go away when Staple dies.
+  @override
+  bool get diesWithOwner => true;
   @override
   int get maxCharges => 2;
   @override
@@ -217,9 +225,13 @@ class StapleSentry extends SkillImpl {
   Use use(GameSim sim, Player p, PlayerInput inp) {
     final mine = sim.deployablesOf(p, 'staple_sentry').toList();
     if (mine.length >= 2) sim.removeDeployable(mine.first);
-    sim.deploy(p, 'staple_sentry', sim.aimPoint(p, 15, ground: false), hp: 120, life: 30, radius: 12);
+    sim.deploy(p, 'staple_sentry', sim.aimPoint(p, 15, ground: false), hp: 40, life: 30, radius: 12);
     return Use.spend;
   }
+
+  /// Bullets can hit (and break) it.
+  @override
+  Obb? collider(Deployable d) => _gadgetBox(d);
 
   @override
   void tickDeployable(GameSim sim, Deployable d, double dt) {
@@ -320,6 +332,11 @@ class SteelLockdown extends SkillImpl {
 // ------------------------------------------------------------- helpers --
 
 /// Turret behaviour: hitscan at the closest visible enemy in range.
+/// Bullet-only hit box around a small gadget (turret / sentry), 0.9 m wide,
+/// 1.1 m tall from its base.
+Obb _gadgetBox(Deployable d) =>
+    Obb.aabb('dp:${d.id}', Col.hit, d.pos.x - 0.45, d.pos.y - 0.1, d.pos.z - 0.45, d.pos.x + 0.45, d.pos.y + 1.1, d.pos.z + 0.45);
+
 void _autoShoot(GameSim sim, Deployable d, double dt, {required double damage, required double interval, required double slow}) {
   final cd = (d.data['cd'] ?? 0) - dt;
   d.data['cd'] = cd;

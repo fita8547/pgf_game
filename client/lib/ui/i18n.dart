@@ -71,7 +71,7 @@ const _skillEn = {
   'quake_trap': ('Quake Trap', 'Roots the enemy who steps on it for 1.5 seconds.', '10s'),
   'overheat': ('Overheat', 'Briefly gain armour, fire rate and move speed.', '12s'),
   'lava_flow': ('Lava Flow', 'Pour lava around you that burns enemies over time.', 'ultimate'),
-  'staple_sentry': ('Staple Sentry', 'A small wall turret that slows and shoots passing enemies.', 'charges'),
+  'staple_sentry': ('Staple Sentry', 'A small wall turret that slows and shoots passing enemies. Gone when Staple dies.', 'charges'),
   'wire_snare': ('Wire Snare', 'A wire that reveals and briefly roots the enemy who touches it.', '12s'),
   'alarm_bot': ('Alarm Bot', 'A robot that makes nearby enemies take more damage.', 'redeploy'),
   'steel_lockdown': ('Steel Lockdown', 'Scan a wide area; after a delay, root every enemy inside.', 'ultimate'),

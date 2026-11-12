@@ -645,7 +645,7 @@ SKILLS = {
         ("twin_edge", "궁", "쌍날 개방", "가위를 둘로 나눠 강력한 근접 공격 모드에 들어간다.", "궁극기", twin_edge),
     ],
     "staple": [
-        ("staple_sentry", "Q", "철심 감시포", "벽에 붙여 지나가는 적을 느리게 하고 쏘는 소형 포탑.", "충전형", staple_sentry),
+        ("staple_sentry", "Q", "철심 감시포", "벽에 붙여 지나가는 적을 느리게 하고 쏘는 소형 포탑. 스테이플이 죽으면 사라진다.", "충전형", staple_sentry),
         ("wire_snare", "E", "철사 덫", "건드린 적의 위치를 알리고 잠깐 묶는 철사.", "12초", wire_snare),
         ("alarm_bot", "Shift", "알람봇", "근처 적에게 받는 피해 증가 효과를 거는 로봇.", "재설치", alarm_bot),
         ("steel_lockdown", "궁", "강철 봉쇄", "넓은 범위를 감지해 일정 시간 후 안의 적을 모두 묶는다.", "궁극기", steel_lockdown),

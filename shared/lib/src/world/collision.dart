@@ -11,6 +11,10 @@ abstract final class Col {
   /// Blocks bullets, projectiles and line of sight.
   static const shot = 2;
   static const solid = move | shot;
+
+  /// Only bullets hit it (small gadgets like turrets): doesn't block
+  /// movement, projectiles or line of sight.
+  static const hit = 4;
 }
 
 /// Oriented box collider. Map geometry is almost entirely boxes (beveled

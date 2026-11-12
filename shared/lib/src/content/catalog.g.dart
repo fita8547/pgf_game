@@ -534,7 +534,7 @@ const List<CharacterInfo> characterInfos = [
           id: "staple_sentry",
           key: SkillKey.q,
           name: "철심 감시포",
-          desc: "벽에 붙여 지나가는 적을 느리게 하고 쏘는 소형 포탑.",
+          desc: "벽에 붙여 지나가는 적을 느리게 하고 쏘는 소형 포탑. 스테이플이 죽으면 사라진다.",
           cdText: "충전형",
           cooldown: 0,
           kind: CooldownKind.charges,

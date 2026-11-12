@@ -54,6 +54,10 @@ class GunStats {
   /// Projectile weapons (launcher): speed m/s, splash radius / damage.
   final double projectileSpeed, splashRadius, splashDamage, selfDamageMult;
 
+  /// Extra metres added to every hitbox radius for this gun's shots (a
+  /// forgiving hit area).
+  final double hitPad;
+
   const GunStats({
     required this.slot,
     required this.cost,
@@ -86,6 +90,7 @@ class GunStats {
     this.splashRadius = 0,
     this.splashDamage = 0,
     this.selfDamageMult = 0.5,
+    this.hitPad = 0,
   });
 
   bool get isProjectile => projectileSpeed > 0;
@@ -255,6 +260,7 @@ const Map<String, GunStats> gunStats = {
     adsRecoilMult: 1,
     range: 300,
     moveMult: 0.85,
+    hitPad: 0.3,
   ),
   'launcher': GunStats(
     slot: GunSlot.primary,

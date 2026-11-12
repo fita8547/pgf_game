@@ -232,6 +232,14 @@ class GameSim {
 
   static int refillCost(GunDef g) => (g.stats.cost * refillPriceFactor).round();
 
+  /// What [p] pays for [g] right now: refill if held, full price otherwise;
+  /// free once a [Economy.freeAfterFirstBuy] gun has been bought this match.
+  static int priceFor(Player p, GunDef g) {
+    if (p.unlocked.contains(g.id)) return 0;
+    final held = (g.slot == GunSlot.primary ? p.primary : p.secondary) == g.id;
+    return held ? refillCost(g) : g.stats.cost;
+  }
+
   /// True if [p] holds [g] with a full magazine and full reserve.
   static bool ammoFull(Player p, GunDef g) => g.slot == GunSlot.primary
       ? p.primMag >= g.stats.mag && p.primRes >= g.stats.reserve
@@ -256,9 +264,10 @@ class GameSim {
     final current = g.slot == GunSlot.primary ? p.primary : p.secondary;
     final refill = current == gunId;
     if (refill && ammoFull(p, g)) return 'ammo_full';
-    final cost = refill ? refillCost(g) : g.stats.cost;
+    final cost = priceFor(p, g);
     if (p.credits < cost) return 'no_credits';
     p.credits -= cost;
+    if (Economy.freeAfterFirstBuy.contains(gunId)) p.unlocked.add(gunId);
     if (g.slot == GunSlot.primary) {
       p.primary = gunId;
       p.primMag = g.stats.mag;
@@ -553,7 +562,7 @@ class GameSim {
     final ends = <List<double>>[];
     for (var k = 0; k < s.pellets; k++) {
       final dir = _coneDir(p.yaw + ry, p.pitch + rp, spread, rr);
-      final hit = traceShot(p, origin, dir, s.range, renderTick);
+      final hit = traceShot(p, origin, dir, s.range, renderTick, pad: s.hitPad);
       final end = origin + dir * hit.dist;
       ends.add([...end.toList(2), hit.victim != null ? (hit.part == HitPart.head ? 2 : 1) : (hit.wall ? 0 : -1)]);
       final v = hit.victim;
@@ -585,8 +594,9 @@ class GameSim {
   }
 
   /// First thing a bullet from [shooter] hits: enemy hitbox or world.
-  ShotHit traceShot(Player shooter, Vec3 o, Vec3 d, double range, double renderTick) {
-    final w = map.world.raycast(o, d, range);
+  /// [pad]: extra metres on every hitbox radius (forgiving guns like the sniper).
+  ShotHit traceShot(Player shooter, Vec3 o, Vec3 d, double range, double renderTick, {double pad = 0}) {
+    final w = map.world.raycast(o, d, range, mask: Col.shot | Col.hit);
     var best = w?.$1 ?? range;
     final hit = ShotHit(best, w != null);
     if (w != null && w.$2.name.startsWith('dp:')) hit.dep = int.tryParse(w.$2.name.substring(3));
@@ -615,7 +625,7 @@ class GameSim {
     for (final q in players.values) {
       if (q.id == shooter.id || !q.alive || q.team == shooter.team) continue;
       final h = _positionAt(q, renderTick);
-      final r = rayHitboxes(q.body, h[0], h[1], h[2], h[3] > 0.5, o, d, best);
+      final r = rayHitboxes(q.body, h[0], h[1], h[2], h[3] > 0.5, o, d, best, pad: pad);
       if (r != null && r.$1 < best) {
         best = r.$1;
         hit
@@ -632,14 +642,16 @@ class GameSim {
   /// Ray vs one player's hitboxes (head sphere, torso capsule, legs capsule
   /// built from the character's bones). Returns (distance, part) or null.
   static (double, HitPart)? rayHitboxes(
-      Body b, double x, double y, double z, bool crouch, Vec3 o, Vec3 d, double maxDist) {
+      Body b, double x, double y, double z, bool crouch, Vec3 o, Vec3 d, double maxDist,
+      {double pad = 0}) {
     final k = crouch ? crouchScale : 1.0;
     (double, HitPart)? best;
-    final th = raySphere(o, d, Vec3(x, y + b.headCenter * k, z), b.headR, maxDist);
+    final th = raySphere(o, d, Vec3(x, y + b.headCenter * k, z), b.headR + pad, maxDist);
     if (th != null) best = (th, HitPart.head);
-    final tb = rayCapsule(o, d, x, y + b.hips * k, y + (b.neck - b.torsoR * 0.6) * k, z, b.torsoR, best?.$1 ?? maxDist);
+    final tb =
+        rayCapsule(o, d, x, y + b.hips * k, y + (b.neck - b.torsoR * 0.6) * k, z, b.torsoR + pad, best?.$1 ?? maxDist);
     if (tb != null && (best == null || tb < best.$1)) best = (tb, HitPart.body);
-    final tl = rayCapsule(o, d, x, y + b.legR, y + b.hips * k - b.legR * 0.5, z, b.legR, best?.$1 ?? maxDist);
+    final tl = rayCapsule(o, d, x, y + b.legR, y + b.hips * k - b.legR * 0.5, z, b.legR + pad, best?.$1 ?? maxDist);
     if (tl != null && (best == null || tl < best.$1)) best = (tl, HitPart.legs);
     return best;
   }

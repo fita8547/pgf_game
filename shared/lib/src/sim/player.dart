@@ -28,6 +28,9 @@ class Player {
 
   /// Bought armour; soaks damage before HP, lost on death.
   double armor = 0;
+
+  /// Guns from [Economy.freeAfterFirstBuy] this player has bought this match.
+  final Set<String> unlocked = {};
   bool alive = false;
   double respawnIn = 0;
   double spawnProtect = 0;
@@ -146,6 +149,7 @@ class Player {
         r(skillCd[0], 2), r(skillCd[1], 2), r(skillCd[2], 2), ...skillCharges, r(revealed, 2),
         {for (final e in fx.entries) if (!_serverOnlyFx.hasMatch(e.key)) e.key: r(e.value, 3)}, mode,
         r(armor, 1),
+        unlocked.join(','),
       ];
 
   static Player fromNet(List l) {
@@ -210,5 +214,7 @@ class Player {
       mode = l[52] as String;
     }
     armor = l.length > 53 ? d(53) : 0;
+    unlocked.clear();
+    if (l.length > 54 && (l[54] as String).isNotEmpty) unlocked.addAll((l[54] as String).split(','));
   }
 }

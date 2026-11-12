@@ -196,6 +196,67 @@ void main() {
     });
   });
 
+  test('sniper is free after the first purchase (lost on death, rebought for 0)', () {
+    final sim = arena();
+    final p = sim.addPlayer('p', 'pebble', teamId: 0); // spawns in the shop room
+    final e = place(sim, sim.addPlayer('e', 'gem', teamId: 1), 0, -20);
+    p.credits = 5000;
+    expect(sim.buy(p, 'sniper'), isNull);
+    expect(p.credits, 5000 - gunById('sniper').stats.cost);
+    p.primMag = 0;
+    final before = p.credits;
+    expect(sim.buy(p, 'sniper'), isNull, reason: 'refill');
+    expect(p.credits, before, reason: 'refill is free');
+    p.spawnProtect = 0;
+    sim.applyDamage(p, 9999, e, 'rifle', false);
+    expect(p.primary, isNull, reason: 'primary lost on death');
+    sim.update(sim.cfg.respawnTime + 0.5);
+    for (var i = 0; i < 40 && !p.alive; i++) {
+      sim.update(0.25);
+    }
+    expect(p.alive, isTrue);
+    p.credits = 0;
+    expect(sim.buy(p, 'sniper'), isNull, reason: 'rebuy with no credits');
+    expect(p.primary, 'sniper');
+    // Survives the wire (client shop shows the price).
+    expect(Player.fromNet(p.toNet()).unlocked, contains('sniper'));
+    expect(GameSim.priceFor(p, gunById('rifle')), gunById('rifle').stats.cost, reason: 'other guns cost as usual');
+  });
+
+  test('turret and sentry: 40 HP, bullets break them, they still see past their own box', () {
+    for (final (char, kind) in [('quake', 'rock_turret'), ('staple', 'staple_sentry')]) {
+      final (sim, p, e) = duel(char, 'gem', dist: 10);
+      cast(sim, p, Btn.skillQ, pitch: -0.3, seconds: 0.1);
+      final d = sim.deployables.firstWhere((x) => x.kind == kind);
+      expect(d.hp, 40, reason: kind);
+      // It shoots the enemy (its own hit box doesn't block its view).
+      final hp = e.hp;
+      hold(sim, p, 1.2);
+      expect(e.hp, lessThan(hp), reason: '$kind shoots');
+      // The enemy shoots it.
+      final target = Vec3(d.pos.x, d.pos.y + 0.5, d.pos.z);
+      final hit = sim.traceShot(e, e.eye, (target - e.eye).normalized(), 50, -1);
+      expect(hit.dep, d.id, reason: '$kind is hittable');
+      sim.damageDeployable(d.id, 40, e);
+      expect(sim.deployables.where((x) => x.kind == kind), isEmpty, reason: '$kind broken');
+    }
+  });
+
+  test('sniper shots have a forgiving hit area, other guns do not', () {
+    final (sim, p, e) = duel('pebble', 'gem', dist: 20);
+    // Aimed 45 cm to the side of the target's chest: outside the real torso.
+    final o = p.eye;
+    final aim = Vec3(e.pos.x + 0.45 + 0.26, e.pos.y + 1.2, e.pos.z);
+    final d = (aim - o).normalized();
+    expect(sim.traceShot(p, o, d, 100, -1).victim, isNull, reason: 'rifle-style ray misses');
+    expect(sim.traceShot(p, o, d, 100, -1, pad: gunById('sniper').stats.hitPad).victim, isNull,
+        reason: 'beyond the pad too');
+    final close = (Vec3(e.pos.x + 0.26 + 0.2, e.pos.y + 1.2, e.pos.z) - o).normalized();
+    expect(sim.traceShot(p, o, close, 100, -1).victim, isNull, reason: '20 cm outside the torso: normal miss');
+    expect(sim.traceShot(p, o, close, 100, -1, pad: gunById('sniper').stats.hitPad).victim, e,
+        reason: 'sniper still hits 20 cm outside');
+  });
+
   group('돌진 스킬은 WASD 방향(대각선 포함)', () {
     for (final (char, btn, label) in [
       ('origami', Btn.skillE, '오리가미 E'),
@@ -516,6 +577,14 @@ void main() {
       cast(sim, p, Btn.skillQ, pitch: -0.6, seconds: 1);
       expect(e.hp, lessThan(200));
       expect(sim.has(e, 'slow'), isTrue);
+    });
+    test('Q sentries vanish when staple dies', () {
+      final (sim, p, e) = duel('staple', 'gem', dist: 30);
+      cast(sim, p, Btn.skillQ, pitch: -0.3, seconds: 0.2);
+      expect(sim.deployables.where((d) => d.kind == 'staple_sentry'), isNotEmpty);
+      sim.applyDamage(p, 9999, e, 'sniper', false);
+      expect(p.alive, isFalse);
+      expect(sim.deployables.where((d) => d.kind == 'staple_sentry'), isEmpty);
     });
     test('E snare roots and reveals', () {
       final (sim, p, e) = duel('staple', 'gem', dist: 5);

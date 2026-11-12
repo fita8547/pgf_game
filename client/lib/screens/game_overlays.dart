@@ -130,7 +130,7 @@ class _Shop extends StatelessWidget {
   Widget _item(Player p, GunDef gun) {
     final owned = p.primary == gun.id || p.secondary == gun.id;
     final full = owned && GameSim.ammoFull(p, gun);
-    final price = owned ? GameSim.refillCost(gun) : gun.stats.cost;
+    final price = GameSim.priceFor(p, gun);
     final can = p.credits >= price && !full;
     final st = gun.stats;
     return InkWell(
@@ -148,7 +148,12 @@ class _Shop extends StatelessWidget {
           Center(child: gunIcon(gun.id, 150, 50)),
           Row(children: [
             Expanded(child: Text(gunName(gun.id), style: const TextStyle(fontWeight: FontWeight.w800))),
-            Text(full ? tr('보유 · 탄약 가득', 'Owned · full') : (owned ? tr('탄약 보충 $price', 'Refill $price') : '${st.cost}'),
+            Text(
+                full
+                    ? tr('보유 · 탄약 가득', 'Owned · full')
+                    : price == 0
+                        ? (owned ? tr('탄약 보충 무료', 'Refill free') : tr('무료', 'Free'))
+                        : (owned ? tr('탄약 보충 $price', 'Refill $price') : '$price'),
                 style: TextStyle(color: can || owned ? Rps.goldText : Rps.fg(0.38), fontWeight: FontWeight.w700)),
           ]),
           Text(

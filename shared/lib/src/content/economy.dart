@@ -18,6 +18,10 @@ abstract final class Economy {
   /// Purchased primary is lost on death (you respawn with your sidearm and
   /// your banked credits). Set false to keep loadouts across lives.
   static const bool losePrimaryOnDeath = true;
+
+  /// Guns that cost nothing (buy again, refill) once bought in this match
+  /// (user request 2026-11-12: sniper).
+  static const Set<String> freeAfterFirstBuy = {'sniper'};
 }
 
 /// Armour sold in the shop (user request 2026-11-11: 100 / 60 / 40).
