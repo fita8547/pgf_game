@@ -97,7 +97,7 @@ def main():
     prof = tempfile.mkdtemp(prefix="rps-cdp-")
     port = 9333
     proc = subprocess.Popen([CHROME, "--headless=new", f"--remote-debugging-port={port}", f"--user-data-dir={prof}",
-                             f"--window-size={a.size}", "--autoplay-policy=no-user-gesture-required",
+                             f"--window-size={a.size}", "--autoplay-policy=no-user-gesture-required", "--mute-audio",  # never through the speakers
                              "--use-angle=d3d11", "--enable-gpu", "--ignore-gpu-blocklist", "about:blank"],
                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     try:
