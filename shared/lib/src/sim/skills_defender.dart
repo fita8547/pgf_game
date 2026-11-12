@@ -138,7 +138,7 @@ class MagmaSlug extends SkillImpl {
     final key = 'hit${hit.id}';
     if (!pj.hits.contains(key)) {
       pj.hits.add(key);
-      sim.applyDamage(hit, 75, sim.players[pj.owner], 'magma_slug', false);
+      sim.applyDamage(hit, 120, sim.players[pj.owner], 'magma_slug', false);
     }
     // Keep flying through the target.
     pj.pos.setFrom(at + pj.vel.normalized() * 0.9);
