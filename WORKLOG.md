@@ -56,6 +56,8 @@
 - 화면 확인 도구: `python tool/cdp_shot.py URL 출력.png --wait 15 --shots 3 --at 5:"자바스크립트"`
 
 ## 기록
+- 2026-11-12 돌진 스킬 전부 WASD 방향(대각선, 키 없으면 앞): 스닙 Q·볼더 E(잡은 적도 돌진 방향 앞에 듦)·시어 E 도약.
+  공용 moveDir()(skills.dart). 버그 수정: 'blind'가 _timers에 없어 실명이 안 풀리던 것(죽을 때까지 유지).
 - 2026-11-12 BGM 교체: song/bgm/*.mp3 8곡을 섞어서 이어 재생(타이틀·로비·경기 계속 이어짐). sync_assets가
   web/game/music/bgm/에 영문 이름으로 복사 + list.json 생성. 곡 추가/삭제 = song/bgm에 넣고 빼고 sync 다시.
   목록이 비면 예전 맵별 루프 곡. 스트리밍 재생(HTMLAudio → musicGain). 헤드리스 확인: 재생됨, 음량 0이면 무음.

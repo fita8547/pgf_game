@@ -249,7 +249,7 @@
      "id": "landslide_charge",
      "key": "E",
      "name": "산사태 돌진",
-     "desc": "앞으로 질주하며 처음 닿은 적을 붙잡아 벽에 처박는다.",
+     "desc": "WASD 방향(대각선 포함)으로 질주하며 처음 닿은 적을 붙잡아 벽에 처박는다.",
      "cd": "8초",
      "tris": 320,
      "file": "glb/skills/boulder/landslide_charge.glb"
@@ -349,7 +349,7 @@
      "id": "cleave_leap",
      "key": "E",
      "name": "절단 도약",
-     "desc": "도약한 뒤 착지 지점을 크게 벤다.",
+     "desc": "WASD 방향(대각선 포함)으로 도약한 뒤 착지 지점을 크게 벤다.",
      "cd": "7초",
      "tris": 1040,
      "file": "glb/skills/shear/cleave_leap.glb"
@@ -490,7 +490,7 @@
      "id": "gale_cut",
      "key": "Q",
      "name": "질풍 절단",
-     "desc": "앞으로 돌진하며 벤다. 처치 시 쿨타임 초기화.",
+     "desc": "WASD 방향(대각선 포함)으로 돌진하며 벤다. 처치 시 쿨타임 초기화.",
      "cd": "8초",
      "tris": 296,
      "file": "glb/skills/snip/gale_cut.glb"

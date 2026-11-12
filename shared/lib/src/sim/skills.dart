@@ -153,6 +153,16 @@ Vec3 _aimDir(Player p) => dirFromAngles(p.yaw, p.pitch);
 
 // ------------------------------------------------------------- 페블 (Pebble) --
 
+/// Unit ground direction of the held movement keys (WASD, diagonals too;
+/// same axes as the mover), or the look direction when none are held.
+/// Dash / charge / leap skills go this way.
+Vec3 moveDir(Player p, PlayerInput inp) {
+  final sy = math.sin(p.yaw), cy = math.cos(p.yaw);
+  final x = cy * inp.moveX + sy * inp.moveZ, z = sy * inp.moveX - cy * inp.moveZ;
+  final l = math.sqrt(x * x + z * z);
+  return l < 0.1 ? Vec3(sy, 0, -cy) : Vec3(x / l, 0, z / l);
+}
+
 /// Q 자갈 점멸: short teleport toward the movement direction (view direction
 /// when standing still). 3 charges, 3 s each. Never passes through walls:
 /// the path is checked in steps smaller than the capsule.

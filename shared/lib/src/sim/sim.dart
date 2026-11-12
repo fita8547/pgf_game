@@ -1201,6 +1201,7 @@ extension SimEffects on GameSim {
     'hot': ['hotRate'],
     'dash': ['dashVx', 'dashVz', 'dashKey', 'dashHit'],
     'marked': <String>[],
+    'blind': <String>[],
   };
 
   void _tickFx(Player p, double dt) {

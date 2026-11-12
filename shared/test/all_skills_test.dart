@@ -152,6 +152,34 @@ void main() {
     });
   });
 
+  group('돌진 스킬은 WASD 방향(대각선 포함)', () {
+    for (final (char, btn, label) in [
+      ('origami', Btn.skillE, '오리가미 E'),
+      ('snip', Btn.skillQ, '스닙 Q'),
+      ('boulder', Btn.skillE, '볼더 E'),
+      ('shear', Btn.skillE, '시어 E'),
+    ]) {
+      test(label, () {
+        for (final (mx, mz) in [(1.0, 0.0), (-1.0, 0.0), (0.0, -1.0), (1.0, 1.0), (-1.0, -1.0), (0.0, 0.0)]) {
+          final (sim, p, _) = duel(char, 'gem', dist: 40);
+          final start = p.pos.copy();
+          // Direction held only on the cast frame: any distance after is the skill's.
+          sim.processInput(p, PlayerInput(dt: dt, buttons: btn, moveX: mx, moveZ: mz));
+          for (var i = 0; i < 72; i++) {
+            sim.processInput(p, PlayerInput(dt: dt));
+            sim.update(dt);
+          }
+          final dx = p.pos.x - start.x, dz = p.pos.z - start.z, d = math.sqrt(dx * dx + dz * dz);
+          // yaw 0: right = +x, forward = -z. No keys = forward.
+          final (ex, ez) = mx == 0 && mz == 0 ? (0.0, 1.0) : (mx / math.sqrt(mx * mx + mz * mz), mz / math.sqrt(mx * mx + mz * mz));
+          expect(d, greaterThan(2.5), reason: '$label moved ($mx,$mz)');
+          expect(dx / d, closeTo(ex, 0.1), reason: '$label dir ($mx,$mz)');
+          expect(-dz / d, closeTo(ez, 0.1), reason: '$label dir ($mx,$mz)');
+        }
+      });
+    }
+  });
+
   group('오리가미', () {
     test('Q updraft goes high', () {
       final (sim, p, _) = duel('origami', 'gem');
@@ -162,23 +190,6 @@ void main() {
         if (p.pos.y > top) top = p.pos.y;
       }
       expect(top, greaterThan(3));
-    });
-    test('E dash follows WASD, diagonals too', () {
-      for (final (mx, mz) in [(1.0, 0.0), (-1.0, 0.0), (0.0, -1.0), (1.0, 1.0)]) {
-        final (sim, p, _) = duel('origami', 'gem', dist: 30);
-        final start = p.pos.copy();
-        sim.processInput(p, PlayerInput(dt: dt, buttons: Btn.skillE, moveX: mx, moveZ: mz));
-        for (var i = 0; i < 24; i++) {
-          sim.processInput(p, PlayerInput(dt: dt, moveX: mx, moveZ: mz));
-          sim.update(dt);
-        }
-        final dx = p.pos.x - start.x, dz = p.pos.z - start.z;
-        // yaw 0: right = +x, forward = -z.
-        final l = math.sqrt(mx * mx + mz * mz);
-        expect(dx / math.sqrt(dx * dx + dz * dz), closeTo(mx / l, 0.1), reason: 'dir ($mx,$mz)');
-        expect(-dz / math.sqrt(dx * dx + dz * dz), closeTo(mz / l, 0.1), reason: 'dir ($mx,$mz)');
-        expect(math.sqrt(dx * dx + dz * dz), greaterThan(4), reason: 'dash, not walk ($mx,$mz)');
-      }
     });
     test('E dash moves fast, kill resets', () {
       final (sim, p, e) = duel('origami', 'gem');
@@ -353,6 +364,10 @@ void main() {
       expect(sim.deployables.single.kind, 'ink_cloud');
       expect(sim.has(e, 'blind'), isTrue);
       expect(sim.has(p, 'blind'), isFalse, reason: 'allies are not blinded');
+      // Walk out of the cloud: the blindness wears off.
+      place(sim, e, 0, -30);
+      hold(sim, p, 1.5);
+      expect(sim.has(e, 'blind'), isFalse, reason: 'blind wears off after leaving');
     });
     test('Q smoke blocks sight, 3 charges', () {
       final (sim, p, e) = duel('inkwell', 'gem', dist: 16);

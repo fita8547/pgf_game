@@ -58,7 +58,7 @@ class RockBulwark extends SkillImpl {
   }
 }
 
-/// E 산사태 돌진: charge forward, grab the first enemy and slam them into a wall.
+/// E 산사태 돌진: charge (WASD direction), grab the first enemy and slam them into a wall.
 class LandslideCharge extends SkillImpl {
   const LandslideCharge();
   static const double speed = 13, time = 0.9;
@@ -69,7 +69,7 @@ class LandslideCharge extends SkillImpl {
 
   @override
   Use use(GameSim sim, Player p, PlayerInput inp) {
-    final f = _flatForward(p);
+    final f = moveDir(p, inp);
     sim.dash(p, f.x * speed, f.z * speed, time, SkillKey.e);
     return Use.spend;
   }
@@ -77,7 +77,9 @@ class LandslideCharge extends SkillImpl {
   @override
   void dashTick(GameSim sim, Player p, double dt) {
     if (!sim.authoritative) return;
-    final f = _flatForward(p);
+    // Carry the victim in front along the charge direction.
+    final dx = p.fx['dashVx'] ?? 0, dz = p.fx['dashVz'] ?? 0, dl = math.sqrt(dx * dx + dz * dz);
+    final f = dl > 0.1 ? Vec3(dx / dl, 0, dz / dl) : _flatForward(p);
     final held = p.fx['grab'];
     if (held != null) {
       final v = sim.players[held.toInt()];
@@ -344,13 +346,13 @@ class SpikeGuard extends SkillImpl {
   void modeEnded(GameSim sim, Player p) => sim.startCooldown(p, SkillKey.q, 6);
 }
 
-/// E 절단 도약: leap forward and cleave where you land.
+/// E 절단 도약: leap (WASD direction) and cleave where you land.
 class CleaveLeap extends SkillImpl {
   const CleaveLeap();
 
   @override
   Use use(GameSim sim, Player p, PlayerInput inp) {
-    final f = _flatForward(p);
+    final f = moveDir(p, inp);
     sim.leap(p, 7.5, f.x * 10, f.z * 10, SkillKey.e);
     return Use.spend;
   }

@@ -586,7 +586,7 @@ def nano_stitch():
 SKILLS = {
     "boulder": [
         ("rock_bulwark", "Q", "바위 방벽", "전방에 큰 돌 방벽을 세워 탄을 막는다. 내구도 1200.", "유지형", rock_bulwark),
-        ("landslide_charge", "E", "산사태 돌진", "앞으로 질주하며 처음 닿은 적을 붙잡아 벽에 처박는다.", "8초", landslide_charge),
+        ("landslide_charge", "E", "산사태 돌진", "WASD 방향(대각선 포함)으로 질주하며 처음 닿은 적을 붙잡아 벽에 처박는다.", "8초", landslide_charge),
         ("magma_slug", "Shift", "용암 투척", "적을 관통하는 용암 덩어리를 던진다.", "6초", magma_slug),
         ("earth_rift", "궁", "대지 균열", "망치로 땅을 내리쳐 전방 부채꼴의 적을 쓰러뜨린다.", "궁극기", earth_rift),
     ],
@@ -634,12 +634,12 @@ SKILLS = {
     ],
     "shear": [
         ("spike_guard", "Q", "가시 방패", "막는 동안 받은 공격 방향으로 가시를 쏜다.", "유지형", spike_guard),
-        ("cleave_leap", "E", "절단 도약", "도약한 뒤 착지 지점을 크게 벤다.", "7초", cleave_leap),
+        ("cleave_leap", "E", "절단 도약", "WASD 방향(대각선 포함)으로 도약한 뒤 착지 지점을 크게 벤다.", "7초", cleave_leap),
         ("blade_fence", "Shift", "칼날 울타리", "적을 밀쳐내는 칼날 벽을 세운다.", "12초", blade_fence),
         ("blade_rain", "궁", "칼날 폭우", "넓은 범위에 칼날을 쏟아 적을 묶는다.", "궁극기", blade_rain),
     ],
     "snip": [
-        ("gale_cut", "Q", "질풍 절단", "앞으로 돌진하며 벤다. 처치 시 쿨타임 초기화.", "8초", gale_cut),
+        ("gale_cut", "Q", "질풍 절단", "WASD 방향(대각선 포함)으로 돌진하며 벤다. 처치 시 쿨타임 초기화.", "8초", gale_cut),
         ("deflect", "E", "튕겨내기", "칼날을 회전시켜 정면 피해를 막고 2배로 되돌려 준다. 투사체도 되돌린다.", "8초", deflect),
         ("phase_beacon", "Shift", "속박 비콘", "비콘을 던져 떨어진 곳 주변의 적을 2초간 속박한다.", "10초", phase_beacon),
         ("twin_edge", "궁", "쌍날 개방", "가위를 둘로 나눠 강력한 근접 공격 모드에 들어간다.", "궁극기", twin_edge),

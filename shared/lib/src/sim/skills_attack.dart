@@ -13,15 +13,6 @@ import 'skills.dart';
 
 Vec3 _flat(Player p) => Vec3(math.sin(p.yaw), 0, -math.cos(p.yaw));
 
-/// Unit ground direction of the held movement keys (same axes as the mover),
-/// or the look direction when none are held.
-Vec3 _moveDir(Player p, PlayerInput inp) {
-  final sy = math.sin(p.yaw), cy = math.cos(p.yaw);
-  final x = cy * inp.moveX + sy * inp.moveZ, z = sy * inp.moveX - cy * inp.moveZ;
-  final l = math.sqrt(x * x + z * z);
-  return l < 0.1 ? _flat(p) : Vec3(x / l, 0, z / l);
-}
-
 // ------------------------------------------------------------- 오리가미 --
 
 /// Q 종이 상승: ride a paper updraft high into the air.
@@ -47,7 +38,7 @@ class PaperDash extends SkillImpl {
 
   @override
   Use use(GameSim sim, Player p, PlayerInput inp) {
-    final f = _moveDir(p, inp);
+    final f = moveDir(p, inp);
     sim.dash(p, f.x * 22, f.z * 22, 0.25, SkillKey.e);
     p.fx['dashedAt'] = sim.time;
     return Use.spend;
@@ -133,7 +124,8 @@ class ShurikenStorm extends SkillImpl {
 
 // ----------------------------------------------------------------- 스닙 --
 
-/// Q 질풍 절단: dash and slash everyone you pass; a kill resets the cooldown.
+/// Q 질풍 절단: dash (WASD direction) and slash everyone you pass; a kill
+/// resets the cooldown.
 class GaleCut extends SkillImpl {
   const GaleCut();
 
@@ -143,7 +135,7 @@ class GaleCut extends SkillImpl {
 
   @override
   Use use(GameSim sim, Player p, PlayerInput inp) {
-    final f = _flat(p);
+    final f = moveDir(p, inp);
     sim.dash(p, f.x * 18, f.z * 18, 0.32, SkillKey.q);
     return Use.spend;
   }
