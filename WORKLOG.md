@@ -56,6 +56,9 @@
 - 화면 확인 도구: `python tool/cdp_shot.py URL 출력.png --wait 15 --shots 3 --at 5:"자바스크립트"`
 
 ## 기록
+- 2026-11-12 요원 대사 영어: song/voice/voice_lines_en.txt(402줄 번역, id | 문장) → gen_voice.py가 json에 "en"으로 합치고
+  song/voice/en/<요원>/<id>.mp3 생성(영어는 목소리 12개를 요원마다 따로). 게임 언어가 영어면 영어 음성·자막·이름.
+  스닙 C 대사 "거기로 간다."(순간이동 시절) → "묶여 있어라." / "Stay put.".
 - 2026-11-12 요원 대사: new-modeling/voice/voice_lines.json → song/voice/ 복사, song/voice/gen_voice.py(edge-tts, 한국어
   목소리 3개 + 캐릭터별 높낮이·빠르기)로 402줄 mp3 생성. 녹음 파일을 같은 이름으로 넣으면 그게 쓰임.
   게임: audio.js 대사 버스(음량 따로), 줄 고르기(연속 반복 없음), 동시 2줄 제한, 스킬은 위치 소리, 팀원 대화(interactions)

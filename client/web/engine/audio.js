@@ -19,6 +19,7 @@ export class Audio {
     this.voiceBusy = new Map(); // speaker key -> true while that speaker talks
     this.voiceLast = new Map(); // agent/event -> last line id (no repeats)
     this.caption = ''; // "seq|agent|text" of the latest line started
+    this.voiceLang = 'ko'; // 'ko' or 'en' (voice/en/<agent>/<id>.mp3, line.en)
     this.captionSeq = 0;
     this.playlist = null; // Promise<[{file, title}]>
     this.bgm = null; // { el, order, i } while the playlist plays
@@ -222,10 +223,13 @@ export class Audio {
     return true;
   }
 
+  setVoiceLang(lang) { this.voiceLang = lang === 'en' ? 'en' : 'ko'; }
+
   // Plays one line file; resolves when it ends.
   async sayLine(agent, line, key, pos) {
     const ctx = this.ensure();
-    const buf = await this.buffer(`voice/${agent}/${line.id}.mp3`);
+    const en = this.voiceLang === 'en' && line.en;
+    const buf = await this.buffer(`voice/${en ? 'en/' : ''}${agent}/${line.id}.mp3`);
     if (!buf) return;
     const src = ctx.createBufferSource();
     src.buffer = buf;
@@ -249,7 +253,7 @@ export class Audio {
     this.voiceBusy.set(key, true);
     this.voiceActive++;
     this.captionSeq++;
-    this.caption = `${this.captionSeq}|${agent}|${line.text}`;
+    this.caption = `${this.captionSeq}|${agent}|${en ? line.en : line.text}`;
     await new Promise((resolve) => {
       src.onended = resolve;
       src.start();

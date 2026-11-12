@@ -1,0 +1,403 @@
+# English agent lines: <id> | <text>. Same ids as voice_lines.json.
+boulder_select_01 | The mountain does not move.
+boulder_select_02 | Boulder. I stand in front.
+boulder_match_start_01 | Stay behind me.
+boulder_match_start_02 | Hit me. You'll be the one that breaks.
+boulder_respawn_01 | Stacking up again.
+boulder_respawn_02 | Stones roll back.
+boulder_skill_q_01 | Blocking!
+boulder_skill_q_02 | Wall's up. Take cover.
+boulder_skill_e_01 | Out of my way!
+boulder_skill_e_02 | Straight into the wall!
+boulder_skill_shift_01 | Hot. Catch.
+boulder_ult_ready_01 | The ground rumbles. Ready.
+boulder_ult_ally_01 | Hammer coming down! Stay close!
+boulder_ult_enemy_01 | The earth rejects you!
+boulder_kill_01 | Broken.
+boulder_kill_02 | Light.
+boulder_kill_03 | Next.
+boulder_multikill_01 | They all crumbled at once.
+boulder_death_01 | ...Cracked.
+boulder_death_02 | I'll... stack up again.
+boulder_low_hp_01 | Cracking. Need healing.
+boulder_low_hp_02 | Still standing... barely.
+boulder_reload_01 | Reloading.
+boulder_thanks_01 | Thanks. Solid again.
+boulder_call_help_01 | I'm being pushed. Come.
+boulder_enemy_spotted_01 | Enemy. There.
+boulder_capture_start_01 | On the point. Holding.
+boulder_point_captured_01 | Point secured. Not giving it up.
+boulder_point_losing_01 | Losing the point. Group up.
+boulder_victory_01 | The mountain did not fall.
+boulder_victory_02 | Good hold.
+boulder_defeat_01 | ...Harder next time.
+boulder_defeat_02 | Turned to sand.
+cardboard_select_01 | Cardboard, starting deliveries!
+cardboard_select_02 | Handle with care! But I'm the one doing the breaking.
+cardboard_match_start_01 | Big load today, folks! Let's roll!
+cardboard_match_start_02 | Everybody packed up tight?
+cardboard_respawn_01 | Redelivery on the way!
+cardboard_respawn_02 | Returned to sender, and back again!
+cardboard_skill_q_01 | All packed! Stay inside!
+cardboard_skill_e_01 | Rolling through, coming through!
+cardboard_skill_shift_01 | Over here, you're taped!
+cardboard_ult_ready_01 | Bulk delivery ready!
+cardboard_ult_ally_01 | Special deliveryyyy!
+cardboard_ult_enemy_01 | No refusing this package!
+cardboard_kill_01 | Delivered!
+cardboard_kill_02 | No signature needed.
+cardboard_kill_03 | Cash on delivery~
+cardboard_multikill_01 | Bundle delivery complete!
+cardboard_death_01 | Oof, I got crushed...
+cardboard_death_02 | Damaged... in transit...
+cardboard_low_hp_01 | My box is falling apart! Tape, please!
+cardboard_low_hp_02 | I'm a soggy box, help!
+cardboard_reload_01 | Repacking!
+cardboard_thanks_01 | Good as a brand-new box!
+cardboard_call_help_01 | Packages piling up here! Need backup!
+cardboard_enemy_spotted_01 | Unclaimed customer over there!
+cardboard_capture_start_01 | Arrived at the point! Unloading!
+cardboard_point_captured_01 | Point received!
+cardboard_point_losing_01 | They're taking the point! Don't let it get returned!
+cardboard_victory_01 | Another accident-free delivery!
+cardboard_victory_02 | All packages delivered! Clocking out!
+cardboard_defeat_01 | ...Delivery delayed today.
+cardboard_defeat_02 | Next time, express shipping.
+shear_select_01 | Shear. Lots to trim.
+shear_select_02 | Shield up, blade sharp.
+shear_match_start_01 | Stick close. I take the hits first.
+shear_match_start_02 | Alright, pruning time.
+shear_respawn_01 | Blade's sharp again.
+shear_respawn_02 | One cut doesn't finish me.
+shear_skill_q_01 | Go on, hit me. You'll get it back.
+shear_skill_e_01 | Coming from above!
+shear_skill_shift_01 | Don't cross that line!
+shear_ult_ready_01 | Blade rain is ready.
+shear_ult_ally_01 | Blades incoming! Follow me in!
+shear_ult_enemy_01 | Take a look at the sky.
+shear_kill_01 | Clean cut.
+shear_kill_02 | Overgrowth gets trimmed.
+shear_kill_03 | Next branch.
+shear_multikill_01 | Cut them all down in one go!
+shear_death_01 | Tch... blade was dull.
+shear_death_02 | Deeper... next time...
+shear_low_hp_01 | Shield's cracked! Heal me!
+shear_low_hp_02 | Bleeding bad. Somebody!
+shear_reload_01 | Reloading.
+shear_thanks_01 | Good, sharp again.
+shear_call_help_01 | Can't hold alone! Get over here!
+shear_enemy_spotted_01 | There. Some overgrowth.
+shear_capture_start_01 | On the point. Guarding it.
+shear_point_captured_01 | Point's ours. Anyone eyeing it gets cut.
+shear_point_losing_01 | Losing the point! Everyone, here!
+shear_victory_01 | Neatly trimmed.
+shear_victory_02 | Nice work, all of you.
+shear_defeat_01 | ...Need to sharpen up.
+shear_defeat_02 | We got trimmed this time.
+origami_select_01 | One sheet is enough.
+origami_select_02 | Origami. Fold, cut, vanish.
+origami_match_start_01 | Let's move quietly.
+origami_match_start_02 | Follow the creases and the path appears.
+origami_respawn_01 | Folding again.
+origami_respawn_02 | Crumpled? Just smooth it out.
+origami_skill_q_01 | Riding the wind.
+origami_skill_e_01 | Fold.
+origami_skill_shift_01 | Fly, little crane.
+origami_ult_ready_01 | The stars are all folded.
+origami_ult_ally_01 | Shuriken storm. I'll open the way.
+origami_ult_enemy_01 | Nowhere to hide.
+origami_kill_01 | One sheet.
+origami_kill_02 | You never felt the cut.
+origami_kill_03 | Crumpled.
+origami_multikill_01 | Paper snow is falling.
+origami_death_01 | ...Torn.
+origami_death_02 | Folded... the wrong line.
+origami_low_hp_01 | I'm thin. Need healing.
+origami_low_hp_02 | About to tear.
+origami_reload_01 | Reloading.
+origami_thanks_01 | ...Thank you.
+origami_call_help_01 | Too much to fold alone. Come.
+origami_enemy_spotted_01 | Enemy. There.
+origami_capture_start_01 | On the point.
+origami_point_captured_01 | Point folded in.
+origami_point_losing_01 | The point is slipping. Back to it.
+origami_victory_01 | Neatly folded.
+origami_victory_02 | Well done, everyone.
+origami_defeat_01 | ...We can fold again.
+origami_defeat_02 | This round got crumpled.
+pebble_select_01 | Pebble's here! Think I'm small? That's gonna hurt!
+pebble_select_02 | Tap, tap, tap! I bounce anywhere!
+pebble_match_start_01 | Race you! Who gets there first?
+pebble_match_start_02 | I'll pave a pebble path, follow me!
+pebble_respawn_01 | Ta-da, I'm back!
+pebble_respawn_02 | Restart~ They won't hit me this time!
+pebble_skill_q_01 | Tap!
+pebble_skill_q_02 | Here~ no, here!
+pebble_skill_e_01 | Undo that!
+pebble_skill_shift_01 | I see everything~
+pebble_ult_ready_01 | Ka-boom is ready!
+pebble_ult_ally_01 | Sticky charge on! Get clear!
+pebble_ult_enemy_01 | A present for you, catch!
+pebble_kill_01 | Ouch, right?
+pebble_kill_02 | Tiny stones hurt more, nyeh!
+pebble_kill_03 | Got one!
+pebble_multikill_01 | Whoa, got a whole bunch!
+pebble_death_01 | Aw, should've rewound...
+pebble_death_02 | No fair!
+pebble_low_hp_01 | Ow ow! Somebody fix me!
+pebble_low_hp_02 | Uh-oh, I'm almost out!
+pebble_reload_01 | Reloading!
+pebble_thanks_01 | Hehe, thanks!
+pebble_call_help_01 | Too many here! Help!
+pebble_enemy_spotted_01 | There, over there!
+pebble_capture_start_01 | Tagged the point!
+pebble_point_captured_01 | Point's ours~!
+pebble_point_losing_01 | They're taking the point! Hurry, hurry!
+pebble_victory_01 | We wo-on! Best ever!
+pebble_victory_02 | See? Little stone power!
+pebble_defeat_01 | Aww... again!
+pebble_defeat_02 | We lost... but it was fun.
+snip_select_01 | Snip. One cut is all it takes.
+snip_select_02 | Snip. That's enough.
+snip_match_start_01 | Follow me or don't.
+snip_match_start_02 | How many will I cut today.
+snip_respawn_01 | Just lucky.
+snip_respawn_02 | Back to the hunt.
+snip_skill_q_01 | Cutting through!
+snip_skill_e_01 | Have it back.
+snip_skill_shift_01 | Beacon out.
+snip_skill_shift_02 | Stay put.
+snip_ult_ready_01 | The blades are ready to split.
+snip_ult_ally_01 | Twin edge, unleashed!
+snip_ult_enemy_01 | How does it feel to be cut twice.
+snip_kill_01 | Snip.
+snip_kill_02 | Too slow.
+snip_kill_03 | Never turn your back on a wolf.
+snip_multikill_01 | Took down the whole pack.
+snip_death_01 | ...Got careless.
+snip_death_02 | Next time... I won't miss.
+snip_low_hp_01 | Deep wound. Heal.
+snip_low_hp_02 | I smell blood... mine.
+snip_reload_01 | Reloading.
+snip_thanks_01 | ...I owe you.
+snip_call_help_01 | Too many. Get here.
+snip_enemy_spotted_01 | I smell them. That way.
+snip_capture_start_01 | The point.
+snip_point_captured_01 | The point is our territory.
+snip_point_losing_01 | Losing our territory. Go back.
+snip_victory_01 | As expected.
+snip_victory_02 | Good hunt.
+snip_defeat_01 | ...Sharpening the blade again.
+snip_defeat_02 | This hunt failed.
+gem_select_01 | I'm Gem! I'll keep you all sparkly and safe.
+gem_select_02 | Call me anytime you get hurt~
+gem_match_start_01 | Have a sparkly day, everyone!
+gem_match_start_02 | Keep my crystal right over your head!
+gem_respawn_01 | Time to shine again!
+gem_respawn_02 | I'm back~!
+gem_skill_q_01 | Crystal for you!
+gem_skill_e_01 | Fight here and you'll be stronger!
+gem_skill_shift_01 | Ding~ You're all better now!
+gem_ult_ready_01 | My sanctum is ready to bloom!
+gem_ult_ally_01 | Crystal sanctum! Gather behind the tree!
+gem_ult_enemy_01 | Oh my, this is our garden.
+gem_kill_01 | Oh my, did that hit?
+gem_kill_02 | Sparkle, and done!
+gem_kill_03 | Sorry~ No, not sorry!
+gem_multikill_01 | Oh my, they all fell down?
+gem_death_01 | Ah, I'm cracked...
+gem_death_02 | My tail...
+gem_low_hp_01 | I'm hurt too! Cover me!
+gem_low_hp_02 | My light is fading...
+gem_reload_01 | Recharging!
+gem_thanks_01 | Oh, thank you!
+gem_call_help_01 | It's dangerous here! Please come!
+gem_enemy_spotted_01 | Enemy over there!
+gem_capture_start_01 | I'm on the point!
+gem_point_captured_01 | The point is ours! Sparkle!
+gem_point_losing_01 | They're taking the point!
+gem_victory_01 | Everyone sparkled so bright!
+gem_victory_02 | We won! Nobody's hurt, right?
+gem_defeat_01 | It's okay, we'll shine brighter next time.
+gem_defeat_02 | Sniff... so close.
+needle_select_01 | Needle. I'll stitch you up. Don't cry about it.
+needle_select_02 | Needle's threaded. Let's go.
+needle_match_start_01 | Don't get hurt. Don't make more work for me.
+needle_match_start_02 | My thread only goes so far. Don't wander off.
+needle_respawn_01 | Back on shift.
+needle_respawn_02 | Stitched up. I'm back.
+needle_skill_q_01 | Thread's attached. Stay close.
+needle_skill_e_01 | Sleep tight.
+needle_skill_shift_01 | Stitch grenade. Their healing is done.
+needle_ult_ready_01 | Nano stitch is ready.
+needle_ult_ally_01 | Nano stitch. Now, push!
+needle_ult_enemy_01 | Hit all you want. It won't matter.
+needle_kill_01 | Surgery failed.
+needle_kill_02 | Sorry, no anesthesia.
+needle_kill_03 | Treated.
+needle_multikill_01 | More patients. On their side.
+needle_death_01 | ...Thread snapped.
+needle_death_02 | If I'm hurt... who stitches me...
+needle_low_hp_01 | The doctor's hurt. Cover me.
+needle_low_hp_02 | Heavy bleeding. Hurry.
+needle_reload_01 | Reloading.
+needle_thanks_01 | ...That's better. Thanks.
+needle_call_help_01 | Too many patients. Backup.
+needle_enemy_spotted_01 | Enemy spotted. There.
+needle_capture_start_01 | Entering the point.
+needle_point_captured_01 | Point secured. Anyone hurt?
+needle_point_losing_01 | Losing the point. Let's go.
+needle_victory_01 | Everyone's alive. Good.
+needle_victory_02 | Surgery successful.
+needle_defeat_01 | ...Diagnosis done. Fix it next time.
+needle_defeat_02 | Thread ran short today.
+scroll_select_01 | I am Scroll. I shall record this battle.
+scroll_select_02 | I have brought talismans aplenty.
+scroll_match_start_01 | Do not rush. A text must be read to the end.
+scroll_match_start_02 | Stay near the lantern, all of you.
+scroll_respawn_01 | I turn to the next chapter.
+scroll_respawn_02 | This tale is not yet over.
+scroll_skill_q_01 | Step within the seal!
+scroll_skill_e_01 | A talisman. It will shield you once.
+scroll_skill_shift_01 | None fall beneath the lantern!
+scroll_ult_ready_01 | It is time to unroll the grand scroll.
+scroll_ult_ally_01 | The grand scroll unfurls! Be protected, all!
+scroll_ult_enemy_01 | I shall write this chapter as your defeat.
+scroll_kill_01 | Duly recorded.
+scroll_kill_02 | A full stop.
+scroll_kill_03 | One line struck out.
+scroll_multikill_01 | A whole page has turned.
+scroll_death_01 | Ah... my brush has snapped.
+scroll_death_02 | In the next... chapter...
+scroll_low_hp_01 | This old man is wounded. Aid me.
+scroll_low_hp_02 | My paper is about to tear.
+scroll_reload_01 | Reloading.
+scroll_thanks_01 | My thanks, young one.
+scroll_call_help_01 | We are short of hands here!
+scroll_enemy_spotted_01 | An enemy, over there.
+scroll_capture_start_01 | I have entered the point.
+scroll_point_captured_01 | The point is ours. I shall record it.
+scroll_point_losing_01 | The point is slipping away! Make haste!
+scroll_victory_01 | A splendid tale.
+scroll_victory_02 | I shall write the chapter of victory.
+scroll_defeat_01 | Defeat is a record too. We redeem it next chapter.
+scroll_defeat_02 | Ho ho, a pity.
+inkwell_select_01 | Inkwell. I'll paint this round my colors.
+inkwell_select_02 | Hmm... quite a big canvas today.
+inkwell_match_start_01 | No rush. Sketch first.
+inkwell_match_start_02 | Don't step in my ink. Oh, not you, them.
+inkwell_respawn_01 | Shall I pick up the brush again.
+inkwell_respawn_02 | Here for another coat.
+inkwell_skill_q_01 | Ink splash.
+inkwell_skill_q_02 | Can't see, can you?
+inkwell_skill_e_01 | Watch your step~
+inkwell_skill_shift_01 | It spreads that way.
+inkwell_ult_ready_01 | Big brush, ready.
+inkwell_ult_ally_01 | Brush wall! One stroke splits them!
+inkwell_ult_enemy_01 | You're not in this picture.
+inkwell_kill_01 | Erased.
+inkwell_kill_02 | Smudged.
+inkwell_kill_03 | Shouldn't mess with a cat.
+inkwell_multikill_01 | Wiped them all in one stroke.
+inkwell_death_01 | Ah... ruined my painting.
+inkwell_death_02 | My paint... dried up.
+inkwell_low_hp_01 | My fur's soaked. Heal me.
+inkwell_low_hp_02 | Ow. Don't bother me...
+inkwell_reload_01 | Reload, reload.
+inkwell_thanks_01 | Hmph, thanks.
+inkwell_call_help_01 | Come over here? Too much to paint alone.
+inkwell_enemy_spotted_01 | Hey, found a smudge.
+inkwell_capture_start_01 | Paws on the point.
+inkwell_point_captured_01 | Painted the point our color.
+inkwell_point_losing_01 | Our color's being erased.
+inkwell_victory_01 | Done. Rather nice work.
+inkwell_victory_02 | Phew, nap time.
+inkwell_defeat_01 | ...Let's tear this one up.
+inkwell_defeat_02 | Hmph, I'll paint it again on the next page.
+quake_select_01 | Quake's up! Let's shake the ground!
+quake_select_02 | The furnace is lit! Let's go!
+quake_match_start_01 | Watch your feet, everyone! I'm about to shake things!
+quake_match_start_02 | Let's keep it hot today!
+quake_respawn_01 | Heated up again!
+quake_respawn_02 | This fire doesn't go out that easy!
+quake_skill_q_01 | Turret's down! It shoots on its own!
+quake_skill_e_01 | Trap's set! Go on, step on it!
+quake_skill_shift_01 | Overheat! Hot hot!
+quake_ult_ready_01 | Lava's boiling! Ready whenever!
+quake_ult_ally_01 | Lava eruption! Don't burn your feet!
+quake_ult_enemy_01 | Things are getting hot down there!
+quake_kill_01 | Melted!
+quake_kill_02 | Boom! One shot!
+quake_kill_03 | Cooled right off!
+quake_multikill_01 | Melted the whole lot!
+quake_death_01 | Argh, the fire's out...
+quake_death_02 | Cooled off... hang on...
+quake_low_hp_01 | Engine overheating! Heal me!
+quake_low_hp_02 | Hot! No wait, it hurts!
+quake_reload_01 | Loading up!
+quake_thanks_01 | Oh! Fired up again!
+quake_call_help_01 | It's a big fight here! Everyone come!
+quake_enemy_spotted_01 | There! Right there!
+quake_capture_start_01 | On the point! Shaking it!
+quake_point_captured_01 | Point taken! The ground is on our side!
+quake_point_losing_01 | The point's shaking! Hold it!
+quake_victory_01 | We won! Best firepower ever!
+quake_victory_02 | Even the ground is cheering for us!
+quake_defeat_01 | Grr... hotter next time.
+quake_defeat_02 | The embers are still alive. Next round!
+staple_select_01 | Staple online. Beginning work.
+staple_select_02 | Filing mode. Enemies will be stapled.
+staple_match_start_01 | Business hours. Attendance confirmed.
+staple_match_start_02 | Distributing the operation memo. Please review.
+staple_respawn_01 | Reboot complete.
+staple_respawn_02 | Restored from backup.
+staple_skill_q_01 | Sentry secured.
+staple_skill_e_01 | Wire installed. Approaches will be reported.
+staple_skill_shift_01 | Alarm bot deployed. Beep beep.
+staple_ult_ready_01 | Steel lockdown, awaiting approval.
+staple_ult_ally_01 | Steel lockdown approved. Stapling all enemies in range.
+staple_ult_enemy_01 | Warning. This area is now locked down.
+staple_kill_01 | Processed.
+staple_kill_02 | Stapled.
+staple_kill_03 | One document filed.
+staple_multikill_01 | Batch processing complete.
+staple_death_01 | Error... occurred...
+staple_death_02 | Paper jam... system... halted.
+staple_low_hp_01 | Damage warning. Requesting repair.
+staple_low_hp_02 | Durability at critical level.
+staple_reload_01 | Refilling staples.
+staple_thanks_01 | Repair confirmed. Thank you.
+staple_call_help_01 | Workload exceeded. Requesting support.
+staple_enemy_spotted_01 | Enemy detected. Sharing coordinates.
+staple_capture_start_01 | Entering the point. Beginning occupancy procedure.
+staple_point_captured_01 | Point registered.
+staple_point_losing_01 | Point ownership transferring. Please intervene.
+staple_victory_01 | Task complete. Clocking out.
+staple_victory_02 | Writing the victory report.
+staple_defeat_01 | Result: rejected. I will resubmit.
+staple_defeat_02 | Defeat logged. Reviewing improvements.
+talk_quake_boulder_01 | Boulder! You'll tank everything up front again, right?
+talk_quake_boulder_02 | If you don't set anything on fire.
+talk_quake_boulder_03 | Can't promise that!
+talk_snip_shear_01 | I'll cut more than you today.
+talk_snip_shear_02 | Your mouth's faster than your blade, kid.
+talk_snip_origami_01 | Paper ninja. Stay out of my way today.
+talk_snip_origami_02 | As long as you don't charge ahead first.
+talk_cardboard_origami_01 | Miss Origami! You'll help me pack today too, right?
+talk_cardboard_origami_02 | ...Paper cranes don't do deliveries.
+talk_scroll_inkwell_01 | Young cat, do not spill ink on my scroll.
+talk_scroll_inkwell_02 | Hmm, it'd look prettier that way.
+talk_pebble_gem_01 | Gem! I'm a sparkly stone too!
+talk_pebble_gem_02 | Then let me polish you up, sparkle sparkle~
+talk_needle_scroll_01 | Grandpa, talismans have no medical basis.
+talk_needle_scroll_02 | Ho ho, so long as they work.
+talk_staple_cardboard_01 | Cardboard. I will assist with box sealing duties.
+talk_staple_cardboard_02 | Oh, Staple! Staple 'em tight today!
+talk_needle_snip_01 | Come back cut up again and I stitch you without anesthesia.
+talk_needle_snip_02 | ...Then I just won't get hurt.
+talk_quake_staple_01 | Tin can! Don't overheat!
+talk_quake_staple_02 | Correction. Not a tin can. An office automation device.
+talk_shear_boulder_01 | Boulder, don't doze off behind your wall.
+talk_shear_boulder_02 | ...Wasn't sleeping.
+talk_inkwell_gem_01 | Fox, tone down the sparkle. It's blinding.
+talk_inkwell_gem_02 | Cats like sparkly things too~

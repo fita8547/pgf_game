@@ -77,6 +77,7 @@ extension type RpsAudio._(JSObject _) implements JSObject {
   external JSPromise<JSAny?> voice(String agent, String event, int speaker, bool important, JSArray<JSNumber>? pos);
   external JSPromise<JSAny?> voiceTalk(String agentsCsv);
   external String voiceCaption();
+  external void setVoiceLang(String lang);
 }
 
 extension type RpsInput._(JSObject _) implements JSObject {

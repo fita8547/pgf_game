@@ -101,177 +101,210 @@
     "select": [
      {
       "id": "boulder_select_01",
-      "text": "산은 움직이지 않는다."
+      "text": "산은 움직이지 않는다.",
+      "en": "The mountain does not move."
      },
      {
       "id": "boulder_select_02",
-      "text": "볼더. 앞은 내가 선다."
+      "text": "볼더. 앞은 내가 선다.",
+      "en": "Boulder. I stand in front."
      }
     ],
     "match_start": [
      {
       "id": "boulder_match_start_01",
-      "text": "내 뒤에 서라."
+      "text": "내 뒤에 서라.",
+      "en": "Stay behind me."
      },
      {
       "id": "boulder_match_start_02",
-      "text": "부딪쳐 봐라. 부서지는 건 그쪽이다."
+      "text": "부딪쳐 봐라. 부서지는 건 그쪽이다.",
+      "en": "Hit me. You'll be the one that breaks."
      }
     ],
     "respawn": [
      {
       "id": "boulder_respawn_01",
-      "text": "다시 쌓는다."
+      "text": "다시 쌓는다.",
+      "en": "Stacking up again."
      },
      {
       "id": "boulder_respawn_02",
-      "text": "돌은 다시 굴러온다."
+      "text": "돌은 다시 굴러온다.",
+      "en": "Stones roll back."
      }
     ],
     "skill_q": [
      {
       "id": "boulder_skill_q_01",
-      "text": "막는다!"
+      "text": "막는다!",
+      "en": "Blocking!"
      },
      {
       "id": "boulder_skill_q_02",
-      "text": "벽 세운다. 숨어라."
+      "text": "벽 세운다. 숨어라.",
+      "en": "Wall's up. Take cover."
      }
     ],
     "skill_e": [
      {
       "id": "boulder_skill_e_01",
-      "text": "비켜라!"
+      "text": "비켜라!",
+      "en": "Out of my way!"
      },
      {
       "id": "boulder_skill_e_02",
-      "text": "벽까지 간다!"
+      "text": "벽까지 간다!",
+      "en": "Straight into the wall!"
      }
     ],
     "skill_shift": [
      {
       "id": "boulder_skill_shift_01",
-      "text": "뜨겁다. 받아라."
+      "text": "뜨겁다. 받아라.",
+      "en": "Hot. Catch."
      }
     ],
     "ult_ready": [
      {
       "id": "boulder_ult_ready_01",
-      "text": "땅이 울린다. 준비됐다."
+      "text": "땅이 울린다. 준비됐다.",
+      "en": "The ground rumbles. Ready."
      }
     ],
     "ult_ally": [
      {
       "id": "boulder_ult_ally_01",
-      "text": "망치 내려간다! 붙어라!"
+      "text": "망치 내려간다! 붙어라!",
+      "en": "Hammer coming down! Stay close!"
      }
     ],
     "ult_enemy": [
      {
       "id": "boulder_ult_enemy_01",
-      "text": "대지가 너희를 거부한다!"
+      "text": "대지가 너희를 거부한다!",
+      "en": "The earth rejects you!"
      }
     ],
     "kill": [
      {
       "id": "boulder_kill_01",
-      "text": "부서졌군."
+      "text": "부서졌군.",
+      "en": "Broken."
      },
      {
       "id": "boulder_kill_02",
-      "text": "가벼웠다."
+      "text": "가벼웠다.",
+      "en": "Light."
      },
      {
       "id": "boulder_kill_03",
-      "text": "다음."
+      "text": "다음.",
+      "en": "Next."
      }
     ],
     "multikill": [
      {
       "id": "boulder_multikill_01",
-      "text": "한꺼번에 무너졌다."
+      "text": "한꺼번에 무너졌다.",
+      "en": "They all crumbled at once."
      }
     ],
     "death": [
      {
       "id": "boulder_death_01",
-      "text": "...금이 갔군."
+      "text": "...금이 갔군.",
+      "en": "...Cracked."
      },
      {
       "id": "boulder_death_02",
-      "text": "다시... 쌓는다."
+      "text": "다시... 쌓는다.",
+      "en": "I'll... stack up again."
      }
     ],
     "low_hp": [
      {
       "id": "boulder_low_hp_01",
-      "text": "금이 가고 있다. 치료."
+      "text": "금이 가고 있다. 치료.",
+      "en": "Cracking. Need healing."
      },
      {
       "id": "boulder_low_hp_02",
-      "text": "아직 서 있다... 간신히."
+      "text": "아직 서 있다... 간신히.",
+      "en": "Still standing... barely."
      }
     ],
     "reload": [
      {
       "id": "boulder_reload_01",
-      "text": "장전."
+      "text": "장전.",
+      "en": "Reloading."
      }
     ],
     "thanks": [
      {
       "id": "boulder_thanks_01",
-      "text": "고맙다. 단단해졌다."
+      "text": "고맙다. 단단해졌다.",
+      "en": "Thanks. Solid again."
      }
     ],
     "call_help": [
      {
       "id": "boulder_call_help_01",
-      "text": "내 쪽이 밀린다. 와라."
+      "text": "내 쪽이 밀린다. 와라.",
+      "en": "I'm being pushed. Come."
      }
     ],
     "enemy_spotted": [
      {
       "id": "boulder_enemy_spotted_01",
-      "text": "적이다. 저기."
+      "text": "적이다. 저기.",
+      "en": "Enemy. There."
      }
     ],
     "capture_start": [
      {
       "id": "boulder_capture_start_01",
-      "text": "거점 밟았다. 버틴다."
+      "text": "거점 밟았다. 버틴다.",
+      "en": "On the point. Holding."
      }
     ],
     "point_captured": [
      {
       "id": "boulder_point_captured_01",
-      "text": "거점 확보. 여긴 안 내준다."
+      "text": "거점 확보. 여긴 안 내준다.",
+      "en": "Point secured. Not giving it up."
      }
     ],
     "point_losing": [
      {
       "id": "boulder_point_losing_01",
-      "text": "거점이 깎인다. 모여라."
+      "text": "거점이 깎인다. 모여라.",
+      "en": "Losing the point. Group up."
      }
     ],
     "victory": [
      {
       "id": "boulder_victory_01",
-      "text": "산은 무너지지 않았다."
+      "text": "산은 무너지지 않았다.",
+      "en": "The mountain did not fall."
      },
      {
       "id": "boulder_victory_02",
-      "text": "잘 버텼다."
+      "text": "잘 버텼다.",
+      "en": "Good hold."
      }
     ],
     "defeat": [
      {
       "id": "boulder_defeat_01",
-      "text": "...다음엔 더 단단하게."
+      "text": "...다음엔 더 단단하게.",
+      "en": "...Harder next time."
      },
      {
       "id": "boulder_defeat_02",
-      "text": "모래가 됐군."
+      "text": "모래가 됐군.",
+      "en": "Turned to sand."
      }
     ]
    }
@@ -284,169 +317,200 @@
     "select": [
      {
       "id": "cardboard_select_01",
-      "text": "카드보드, 배송 시작합니다!"
+      "text": "카드보드, 배송 시작합니다!",
+      "en": "Cardboard, starting deliveries!"
      },
      {
       "id": "cardboard_select_02",
-      "text": "파손 주의! 근데 파손시키는 건 제 쪽이에요."
+      "text": "파손 주의! 근데 파손시키는 건 제 쪽이에요.",
+      "en": "Handle with care! But I'm the one doing the breaking."
      }
     ],
     "match_start": [
      {
       "id": "cardboard_match_start_01",
-      "text": "자, 오늘 물량 많습니다! 출발!"
+      "text": "자, 오늘 물량 많습니다! 출발!",
+      "en": "Big load today, folks! Let's roll!"
      },
      {
       "id": "cardboard_match_start_02",
-      "text": "다들 포장 단단히 하셨죠?"
+      "text": "다들 포장 단단히 하셨죠?",
+      "en": "Everybody packed up tight?"
      }
     ],
     "respawn": [
      {
       "id": "cardboard_respawn_01",
-      "text": "재배송 들어갑니다!"
+      "text": "재배송 들어갑니다!",
+      "en": "Redelivery on the way!"
      },
      {
       "id": "cardboard_respawn_02",
-      "text": "반품됐다가 돌아왔어요!"
+      "text": "반품됐다가 돌아왔어요!",
+      "en": "Returned to sender, and back again!"
      }
     ],
     "skill_q": [
      {
       "id": "cardboard_skill_q_01",
-      "text": "포장 완료! 안에 계세요!"
+      "text": "포장 완료! 안에 계세요!",
+      "en": "All packed! Stay inside!"
      }
     ],
     "skill_e": [
      {
       "id": "cardboard_skill_e_01",
-      "text": "굴러갑니다, 비켜요!"
+      "text": "굴러갑니다, 비켜요!",
+      "en": "Rolling through, coming through!"
      }
     ],
     "skill_shift": [
      {
       "id": "cardboard_skill_shift_01",
-      "text": "이리 와요, 테이프 붙었어요!"
+      "text": "이리 와요, 테이프 붙었어요!",
+      "en": "Over here, you're taped!"
      }
     ],
     "ult_ready": [
      {
       "id": "cardboard_ult_ready_01",
-      "text": "대량 배송 준비 끝!"
+      "text": "대량 배송 준비 끝!",
+      "en": "Bulk delivery ready!"
      }
     ],
     "ult_ally": [
      {
       "id": "cardboard_ult_ally_01",
-      "text": "택배 왔습니다아아!"
+      "text": "택배 왔습니다아아!",
+      "en": "Special deliveryyyy!"
      }
     ],
     "ult_enemy": [
      {
       "id": "cardboard_ult_enemy_01",
-      "text": "수령 거부는 안 됩니다!"
+      "text": "수령 거부는 안 됩니다!",
+      "en": "No refusing this package!"
      }
     ],
     "kill": [
      {
       "id": "cardboard_kill_01",
-      "text": "배송 완료!"
+      "text": "배송 완료!",
+      "en": "Delivered!"
      },
      {
       "id": "cardboard_kill_02",
-      "text": "서명 안 하셔도 돼요."
+      "text": "서명 안 하셔도 돼요.",
+      "en": "No signature needed."
      },
      {
       "id": "cardboard_kill_03",
-      "text": "착불이에요~"
+      "text": "착불이에요~",
+      "en": "Cash on delivery~"
      }
     ],
     "multikill": [
      {
       "id": "cardboard_multikill_01",
-      "text": "묶음 배송 완료!"
+      "text": "묶음 배송 완료!",
+      "en": "Bundle delivery complete!"
      }
     ],
     "death": [
      {
       "id": "cardboard_death_01",
-      "text": "아이고, 찌그러졌다..."
+      "text": "아이고, 찌그러졌다...",
+      "en": "Oof, I got crushed..."
      },
      {
       "id": "cardboard_death_02",
-      "text": "파손... 됐네요..."
+      "text": "파손... 됐네요...",
+      "en": "Damaged... in transit..."
      }
     ],
     "low_hp": [
      {
       "id": "cardboard_low_hp_01",
-      "text": "상자가 너덜너덜해요! 테이프 좀!"
+      "text": "상자가 너덜너덜해요! 테이프 좀!",
+      "en": "My box is falling apart! Tape, please!"
      },
      {
       "id": "cardboard_low_hp_02",
-      "text": "젖은 상자예요, 살려 줘요!"
+      "text": "젖은 상자예요, 살려 줘요!",
+      "en": "I'm a soggy box, help!"
      }
     ],
     "reload": [
      {
       "id": "cardboard_reload_01",
-      "text": "재포장!"
+      "text": "재포장!",
+      "en": "Repacking!"
      }
     ],
     "thanks": [
      {
       "id": "cardboard_thanks_01",
-      "text": "덕분에 새 상자 됐어요!"
+      "text": "덕분에 새 상자 됐어요!",
+      "en": "Good as a brand-new box!"
      }
     ],
     "call_help": [
      {
       "id": "cardboard_call_help_01",
-      "text": "여기 물량 터졌어요! 지원 부탁!"
+      "text": "여기 물량 터졌어요! 지원 부탁!",
+      "en": "Packages piling up here! Need backup!"
      }
     ],
     "enemy_spotted": [
      {
       "id": "cardboard_enemy_spotted_01",
-      "text": "저기 미수령 고객 있어요!"
+      "text": "저기 미수령 고객 있어요!",
+      "en": "Unclaimed customer over there!"
      }
     ],
     "capture_start": [
      {
       "id": "cardboard_capture_start_01",
-      "text": "거점 도착! 하차 중!"
+      "text": "거점 도착! 하차 중!",
+      "en": "Arrived at the point! Unloading!"
      }
     ],
     "point_captured": [
      {
       "id": "cardboard_point_captured_01",
-      "text": "거점 접수 완료!"
+      "text": "거점 접수 완료!",
+      "en": "Point received!"
      }
     ],
     "point_losing": [
      {
       "id": "cardboard_point_losing_01",
-      "text": "거점 뺏기고 있어요! 반송되면 안 돼요!"
+      "text": "거점 뺏기고 있어요! 반송되면 안 돼요!",
+      "en": "They're taking the point! Don't let it get returned!"
      }
     ],
     "victory": [
      {
       "id": "cardboard_victory_01",
-      "text": "오늘도 무사고 배송!"
+      "text": "오늘도 무사고 배송!",
+      "en": "Another accident-free delivery!"
      },
      {
       "id": "cardboard_victory_02",
-      "text": "전 물량 완료! 퇴근!"
+      "text": "전 물량 완료! 퇴근!",
+      "en": "All packages delivered! Clocking out!"
      }
     ],
     "defeat": [
      {
       "id": "cardboard_defeat_01",
-      "text": "...오늘은 배송 지연이네요."
+      "text": "...오늘은 배송 지연이네요.",
+      "en": "...Delivery delayed today."
      },
      {
       "id": "cardboard_defeat_02",
-      "text": "다음엔 빠른 배송으로 갚아 줄게요."
+      "text": "다음엔 빠른 배송으로 갚아 줄게요.",
+      "en": "Next time, express shipping."
      }
     ]
    }
@@ -459,169 +523,200 @@
     "select": [
      {
       "id": "shear_select_01",
-      "text": "시어. 잘라낼 게 많군."
+      "text": "시어. 잘라낼 게 많군.",
+      "en": "Shear. Lots to trim."
      },
      {
       "id": "shear_select_02",
-      "text": "방패는 들고, 날은 세우고."
+      "text": "방패는 들고, 날은 세우고.",
+      "en": "Shield up, blade sharp."
      }
     ],
     "match_start": [
      {
       "id": "shear_match_start_01",
-      "text": "붙어. 내가 먼저 맞는다."
+      "text": "붙어. 내가 먼저 맞는다.",
+      "en": "Stick close. I take the hits first."
      },
      {
       "id": "shear_match_start_02",
-      "text": "자, 가지치기 시간이다."
+      "text": "자, 가지치기 시간이다.",
+      "en": "Alright, pruning time."
      }
     ],
     "respawn": [
      {
       "id": "shear_respawn_01",
-      "text": "다시 날 세웠다."
+      "text": "다시 날 세웠다.",
+      "en": "Blade's sharp again."
      },
      {
       "id": "shear_respawn_02",
-      "text": "한 번 잘렸다고 끝 아니야."
+      "text": "한 번 잘렸다고 끝 아니야.",
+      "en": "One cut doesn't finish me."
      }
     ],
     "skill_q": [
      {
       "id": "shear_skill_q_01",
-      "text": "쳐 봐. 그대로 돌려준다."
+      "text": "쳐 봐. 그대로 돌려준다.",
+      "en": "Go on, hit me. You'll get it back."
      }
     ],
     "skill_e": [
      {
       "id": "shear_skill_e_01",
-      "text": "위에서 간다!"
+      "text": "위에서 간다!",
+      "en": "Coming from above!"
      }
     ],
     "skill_shift": [
      {
       "id": "shear_skill_shift_01",
-      "text": "넘어오지 마!"
+      "text": "넘어오지 마!",
+      "en": "Don't cross that line!"
      }
     ],
     "ult_ready": [
      {
       "id": "shear_ult_ready_01",
-      "text": "칼날 비, 준비됐다."
+      "text": "칼날 비, 준비됐다.",
+      "en": "Blade rain is ready."
      }
     ],
     "ult_ally": [
      {
       "id": "shear_ult_ally_01",
-      "text": "칼날이 쏟아진다! 따라 들어와!"
+      "text": "칼날이 쏟아진다! 따라 들어와!",
+      "en": "Blades incoming! Follow me in!"
      }
     ],
     "ult_enemy": [
      {
       "id": "shear_ult_enemy_01",
-      "text": "하늘 좀 봐라."
+      "text": "하늘 좀 봐라.",
+      "en": "Take a look at the sky."
      }
     ],
     "kill": [
      {
       "id": "shear_kill_01",
-      "text": "깔끔하게 잘렸네."
+      "text": "깔끔하게 잘렸네.",
+      "en": "Clean cut."
      },
      {
       "id": "shear_kill_02",
-      "text": "웃자란 건 자른다."
+      "text": "웃자란 건 자른다.",
+      "en": "Overgrowth gets trimmed."
      },
      {
       "id": "shear_kill_03",
-      "text": "다음 가지."
+      "text": "다음 가지.",
+      "en": "Next branch."
      }
     ],
     "multikill": [
      {
       "id": "shear_multikill_01",
-      "text": "한 번에 다 쳐냈다!"
+      "text": "한 번에 다 쳐냈다!",
+      "en": "Cut them all down in one go!"
      }
     ],
     "death": [
      {
       "id": "shear_death_01",
-      "text": "칫... 날이 무뎠다."
+      "text": "칫... 날이 무뎠다.",
+      "en": "Tch... blade was dull."
      },
      {
       "id": "shear_death_02",
-      "text": "다음엔 더 깊게..."
+      "text": "다음엔 더 깊게...",
+      "en": "Deeper... next time..."
      }
     ],
     "low_hp": [
      {
       "id": "shear_low_hp_01",
-      "text": "방패 금 갔다! 치료!"
+      "text": "방패 금 갔다! 치료!",
+      "en": "Shield's cracked! Heal me!"
      },
      {
       "id": "shear_low_hp_02",
-      "text": "피 많이 흘렸다. 누가 좀!"
+      "text": "피 많이 흘렸다. 누가 좀!",
+      "en": "Bleeding bad. Somebody!"
      }
     ],
     "reload": [
      {
       "id": "shear_reload_01",
-      "text": "탄 채운다."
+      "text": "탄 채운다.",
+      "en": "Reloading."
      }
     ],
     "thanks": [
      {
       "id": "shear_thanks_01",
-      "text": "좋아, 다시 날 선다."
+      "text": "좋아, 다시 날 선다.",
+      "en": "Good, sharp again."
      }
     ],
     "call_help": [
      {
       "id": "shear_call_help_01",
-      "text": "혼자선 못 막아! 붙어!"
+      "text": "혼자선 못 막아! 붙어!",
+      "en": "Can't hold alone! Get over here!"
      }
     ],
     "enemy_spotted": [
      {
       "id": "shear_enemy_spotted_01",
-      "text": "저기. 웃자란 놈 있다."
+      "text": "저기. 웃자란 놈 있다.",
+      "en": "There. Some overgrowth."
      }
     ],
     "capture_start": [
      {
       "id": "shear_capture_start_01",
-      "text": "거점 들어왔다. 지킨다."
+      "text": "거점 들어왔다. 지킨다.",
+      "en": "On the point. Guarding it."
      }
     ],
     "point_captured": [
      {
       "id": "shear_point_captured_01",
-      "text": "거점 우리 거다. 넘보면 잘라."
+      "text": "거점 우리 거다. 넘보면 잘라.",
+      "en": "Point's ours. Anyone eyeing it gets cut."
      }
     ],
     "point_losing": [
      {
       "id": "shear_point_losing_01",
-      "text": "거점 깎인다! 다 와!"
+      "text": "거점 깎인다! 다 와!",
+      "en": "Losing the point! Everyone, here!"
      }
     ],
     "victory": [
      {
       "id": "shear_victory_01",
-      "text": "깔끔하게 정리됐다."
+      "text": "깔끔하게 정리됐다.",
+      "en": "Neatly trimmed."
      },
      {
       "id": "shear_victory_02",
-      "text": "잘했다, 다들."
+      "text": "잘했다, 다들.",
+      "en": "Nice work, all of you."
      }
     ],
     "defeat": [
      {
       "id": "shear_defeat_01",
-      "text": "...날 다시 갈아야겠군."
+      "text": "...날 다시 갈아야겠군.",
+      "en": "...Need to sharpen up."
      },
      {
       "id": "shear_defeat_02",
-      "text": "이번엔 우리가 잘렸네."
+      "text": "이번엔 우리가 잘렸네.",
+      "en": "We got trimmed this time."
      }
     ]
    }
@@ -634,169 +729,200 @@
     "select": [
      {
       "id": "origami_select_01",
-      "text": "한 장이면 충분해."
+      "text": "한 장이면 충분해.",
+      "en": "One sheet is enough."
      },
      {
       "id": "origami_select_02",
-      "text": "오리가미. 접고, 베고, 사라진다."
+      "text": "오리가미. 접고, 베고, 사라진다.",
+      "en": "Origami. Fold, cut, vanish."
      }
     ],
     "match_start": [
      {
       "id": "origami_match_start_01",
-      "text": "소리 없이 가자."
+      "text": "소리 없이 가자.",
+      "en": "Let's move quietly."
      },
      {
       "id": "origami_match_start_02",
-      "text": "접힌 선을 따라가면 길이 보여."
+      "text": "접힌 선을 따라가면 길이 보여.",
+      "en": "Follow the creases and the path appears."
      }
     ],
     "respawn": [
      {
       "id": "origami_respawn_01",
-      "text": "다시 접는다."
+      "text": "다시 접는다.",
+      "en": "Folding again."
      },
      {
       "id": "origami_respawn_02",
-      "text": "구겨져도 펴면 그만."
+      "text": "구겨져도 펴면 그만.",
+      "en": "Crumpled? Just smooth it out."
      }
     ],
     "skill_q": [
      {
       "id": "origami_skill_q_01",
-      "text": "바람을 탄다."
+      "text": "바람을 탄다.",
+      "en": "Riding the wind."
      }
     ],
     "skill_e": [
      {
       "id": "origami_skill_e_01",
-      "text": "접는다."
+      "text": "접는다.",
+      "en": "Fold."
      }
     ],
     "skill_shift": [
      {
       "id": "origami_skill_shift_01",
-      "text": "날아라, 학아."
+      "text": "날아라, 학아.",
+      "en": "Fly, little crane."
      }
     ],
     "ult_ready": [
      {
       "id": "origami_ult_ready_01",
-      "text": "표창이 다 접혔어."
+      "text": "표창이 다 접혔어.",
+      "en": "The stars are all folded."
      }
     ],
     "ult_ally": [
      {
       "id": "origami_ult_ally_01",
-      "text": "표창 폭풍. 길을 열게."
+      "text": "표창 폭풍. 길을 열게.",
+      "en": "Shuriken storm. I'll open the way."
      }
     ],
     "ult_enemy": [
      {
       "id": "origami_ult_enemy_01",
-      "text": "숨을 곳은 없어."
+      "text": "숨을 곳은 없어.",
+      "en": "Nowhere to hide."
      }
     ],
     "kill": [
      {
       "id": "origami_kill_01",
-      "text": "한 장."
+      "text": "한 장.",
+      "en": "One sheet."
      },
      {
       "id": "origami_kill_02",
-      "text": "베였다는 것도 몰랐겠지."
+      "text": "베였다는 것도 몰랐겠지.",
+      "en": "You never felt the cut."
      },
      {
       "id": "origami_kill_03",
-      "text": "구겨졌네."
+      "text": "구겨졌네.",
+      "en": "Crumpled."
      }
     ],
     "multikill": [
      {
       "id": "origami_multikill_01",
-      "text": "종이 눈이 내렸어."
+      "text": "종이 눈이 내렸어.",
+      "en": "Paper snow is falling."
      }
     ],
     "death": [
      {
       "id": "origami_death_01",
-      "text": "...찢어졌네."
+      "text": "...찢어졌네.",
+      "en": "...Torn."
      },
      {
       "id": "origami_death_02",
-      "text": "선을... 잘못 접었어."
+      "text": "선을... 잘못 접었어.",
+      "en": "Folded... the wrong line."
      }
     ],
     "low_hp": [
      {
       "id": "origami_low_hp_01",
-      "text": "얇아졌어. 치료가 필요해."
+      "text": "얇아졌어. 치료가 필요해.",
+      "en": "I'm thin. Need healing."
      },
      {
       "id": "origami_low_hp_02",
-      "text": "찢어지기 직전이야."
+      "text": "찢어지기 직전이야.",
+      "en": "About to tear."
      }
     ],
     "reload": [
      {
       "id": "origami_reload_01",
-      "text": "장전."
+      "text": "장전.",
+      "en": "Reloading."
      }
     ],
     "thanks": [
      {
       "id": "origami_thanks_01",
-      "text": "...고마워."
+      "text": "...고마워.",
+      "en": "...Thank you."
      }
     ],
     "call_help": [
      {
       "id": "origami_call_help_01",
-      "text": "혼자 접기엔 벅차. 와 줘."
+      "text": "혼자 접기엔 벅차. 와 줘.",
+      "en": "Too much to fold alone. Come."
      }
     ],
     "enemy_spotted": [
      {
       "id": "origami_enemy_spotted_01",
-      "text": "적. 저기."
+      "text": "적. 저기.",
+      "en": "Enemy. There."
      }
     ],
     "capture_start": [
      {
       "id": "origami_capture_start_01",
-      "text": "거점 위야."
+      "text": "거점 위야.",
+      "en": "On the point."
      }
     ],
     "point_captured": [
      {
       "id": "origami_point_captured_01",
-      "text": "거점, 접어 넣었어."
+      "text": "거점, 접어 넣었어.",
+      "en": "Point folded in."
      }
     ],
     "point_losing": [
      {
       "id": "origami_point_losing_01",
-      "text": "거점이 넘어가. 돌아가자."
+      "text": "거점이 넘어가. 돌아가자.",
+      "en": "The point is slipping. Back to it."
      }
     ],
     "victory": [
      {
       "id": "origami_victory_01",
-      "text": "깔끔하게 접혔네."
+      "text": "깔끔하게 접혔네.",
+      "en": "Neatly folded."
      },
      {
       "id": "origami_victory_02",
-      "text": "모두 수고했어."
+      "text": "모두 수고했어.",
+      "en": "Well done, everyone."
      }
     ],
     "defeat": [
      {
       "id": "origami_defeat_01",
-      "text": "...다시 접으면 돼."
+      "text": "...다시 접으면 돼.",
+      "en": "...We can fold again."
      },
      {
       "id": "origami_defeat_02",
-      "text": "이번 판은 구겨졌어."
+      "text": "이번 판은 구겨졌어.",
+      "en": "This round got crumpled."
      }
     ]
    }
@@ -809,173 +935,205 @@
     "select": [
      {
       "id": "pebble_select_01",
-      "text": "페블 등장! 작다고 무시하면 아프다?"
+      "text": "페블 등장! 작다고 무시하면 아프다?",
+      "en": "Pebble's here! Think I'm small? That's gonna hurt!"
      },
      {
       "id": "pebble_select_02",
-      "text": "톡, 톡, 톡! 어디든 튀어 간다!"
+      "text": "톡, 톡, 톡! 어디든 튀어 간다!",
+      "en": "Tap, tap, tap! I bounce anywhere!"
      }
     ],
     "match_start": [
      {
       "id": "pebble_match_start_01",
-      "text": "누가 제일 빨리 가나 시합하자!"
+      "text": "누가 제일 빨리 가나 시합하자!",
+      "en": "Race you! Who gets there first?"
      },
      {
       "id": "pebble_match_start_02",
-      "text": "자갈 길 깔아 줄게, 따라와!"
+      "text": "자갈 길 깔아 줄게, 따라와!",
+      "en": "I'll pave a pebble path, follow me!"
      }
     ],
     "respawn": [
      {
       "id": "pebble_respawn_01",
-      "text": "짠, 또 왔지!"
+      "text": "짠, 또 왔지!",
+      "en": "Ta-da, I'm back!"
      },
      {
       "id": "pebble_respawn_02",
-      "text": "다시 시작~ 이번엔 안 맞아!"
+      "text": "다시 시작~ 이번엔 안 맞아!",
+      "en": "Restart~ They won't hit me this time!"
      }
     ],
     "skill_q": [
      {
       "id": "pebble_skill_q_01",
-      "text": "톡!"
+      "text": "톡!",
+      "en": "Tap!"
      },
      {
       "id": "pebble_skill_q_02",
-      "text": "여기~ 아니 여기!"
+      "text": "여기~ 아니 여기!",
+      "en": "Here~ no, here!"
      }
     ],
     "skill_e": [
      {
       "id": "pebble_skill_e_01",
-      "text": "방금 거 취소!"
+      "text": "방금 거 취소!",
+      "en": "Undo that!"
      }
     ],
     "skill_shift": [
      {
       "id": "pebble_skill_shift_01",
-      "text": "다 보인다~"
+      "text": "다 보인다~",
+      "en": "I see everything~"
      }
     ],
     "ult_ready": [
      {
       "id": "pebble_ult_ready_01",
-      "text": "꽝 준비됐어!"
+      "text": "꽝 준비됐어!",
+      "en": "Ka-boom is ready!"
      }
     ],
     "ult_ally": [
      {
       "id": "pebble_ult_ally_01",
-      "text": "점착 폭약 붙였다! 떨어져!"
+      "text": "점착 폭약 붙였다! 떨어져!",
+      "en": "Sticky charge on! Get clear!"
      }
     ],
     "ult_enemy": [
      {
       "id": "pebble_ult_enemy_01",
-      "text": "선물이야, 받아!"
+      "text": "선물이야, 받아!",
+      "en": "A present for you, catch!"
      }
     ],
     "kill": [
      {
       "id": "pebble_kill_01",
-      "text": "아야, 했지?"
+      "text": "아야, 했지?",
+      "en": "Ouch, right?"
      },
      {
       "id": "pebble_kill_02",
-      "text": "작은 돌이 더 아프지롱!"
+      "text": "작은 돌이 더 아프지롱!",
+      "en": "Tiny stones hurt more, nyeh!"
      },
      {
       "id": "pebble_kill_03",
-      "text": "하나 잡았다!"
+      "text": "하나 잡았다!",
+      "en": "Got one!"
      }
     ],
     "multikill": [
      {
       "id": "pebble_multikill_01",
-      "text": "우와, 줄줄이 잡았다!"
+      "text": "우와, 줄줄이 잡았다!",
+      "en": "Whoa, got a whole bunch!"
      }
     ],
     "death": [
      {
       "id": "pebble_death_01",
-      "text": "아, 되감기 쓸걸..."
+      "text": "아, 되감기 쓸걸...",
+      "en": "Aw, should've rewound..."
      },
      {
       "id": "pebble_death_02",
-      "text": "치사해!"
+      "text": "치사해!",
+      "en": "No fair!"
      }
     ],
     "low_hp": [
      {
       "id": "pebble_low_hp_01",
-      "text": "아파 아파! 누가 좀 고쳐 줘!"
+      "text": "아파 아파! 누가 좀 고쳐 줘!",
+      "en": "Ow ow! Somebody fix me!"
      },
      {
       "id": "pebble_low_hp_02",
-      "text": "큰일 났다, 피 없어!"
+      "text": "큰일 났다, 피 없어!",
+      "en": "Uh-oh, I'm almost out!"
      }
     ],
     "reload": [
      {
       "id": "pebble_reload_01",
-      "text": "탄 채우는 중!"
+      "text": "탄 채우는 중!",
+      "en": "Reloading!"
      }
     ],
     "thanks": [
      {
       "id": "pebble_thanks_01",
-      "text": "헤헤, 고마워!"
+      "text": "헤헤, 고마워!",
+      "en": "Hehe, thanks!"
      }
     ],
     "call_help": [
      {
       "id": "pebble_call_help_01",
-      "text": "여기 너무 많아! 도와줘!"
+      "text": "여기 너무 많아! 도와줘!",
+      "en": "Too many here! Help!"
      }
     ],
     "enemy_spotted": [
      {
       "id": "pebble_enemy_spotted_01",
-      "text": "저기 있다, 저기!"
+      "text": "저기 있다, 저기!",
+      "en": "There, over there!"
      }
     ],
     "capture_start": [
      {
       "id": "pebble_capture_start_01",
-      "text": "거점 찍었다!"
+      "text": "거점 찍었다!",
+      "en": "Tagged the point!"
      }
     ],
     "point_captured": [
      {
       "id": "pebble_point_captured_01",
-      "text": "거점 우리 꺼~!"
+      "text": "거점 우리 꺼~!",
+      "en": "Point's ours~!"
      }
     ],
     "point_losing": [
      {
       "id": "pebble_point_losing_01",
-      "text": "거점 뺏긴다! 빨리빨리!"
+      "text": "거점 뺏긴다! 빨리빨리!",
+      "en": "They're taking the point! Hurry, hurry!"
      }
     ],
     "victory": [
      {
       "id": "pebble_victory_01",
-      "text": "이겼다아! 최고!"
+      "text": "이겼다아! 최고!",
+      "en": "We wo-on! Best ever!"
      },
      {
       "id": "pebble_victory_02",
-      "text": "봤지? 작은 돌의 힘!"
+      "text": "봤지? 작은 돌의 힘!",
+      "en": "See? Little stone power!"
      }
     ],
     "defeat": [
      {
       "id": "pebble_defeat_01",
-      "text": "에이... 다시 해!"
+      "text": "에이... 다시 해!",
+      "en": "Aww... again!"
      },
      {
       "id": "pebble_defeat_02",
-      "text": "졌다... 그래도 재밌었어."
+      "text": "졌다... 그래도 재밌었어.",
+      "en": "We lost... but it was fun."
      }
     ]
    }
@@ -988,173 +1146,205 @@
     "select": [
      {
       "id": "snip_select_01",
-      "text": "스닙. 칼 한 번이면 끝난다."
+      "text": "스닙. 칼 한 번이면 끝난다.",
+      "en": "Snip. One cut is all it takes."
      },
      {
       "id": "snip_select_02",
-      "text": "싹둑. 그거면 돼."
+      "text": "싹둑. 그거면 돼.",
+      "en": "Snip. That's enough."
      }
     ],
     "match_start": [
      {
       "id": "snip_match_start_01",
-      "text": "따라오든가, 말든가."
+      "text": "따라오든가, 말든가.",
+      "en": "Follow me or don't."
      },
      {
       "id": "snip_match_start_02",
-      "text": "오늘은 몇이나 베일까."
+      "text": "오늘은 몇이나 베일까.",
+      "en": "How many will I cut today."
      }
     ],
     "respawn": [
      {
       "id": "snip_respawn_01",
-      "text": "운이 좋았을 뿐이다."
+      "text": "운이 좋았을 뿐이다.",
+      "en": "Just lucky."
      },
      {
       "id": "snip_respawn_02",
-      "text": "다시 사냥이다."
+      "text": "다시 사냥이다.",
+      "en": "Back to the hunt."
      }
     ],
     "skill_q": [
      {
       "id": "snip_skill_q_01",
-      "text": "베어 낸다!"
+      "text": "베어 낸다!",
+      "en": "Cutting through!"
      }
     ],
     "skill_e": [
      {
       "id": "snip_skill_e_01",
-      "text": "돌려주지."
+      "text": "돌려주지.",
+      "en": "Have it back."
      }
     ],
     "skill_shift": [
      {
       "id": "snip_skill_shift_01",
-      "text": "비콘 던졌다."
+      "text": "비콘 던졌다.",
+      "en": "Beacon out."
      },
      {
       "id": "snip_skill_shift_02",
-      "text": "거기로 간다."
+      "text": "묶여 있어라.",
+      "en": "Stay put."
      }
     ],
     "ult_ready": [
      {
       "id": "snip_ult_ready_01",
-      "text": "날이 갈라질 준비가 됐다."
+      "text": "날이 갈라질 준비가 됐다.",
+      "en": "The blades are ready to split."
      }
     ],
     "ult_ally": [
      {
       "id": "snip_ult_ally_01",
-      "text": "쌍날, 개방한다!"
+      "text": "쌍날, 개방한다!",
+      "en": "Twin edge, unleashed!"
      }
     ],
     "ult_enemy": [
      {
       "id": "snip_ult_enemy_01",
-      "text": "두 번 베이는 기분이 어떨까."
+      "text": "두 번 베이는 기분이 어떨까.",
+      "en": "How does it feel to be cut twice."
      }
     ],
     "kill": [
      {
       "id": "snip_kill_01",
-      "text": "싹둑."
+      "text": "싹둑.",
+      "en": "Snip."
      },
      {
       "id": "snip_kill_02",
-      "text": "느려."
+      "text": "느려.",
+      "en": "Too slow."
      },
      {
       "id": "snip_kill_03",
-      "text": "늑대 앞에서 등을 보이면 안 되지."
+      "text": "늑대 앞에서 등을 보이면 안 되지.",
+      "en": "Never turn your back on a wolf."
      }
     ],
     "multikill": [
      {
       "id": "snip_multikill_01",
-      "text": "무리째 베었다."
+      "text": "무리째 베었다.",
+      "en": "Took down the whole pack."
      }
     ],
     "death": [
      {
       "id": "snip_death_01",
-      "text": "...방심했군."
+      "text": "...방심했군.",
+      "en": "...Got careless."
      },
      {
       "id": "snip_death_02",
-      "text": "다음엔... 안 놓친다."
+      "text": "다음엔... 안 놓친다.",
+      "en": "Next time... I won't miss."
      }
     ],
     "low_hp": [
      {
       "id": "snip_low_hp_01",
-      "text": "상처가 깊다. 치료."
+      "text": "상처가 깊다. 치료.",
+      "en": "Deep wound. Heal."
      },
      {
       "id": "snip_low_hp_02",
-      "text": "피 냄새가... 내 거군."
+      "text": "피 냄새가... 내 거군.",
+      "en": "I smell blood... mine."
      }
     ],
     "reload": [
      {
       "id": "snip_reload_01",
-      "text": "장전."
+      "text": "장전.",
+      "en": "Reloading."
      }
     ],
     "thanks": [
      {
       "id": "snip_thanks_01",
-      "text": "...신세 졌군."
+      "text": "...신세 졌군.",
+      "en": "...I owe you."
      }
     ],
     "call_help": [
      {
       "id": "snip_call_help_01",
-      "text": "숫자가 많다. 와라."
+      "text": "숫자가 많다. 와라.",
+      "en": "Too many. Get here."
      }
     ],
     "enemy_spotted": [
      {
       "id": "snip_enemy_spotted_01",
-      "text": "냄새가 난다. 저쪽이다."
+      "text": "냄새가 난다. 저쪽이다.",
+      "en": "I smell them. That way."
      }
     ],
     "capture_start": [
      {
       "id": "snip_capture_start_01",
-      "text": "거점이다."
+      "text": "거점이다.",
+      "en": "The point."
      }
     ],
     "point_captured": [
      {
       "id": "snip_point_captured_01",
-      "text": "거점은 우리 영역이다."
+      "text": "거점은 우리 영역이다.",
+      "en": "The point is our territory."
      }
     ],
     "point_losing": [
      {
       "id": "snip_point_losing_01",
-      "text": "영역을 뺏긴다. 돌아가."
+      "text": "영역을 뺏긴다. 돌아가.",
+      "en": "Losing our territory. Go back."
      }
     ],
     "victory": [
      {
       "id": "snip_victory_01",
-      "text": "당연한 결과다."
+      "text": "당연한 결과다.",
+      "en": "As expected."
      },
      {
       "id": "snip_victory_02",
-      "text": "좋은 사냥이었다."
+      "text": "좋은 사냥이었다.",
+      "en": "Good hunt."
      }
     ],
     "defeat": [
      {
       "id": "snip_defeat_01",
-      "text": "...날을 다시 세운다."
+      "text": "...날을 다시 세운다.",
+      "en": "...Sharpening the blade again."
      },
      {
       "id": "snip_defeat_02",
-      "text": "이번 사냥은 실패다."
+      "text": "이번 사냥은 실패다.",
+      "en": "This hunt failed."
      }
     ]
    }
@@ -1167,169 +1357,200 @@
     "select": [
      {
       "id": "gem_select_01",
-      "text": "젬이에요! 반짝반짝하게 지켜 드릴게요."
+      "text": "젬이에요! 반짝반짝하게 지켜 드릴게요.",
+      "en": "I'm Gem! I'll keep you all sparkly and safe."
      },
      {
       "id": "gem_select_02",
-      "text": "다치면 언제든 불러 주세요~"
+      "text": "다치면 언제든 불러 주세요~",
+      "en": "Call me anytime you get hurt~"
      }
     ],
     "match_start": [
      {
       "id": "gem_match_start_01",
-      "text": "다들 반짝이는 하루 보내요!"
+      "text": "다들 반짝이는 하루 보내요!",
+      "en": "Have a sparkly day, everyone!"
      },
      {
       "id": "gem_match_start_02",
-      "text": "제 결정, 꼭 머리 위에 달고 다니세요!"
+      "text": "제 결정, 꼭 머리 위에 달고 다니세요!",
+      "en": "Keep my crystal right over your head!"
      }
     ],
     "respawn": [
      {
       "id": "gem_respawn_01",
-      "text": "다시 빛나 볼까요!"
+      "text": "다시 빛나 볼까요!",
+      "en": "Time to shine again!"
      },
      {
       "id": "gem_respawn_02",
-      "text": "돌아왔어요~!"
+      "text": "돌아왔어요~!",
+      "en": "I'm back~!"
      }
     ],
     "skill_q": [
      {
       "id": "gem_skill_q_01",
-      "text": "결정 달아 드릴게요!"
+      "text": "결정 달아 드릴게요!",
+      "en": "Crystal for you!"
      }
     ],
     "skill_e": [
      {
       "id": "gem_skill_e_01",
-      "text": "여기서 싸우면 더 세져요!"
+      "text": "여기서 싸우면 더 세져요!",
+      "en": "Fight here and you'll be stronger!"
      }
     ],
     "skill_shift": [
      {
       "id": "gem_skill_shift_01",
-      "text": "딸랑~ 이제 괜찮아요!"
+      "text": "딸랑~ 이제 괜찮아요!",
+      "en": "Ding~ You're all better now!"
      }
     ],
     "ult_ready": [
      {
       "id": "gem_ult_ready_01",
-      "text": "성소 피울 수 있어요!"
+      "text": "성소 피울 수 있어요!",
+      "en": "My sanctum is ready to bloom!"
      }
     ],
     "ult_ally": [
      {
       "id": "gem_ult_ally_01",
-      "text": "수정 성소! 나무 뒤로 모여요!"
+      "text": "수정 성소! 나무 뒤로 모여요!",
+      "en": "Crystal sanctum! Gather behind the tree!"
      }
     ],
     "ult_enemy": [
      {
       "id": "gem_ult_enemy_01",
-      "text": "어머, 여긴 저희 정원이에요."
+      "text": "어머, 여긴 저희 정원이에요.",
+      "en": "Oh my, this is our garden."
      }
     ],
     "kill": [
      {
       "id": "gem_kill_01",
-      "text": "어머, 맞았네요?"
+      "text": "어머, 맞았네요?",
+      "en": "Oh my, did that hit?"
      },
      {
       "id": "gem_kill_02",
-      "text": "반짝, 하고 끝!"
+      "text": "반짝, 하고 끝!",
+      "en": "Sparkle, and done!"
      },
      {
       "id": "gem_kill_03",
-      "text": "미안해요~ 아니, 안 미안해요!"
+      "text": "미안해요~ 아니, 안 미안해요!",
+      "en": "Sorry~ No, not sorry!"
      }
     ],
     "multikill": [
      {
       "id": "gem_multikill_01",
-      "text": "어머, 다 쓰러졌네?"
+      "text": "어머, 다 쓰러졌네?",
+      "en": "Oh my, they all fell down?"
      }
     ],
     "death": [
      {
       "id": "gem_death_01",
-      "text": "아앗, 금이 갔어요..."
+      "text": "아앗, 금이 갔어요...",
+      "en": "Ah, I'm cracked..."
      },
      {
       "id": "gem_death_02",
-      "text": "제 꼬리가..."
+      "text": "제 꼬리가...",
+      "en": "My tail..."
      }
     ],
     "low_hp": [
      {
       "id": "gem_low_hp_01",
-      "text": "저도 다쳤어요! 엄호해 주세요!"
+      "text": "저도 다쳤어요! 엄호해 주세요!",
+      "en": "I'm hurt too! Cover me!"
      },
      {
       "id": "gem_low_hp_02",
-      "text": "빛이 꺼져 가요..."
+      "text": "빛이 꺼져 가요...",
+      "en": "My light is fading..."
      }
     ],
     "reload": [
      {
       "id": "gem_reload_01",
-      "text": "충전 중이에요!"
+      "text": "충전 중이에요!",
+      "en": "Recharging!"
      }
     ],
     "thanks": [
      {
       "id": "gem_thanks_01",
-      "text": "어머, 고마워요!"
+      "text": "어머, 고마워요!",
+      "en": "Oh, thank you!"
      }
     ],
     "call_help": [
      {
       "id": "gem_call_help_01",
-      "text": "여기 위험해요! 와 주세요!"
+      "text": "여기 위험해요! 와 주세요!",
+      "en": "It's dangerous here! Please come!"
      }
     ],
     "enemy_spotted": [
      {
       "id": "gem_enemy_spotted_01",
-      "text": "저기 적이 있어요!"
+      "text": "저기 적이 있어요!",
+      "en": "Enemy over there!"
      }
     ],
     "capture_start": [
      {
       "id": "gem_capture_start_01",
-      "text": "거점 들어왔어요!"
+      "text": "거점 들어왔어요!",
+      "en": "I'm on the point!"
      }
     ],
     "point_captured": [
      {
       "id": "gem_point_captured_01",
-      "text": "거점 우리 거예요! 반짝!"
+      "text": "거점 우리 거예요! 반짝!",
+      "en": "The point is ours! Sparkle!"
      }
     ],
     "point_losing": [
      {
       "id": "gem_point_losing_01",
-      "text": "거점 뺏기고 있어요!"
+      "text": "거점 뺏기고 있어요!",
+      "en": "They're taking the point!"
      }
     ],
     "victory": [
      {
       "id": "gem_victory_01",
-      "text": "모두 반짝반짝 빛났어요!"
+      "text": "모두 반짝반짝 빛났어요!",
+      "en": "Everyone sparkled so bright!"
      },
      {
       "id": "gem_victory_02",
-      "text": "이겼다! 다친 데 없죠?"
+      "text": "이겼다! 다친 데 없죠?",
+      "en": "We won! Nobody's hurt, right?"
      }
     ],
     "defeat": [
      {
       "id": "gem_defeat_01",
-      "text": "괜찮아요, 다음엔 더 빛날 거예요."
+      "text": "괜찮아요, 다음엔 더 빛날 거예요.",
+      "en": "It's okay, we'll shine brighter next time."
      },
      {
       "id": "gem_defeat_02",
-      "text": "흑... 아쉬워요."
+      "text": "흑... 아쉬워요.",
+      "en": "Sniff... so close."
      }
     ]
    }
@@ -1342,169 +1563,200 @@
     "select": [
      {
       "id": "needle_select_01",
-      "text": "니들. 다치면 꿰매 줄게. 아프다고 울지 마."
+      "text": "니들. 다치면 꿰매 줄게. 아프다고 울지 마.",
+      "en": "Needle. I'll stitch you up. Don't cry about it."
      },
      {
       "id": "needle_select_02",
-      "text": "실 꿰었어. 시작하자."
+      "text": "실 꿰었어. 시작하자.",
+      "en": "Needle's threaded. Let's go."
      }
     ],
     "match_start": [
      {
       "id": "needle_match_start_01",
-      "text": "다치지 마. 일 늘리지 말고."
+      "text": "다치지 마. 일 늘리지 말고.",
+      "en": "Don't get hurt. Don't make more work for me."
      },
      {
       "id": "needle_match_start_02",
-      "text": "실 길이엔 한계가 있어. 너무 멀리 가지 마."
+      "text": "실 길이엔 한계가 있어. 너무 멀리 가지 마.",
+      "en": "My thread only goes so far. Don't wander off."
      }
     ],
     "respawn": [
      {
       "id": "needle_respawn_01",
-      "text": "다시 출근이네."
+      "text": "다시 출근이네.",
+      "en": "Back on shift."
      },
      {
       "id": "needle_respawn_02",
-      "text": "봉합 끝. 돌아왔어."
+      "text": "봉합 끝. 돌아왔어.",
+      "en": "Stitched up. I'm back."
      }
     ],
     "skill_q": [
      {
       "id": "needle_skill_q_01",
-      "text": "실 연결했어. 멀어지지 마."
+      "text": "실 연결했어. 멀어지지 마.",
+      "en": "Thread's attached. Stay close."
      }
     ],
     "skill_e": [
      {
       "id": "needle_skill_e_01",
-      "text": "잘 자."
+      "text": "잘 자.",
+      "en": "Sleep tight."
      }
     ],
     "skill_shift": [
      {
       "id": "needle_skill_shift_01",
-      "text": "봉합 수류탄. 저쪽 치료는 끝이야."
+      "text": "봉합 수류탄. 저쪽 치료는 끝이야.",
+      "en": "Stitch grenade. Their healing is done."
      }
     ],
     "ult_ready": [
      {
       "id": "needle_ult_ready_01",
-      "text": "나노 봉합, 준비됐어."
+      "text": "나노 봉합, 준비됐어.",
+      "en": "Nano stitch is ready."
      }
     ],
     "ult_ally": [
      {
       "id": "needle_ult_ally_01",
-      "text": "나노 봉합. 지금이야, 밀어붙여."
+      "text": "나노 봉합. 지금이야, 밀어붙여.",
+      "en": "Nano stitch. Now, push!"
      }
     ],
     "ult_enemy": [
      {
       "id": "needle_ult_enemy_01",
-      "text": "이제 아무리 때려도 소용없어."
+      "text": "이제 아무리 때려도 소용없어.",
+      "en": "Hit all you want. It won't matter."
      }
     ],
     "kill": [
      {
       "id": "needle_kill_01",
-      "text": "수술 실패."
+      "text": "수술 실패.",
+      "en": "Surgery failed."
      },
      {
       "id": "needle_kill_02",
-      "text": "마취 없이 미안."
+      "text": "마취 없이 미안.",
+      "en": "Sorry, no anesthesia."
      },
      {
       "id": "needle_kill_03",
-      "text": "처치 완료."
+      "text": "처치 완료.",
+      "en": "Treated."
      }
     ],
     "multikill": [
      {
       "id": "needle_multikill_01",
-      "text": "환자가 늘었네. 저쪽이."
+      "text": "환자가 늘었네. 저쪽이.",
+      "en": "More patients. On their side."
      }
     ],
     "death": [
      {
       "id": "needle_death_01",
-      "text": "...실이 끊겼어."
+      "text": "...실이 끊겼어.",
+      "en": "...Thread snapped."
      },
      {
       "id": "needle_death_02",
-      "text": "내가 다치면... 누가 꿰매..."
+      "text": "내가 다치면... 누가 꿰매...",
+      "en": "If I'm hurt... who stitches me..."
      }
     ],
     "low_hp": [
      {
       "id": "needle_low_hp_01",
-      "text": "의사가 다쳤어. 엄호해."
+      "text": "의사가 다쳤어. 엄호해.",
+      "en": "The doctor's hurt. Cover me."
      },
      {
       "id": "needle_low_hp_02",
-      "text": "출혈 심해. 빨리."
+      "text": "출혈 심해. 빨리.",
+      "en": "Heavy bleeding. Hurry."
      }
     ],
     "reload": [
      {
       "id": "needle_reload_01",
-      "text": "장전."
+      "text": "장전.",
+      "en": "Reloading."
      }
     ],
     "thanks": [
      {
       "id": "needle_thanks_01",
-      "text": "...좀 낫네. 고마워."
+      "text": "...좀 낫네. 고마워.",
+      "en": "...That's better. Thanks."
      }
     ],
     "call_help": [
      {
       "id": "needle_call_help_01",
-      "text": "환자가 너무 많아. 지원."
+      "text": "환자가 너무 많아. 지원.",
+      "en": "Too many patients. Backup."
      }
     ],
     "enemy_spotted": [
      {
       "id": "needle_enemy_spotted_01",
-      "text": "적 발견. 저기."
+      "text": "적 발견. 저기.",
+      "en": "Enemy spotted. There."
      }
     ],
     "capture_start": [
      {
       "id": "needle_capture_start_01",
-      "text": "거점 진입."
+      "text": "거점 진입.",
+      "en": "Entering the point."
      }
     ],
     "point_captured": [
      {
       "id": "needle_point_captured_01",
-      "text": "거점 확보. 다친 사람 없지?"
+      "text": "거점 확보. 다친 사람 없지?",
+      "en": "Point secured. Anyone hurt?"
      }
     ],
     "point_losing": [
      {
       "id": "needle_point_losing_01",
-      "text": "거점 뺏겨. 가자."
+      "text": "거점 뺏겨. 가자.",
+      "en": "Losing the point. Let's go."
      }
     ],
     "victory": [
      {
       "id": "needle_victory_01",
-      "text": "다들 살아 있네. 다행이야."
+      "text": "다들 살아 있네. 다행이야.",
+      "en": "Everyone's alive. Good."
      },
      {
       "id": "needle_victory_02",
-      "text": "수술 성공."
+      "text": "수술 성공.",
+      "en": "Surgery successful."
      }
     ],
     "defeat": [
      {
       "id": "needle_defeat_01",
-      "text": "...진단은 끝났어. 다음엔 고쳐."
+      "text": "...진단은 끝났어. 다음엔 고쳐.",
+      "en": "...Diagnosis done. Fix it next time."
      },
      {
       "id": "needle_defeat_02",
-      "text": "오늘은 실이 짧았네."
+      "text": "오늘은 실이 짧았네.",
+      "en": "Thread ran short today."
      }
     ]
    }
@@ -1517,169 +1769,200 @@
     "select": [
      {
       "id": "scroll_select_01",
-      "text": "스크롤이오. 이 싸움, 기록해 두리다."
+      "text": "스크롤이오. 이 싸움, 기록해 두리다.",
+      "en": "I am Scroll. I shall record this battle."
      },
      {
       "id": "scroll_select_02",
-      "text": "부적은 넉넉히 챙겼소."
+      "text": "부적은 넉넉히 챙겼소.",
+      "en": "I have brought talismans aplenty."
      }
     ],
     "match_start": [
      {
       "id": "scroll_match_start_01",
-      "text": "서두르지 마시오. 글은 끝까지 읽어야 하는 법."
+      "text": "서두르지 마시오. 글은 끝까지 읽어야 하는 법.",
+      "en": "Do not rush. A text must be read to the end."
      },
      {
       "id": "scroll_match_start_02",
-      "text": "모두 등불 곁을 떠나지 마시오."
+      "text": "모두 등불 곁을 떠나지 마시오.",
+      "en": "Stay near the lantern, all of you."
      }
     ],
     "respawn": [
      {
       "id": "scroll_respawn_01",
-      "text": "다음 장을 펼치겠소."
+      "text": "다음 장을 펼치겠소.",
+      "en": "I turn to the next chapter."
      },
      {
       "id": "scroll_respawn_02",
-      "text": "아직 끝난 이야기가 아니오."
+      "text": "아직 끝난 이야기가 아니오.",
+      "en": "This tale is not yet over."
      }
     ],
     "skill_q": [
      {
       "id": "scroll_skill_q_01",
-      "text": "인장 안으로 드시오!"
+      "text": "인장 안으로 드시오!",
+      "en": "Step within the seal!"
      }
     ],
     "skill_e": [
      {
       "id": "scroll_skill_e_01",
-      "text": "부적이오. 한 번은 막아 줄 것이오."
+      "text": "부적이오. 한 번은 막아 줄 것이오.",
+      "en": "A talisman. It will shield you once."
      }
     ],
     "skill_shift": [
      {
       "id": "scroll_skill_shift_01",
-      "text": "등불 아래선 쓰러지지 않소!"
+      "text": "등불 아래선 쓰러지지 않소!",
+      "en": "None fall beneath the lantern!"
      }
     ],
     "ult_ready": [
      {
       "id": "scroll_ult_ready_01",
-      "text": "대두루마리를 펼칠 때가 됐소."
+      "text": "대두루마리를 펼칠 때가 됐소.",
+      "en": "It is time to unroll the grand scroll."
      }
     ],
     "ult_ally": [
      {
       "id": "scroll_ult_ally_01",
-      "text": "대두루마리를 펼치오! 모두 보호받으시오!"
+      "text": "대두루마리를 펼치오! 모두 보호받으시오!",
+      "en": "The grand scroll unfurls! Be protected, all!"
      }
     ],
     "ult_enemy": [
      {
       "id": "scroll_ult_enemy_01",
-      "text": "이 장은 그대들의 패배로 적겠소."
+      "text": "이 장은 그대들의 패배로 적겠소.",
+      "en": "I shall write this chapter as your defeat."
      }
     ],
     "kill": [
      {
       "id": "scroll_kill_01",
-      "text": "기록에 남기겠소."
+      "text": "기록에 남기겠소.",
+      "en": "Duly recorded."
      },
      {
       "id": "scroll_kill_02",
-      "text": "마침표를 찍었소."
+      "text": "마침표를 찍었소.",
+      "en": "A full stop."
      },
      {
       "id": "scroll_kill_03",
-      "text": "한 줄 지웠소."
+      "text": "한 줄 지웠소.",
+      "en": "One line struck out."
      }
     ],
     "multikill": [
      {
       "id": "scroll_multikill_01",
-      "text": "한 장이 통째로 넘어갔구려."
+      "text": "한 장이 통째로 넘어갔구려.",
+      "en": "A whole page has turned."
      }
     ],
     "death": [
      {
       "id": "scroll_death_01",
-      "text": "허... 붓이 꺾였구려."
+      "text": "허... 붓이 꺾였구려.",
+      "en": "Ah... my brush has snapped."
      },
      {
       "id": "scroll_death_02",
-      "text": "다음... 장에서..."
+      "text": "다음... 장에서...",
+      "en": "In the next... chapter..."
      }
     ],
     "low_hp": [
      {
       "id": "scroll_low_hp_01",
-      "text": "이 늙은이도 다쳤소. 도와주시오."
+      "text": "이 늙은이도 다쳤소. 도와주시오.",
+      "en": "This old man is wounded. Aid me."
      },
      {
       "id": "scroll_low_hp_02",
-      "text": "종이가 찢어지려 하오."
+      "text": "종이가 찢어지려 하오.",
+      "en": "My paper is about to tear."
      }
     ],
     "reload": [
      {
       "id": "scroll_reload_01",
-      "text": "장전하겠소."
+      "text": "장전하겠소.",
+      "en": "Reloading."
      }
     ],
     "thanks": [
      {
       "id": "scroll_thanks_01",
-      "text": "고맙소, 젊은이."
+      "text": "고맙소, 젊은이.",
+      "en": "My thanks, young one."
      }
     ],
     "call_help": [
      {
       "id": "scroll_call_help_01",
-      "text": "이쪽에 손이 모자라오!"
+      "text": "이쪽에 손이 모자라오!",
+      "en": "We are short of hands here!"
      }
     ],
     "enemy_spotted": [
      {
       "id": "scroll_enemy_spotted_01",
-      "text": "저기 적이 있소."
+      "text": "저기 적이 있소.",
+      "en": "An enemy, over there."
      }
     ],
     "capture_start": [
      {
       "id": "scroll_capture_start_01",
-      "text": "거점에 들었소."
+      "text": "거점에 들었소.",
+      "en": "I have entered the point."
      }
     ],
     "point_captured": [
      {
       "id": "scroll_point_captured_01",
-      "text": "거점을 차지했소. 기록하리다."
+      "text": "거점을 차지했소. 기록하리다.",
+      "en": "The point is ours. I shall record it."
      }
     ],
     "point_losing": [
      {
       "id": "scroll_point_losing_01",
-      "text": "거점이 넘어가고 있소! 서두르시오!"
+      "text": "거점이 넘어가고 있소! 서두르시오!",
+      "en": "The point is slipping away! Make haste!"
      }
     ],
     "victory": [
      {
       "id": "scroll_victory_01",
-      "text": "훌륭한 이야기였소."
+      "text": "훌륭한 이야기였소.",
+      "en": "A splendid tale."
      },
      {
       "id": "scroll_victory_02",
-      "text": "승리의 장을 적겠소."
+      "text": "승리의 장을 적겠소.",
+      "en": "I shall write the chapter of victory."
      }
     ],
     "defeat": [
      {
       "id": "scroll_defeat_01",
-      "text": "패배도 기록이오. 다음 장에서 만회합시다."
+      "text": "패배도 기록이오. 다음 장에서 만회합시다.",
+      "en": "Defeat is a record too. We redeem it next chapter."
      },
      {
       "id": "scroll_defeat_02",
-      "text": "허허, 아쉽구려."
+      "text": "허허, 아쉽구려.",
+      "en": "Ho ho, a pity."
      }
     ]
    }
@@ -1692,173 +1975,205 @@
     "select": [
      {
       "id": "inkwell_select_01",
-      "text": "잉크웰. 이 판, 내 그림으로 칠해 줄게."
+      "text": "잉크웰. 이 판, 내 그림으로 칠해 줄게.",
+      "en": "Inkwell. I'll paint this round my colors."
      },
      {
       "id": "inkwell_select_02",
-      "text": "흐음... 오늘 캔버스는 꽤 넓네."
+      "text": "흐음... 오늘 캔버스는 꽤 넓네.",
+      "en": "Hmm... quite a big canvas today."
      }
     ],
     "match_start": [
      {
       "id": "inkwell_match_start_01",
-      "text": "급할 거 없어. 밑그림부터 그리자."
+      "text": "급할 거 없어. 밑그림부터 그리자.",
+      "en": "No rush. Sketch first."
      },
      {
       "id": "inkwell_match_start_02",
-      "text": "내 먹물 밟지 마. 아, 너희 말고 쟤네."
+      "text": "내 먹물 밟지 마. 아, 너희 말고 쟤네.",
+      "en": "Don't step in my ink. Oh, not you, them."
      }
     ],
     "respawn": [
      {
       "id": "inkwell_respawn_01",
-      "text": "다시 붓을 들어 볼까."
+      "text": "다시 붓을 들어 볼까.",
+      "en": "Shall I pick up the brush again."
      },
      {
       "id": "inkwell_respawn_02",
-      "text": "덧칠하러 왔어."
+      "text": "덧칠하러 왔어.",
+      "en": "Here for another coat."
      }
     ],
     "skill_q": [
      {
       "id": "inkwell_skill_q_01",
-      "text": "먹칠."
+      "text": "먹칠.",
+      "en": "Ink splash."
      },
      {
       "id": "inkwell_skill_q_02",
-      "text": "안 보이지?"
+      "text": "안 보이지?",
+      "en": "Can't see, can you?"
      }
     ],
     "skill_e": [
      {
       "id": "inkwell_skill_e_01",
-      "text": "발 조심~"
+      "text": "발 조심~",
+      "en": "Watch your step~"
      }
     ],
     "skill_shift": [
      {
       "id": "inkwell_skill_shift_01",
-      "text": "저쪽으로 번진다."
+      "text": "저쪽으로 번진다.",
+      "en": "It spreads that way."
      }
     ],
     "ult_ready": [
      {
       "id": "inkwell_ult_ready_01",
-      "text": "큰 붓, 준비됐어."
+      "text": "큰 붓, 준비됐어.",
+      "en": "Big brush, ready."
      }
     ],
     "ult_ally": [
      {
       "id": "inkwell_ult_ally_01",
-      "text": "대붓 장벽! 한 획에 갈라 줄게!"
+      "text": "대붓 장벽! 한 획에 갈라 줄게!",
+      "en": "Brush wall! One stroke splits them!"
      }
     ],
     "ult_enemy": [
      {
       "id": "inkwell_ult_enemy_01",
-      "text": "이 그림에 너흰 없어."
+      "text": "이 그림에 너흰 없어.",
+      "en": "You're not in this picture."
      }
     ],
     "kill": [
      {
       "id": "inkwell_kill_01",
-      "text": "지웠다."
+      "text": "지웠다.",
+      "en": "Erased."
      },
      {
       "id": "inkwell_kill_02",
-      "text": "번졌네."
+      "text": "번졌네.",
+      "en": "Smudged."
      },
      {
       "id": "inkwell_kill_03",
-      "text": "고양이 앞에서 까불면 안 되지."
+      "text": "고양이 앞에서 까불면 안 되지.",
+      "en": "Shouldn't mess with a cat."
      }
     ],
     "multikill": [
      {
       "id": "inkwell_multikill_01",
-      "text": "한 획에 싹 지웠어."
+      "text": "한 획에 싹 지웠어.",
+      "en": "Wiped them all in one stroke."
      }
     ],
     "death": [
      {
       "id": "inkwell_death_01",
-      "text": "아... 그림 망쳤다."
+      "text": "아... 그림 망쳤다.",
+      "en": "Ah... ruined my painting."
      },
      {
       "id": "inkwell_death_02",
-      "text": "물감이... 말라 버렸네."
+      "text": "물감이... 말라 버렸네.",
+      "en": "My paint... dried up."
      }
     ],
     "low_hp": [
      {
       "id": "inkwell_low_hp_01",
-      "text": "털이 다 젖었어. 치료 좀."
+      "text": "털이 다 젖었어. 치료 좀.",
+      "en": "My fur's soaked. Heal me."
      },
      {
       "id": "inkwell_low_hp_02",
-      "text": "아파. 귀찮게 하지 마..."
+      "text": "아파. 귀찮게 하지 마...",
+      "en": "Ow. Don't bother me..."
      }
     ],
     "reload": [
      {
       "id": "inkwell_reload_01",
-      "text": "장전, 장전."
+      "text": "장전, 장전.",
+      "en": "Reload, reload."
      }
     ],
     "thanks": [
      {
       "id": "inkwell_thanks_01",
-      "text": "흥, 고마워."
+      "text": "흥, 고마워.",
+      "en": "Hmph, thanks."
      }
     ],
     "call_help": [
      {
       "id": "inkwell_call_help_01",
-      "text": "여기 좀 와 줄래? 혼자 칠하기엔 넓어."
+      "text": "여기 좀 와 줄래? 혼자 칠하기엔 넓어.",
+      "en": "Come over here? Too much to paint alone."
      }
     ],
     "enemy_spotted": [
      {
       "id": "inkwell_enemy_spotted_01",
-      "text": "저기, 얼룩 발견."
+      "text": "저기, 얼룩 발견.",
+      "en": "Hey, found a smudge."
      }
     ],
     "capture_start": [
      {
       "id": "inkwell_capture_start_01",
-      "text": "거점에 발 올렸어."
+      "text": "거점에 발 올렸어.",
+      "en": "Paws on the point."
      }
     ],
     "point_captured": [
      {
       "id": "inkwell_point_captured_01",
-      "text": "거점, 우리 색으로 칠했어."
+      "text": "거점, 우리 색으로 칠했어.",
+      "en": "Painted the point our color."
      }
     ],
     "point_losing": [
      {
       "id": "inkwell_point_losing_01",
-      "text": "우리 색이 지워지고 있어."
+      "text": "우리 색이 지워지고 있어.",
+      "en": "Our color's being erased."
      }
     ],
     "victory": [
      {
       "id": "inkwell_victory_01",
-      "text": "완성. 꽤 괜찮은 작품이네."
+      "text": "완성. 꽤 괜찮은 작품이네.",
+      "en": "Done. Rather nice work."
      },
      {
       "id": "inkwell_victory_02",
-      "text": "후아, 이제 낮잠."
+      "text": "후아, 이제 낮잠.",
+      "en": "Phew, nap time."
      }
     ],
     "defeat": [
      {
       "id": "inkwell_defeat_01",
-      "text": "...이번 그림은 찢어 버리자."
+      "text": "...이번 그림은 찢어 버리자.",
+      "en": "...Let's tear this one up."
      },
      {
       "id": "inkwell_defeat_02",
-      "text": "흥, 다음 장에 다시 그릴 거야."
+      "text": "흥, 다음 장에 다시 그릴 거야.",
+      "en": "Hmph, I'll paint it again on the next page."
      }
     ]
    }
@@ -1871,169 +2186,200 @@
     "select": [
      {
       "id": "quake_select_01",
-      "text": "퀘이크 등판! 땅 좀 흔들어 볼까!"
+      "text": "퀘이크 등판! 땅 좀 흔들어 볼까!",
+      "en": "Quake's up! Let's shake the ground!"
      },
      {
       "id": "quake_select_02",
-      "text": "용광로 불 지폈다! 가자!"
+      "text": "용광로 불 지폈다! 가자!",
+      "en": "The furnace is lit! Let's go!"
      }
     ],
     "match_start": [
      {
       "id": "quake_match_start_01",
-      "text": "다들 발밑 조심해라! 내가 흔들 거니까!"
+      "text": "다들 발밑 조심해라! 내가 흔들 거니까!",
+      "en": "Watch your feet, everyone! I'm about to shake things!"
      },
      {
       "id": "quake_match_start_02",
-      "text": "오늘도 뜨겁게 가 보자고!"
+      "text": "오늘도 뜨겁게 가 보자고!",
+      "en": "Let's keep it hot today!"
      }
     ],
     "respawn": [
      {
       "id": "quake_respawn_01",
-      "text": "다시 달궈졌다!"
+      "text": "다시 달궈졌다!",
+      "en": "Heated up again!"
      },
      {
       "id": "quake_respawn_02",
-      "text": "이 정도로 꺼질 불이 아니지!"
+      "text": "이 정도로 꺼질 불이 아니지!",
+      "en": "This fire doesn't go out that easy!"
      }
     ],
     "skill_q": [
      {
       "id": "quake_skill_q_01",
-      "text": "포탑 박았다! 알아서 쏴라!"
+      "text": "포탑 박았다! 알아서 쏴라!",
+      "en": "Turret's down! It shoots on its own!"
      }
     ],
     "skill_e": [
      {
       "id": "quake_skill_e_01",
-      "text": "덫 깔았다! 밟아 봐라!"
+      "text": "덫 깔았다! 밟아 봐라!",
+      "en": "Trap's set! Go on, step on it!"
      }
     ],
     "skill_shift": [
      {
       "id": "quake_skill_shift_01",
-      "text": "과열! 뜨겁다!"
+      "text": "과열! 뜨겁다!",
+      "en": "Overheat! Hot hot!"
      }
     ],
     "ult_ready": [
      {
       "id": "quake_ult_ready_01",
-      "text": "용암 끓는다! 언제든 간다!"
+      "text": "용암 끓는다! 언제든 간다!",
+      "en": "Lava's boiling! Ready whenever!"
      }
     ],
     "ult_ally": [
      {
       "id": "quake_ult_ally_01",
-      "text": "용암 분출! 발 데지 마라!"
+      "text": "용암 분출! 발 데지 마라!",
+      "en": "Lava eruption! Don't burn your feet!"
      }
     ],
     "ult_enemy": [
      {
       "id": "quake_ult_enemy_01",
-      "text": "발밑이 뜨거울 거다!"
+      "text": "발밑이 뜨거울 거다!",
+      "en": "Things are getting hot down there!"
      }
     ],
     "kill": [
      {
       "id": "quake_kill_01",
-      "text": "녹았다!"
+      "text": "녹았다!",
+      "en": "Melted!"
      },
      {
       "id": "quake_kill_02",
-      "text": "쾅! 한 방!"
+      "text": "쾅! 한 방!",
+      "en": "Boom! One shot!"
      },
      {
       "id": "quake_kill_03",
-      "text": "식어 버렸네!"
+      "text": "식어 버렸네!",
+      "en": "Cooled right off!"
      }
     ],
     "multikill": [
      {
       "id": "quake_multikill_01",
-      "text": "싹 다 녹여 버렸다!"
+      "text": "싹 다 녹여 버렸다!",
+      "en": "Melted the whole lot!"
      }
     ],
     "death": [
      {
       "id": "quake_death_01",
-      "text": "크윽, 불이 꺼졌다..."
+      "text": "크윽, 불이 꺼졌다...",
+      "en": "Argh, the fire's out..."
      },
      {
       "id": "quake_death_02",
-      "text": "식었다... 잠깐만..."
+      "text": "식었다... 잠깐만...",
+      "en": "Cooled off... hang on..."
      }
     ],
     "low_hp": [
      {
       "id": "quake_low_hp_01",
-      "text": "엔진 과열! 치료 좀!"
+      "text": "엔진 과열! 치료 좀!",
+      "en": "Engine overheating! Heal me!"
      },
      {
       "id": "quake_low_hp_02",
-      "text": "아뜨! 아니, 아프다고!"
+      "text": "아뜨! 아니, 아프다고!",
+      "en": "Hot! No wait, it hurts!"
      }
     ],
     "reload": [
      {
       "id": "quake_reload_01",
-      "text": "탄 넣는다!"
+      "text": "탄 넣는다!",
+      "en": "Loading up!"
      }
     ],
     "thanks": [
      {
       "id": "quake_thanks_01",
-      "text": "오! 다시 뜨거워졌다!"
+      "text": "오! 다시 뜨거워졌다!",
+      "en": "Oh! Fired up again!"
      }
     ],
     "call_help": [
      {
       "id": "quake_call_help_01",
-      "text": "여기 판 커졌다! 다 와라!"
+      "text": "여기 판 커졌다! 다 와라!",
+      "en": "It's a big fight here! Everyone come!"
      }
     ],
     "enemy_spotted": [
      {
       "id": "quake_enemy_spotted_01",
-      "text": "저기다! 저기 있다!"
+      "text": "저기다! 저기 있다!",
+      "en": "There! Right there!"
      }
     ],
     "capture_start": [
      {
       "id": "quake_capture_start_01",
-      "text": "거점 밟았다! 흔든다!"
+      "text": "거점 밟았다! 흔든다!",
+      "en": "On the point! Shaking it!"
      }
     ],
     "point_captured": [
      {
       "id": "quake_point_captured_01",
-      "text": "거점 접수! 땅이 우리 편이다!"
+      "text": "거점 접수! 땅이 우리 편이다!",
+      "en": "Point taken! The ground is on our side!"
      }
     ],
     "point_losing": [
      {
       "id": "quake_point_losing_01",
-      "text": "거점 흔들린다! 막아!"
+      "text": "거점 흔들린다! 막아!",
+      "en": "The point's shaking! Hold it!"
      }
     ],
     "victory": [
      {
       "id": "quake_victory_01",
-      "text": "이겼다아! 오늘 화력 최고였다!"
+      "text": "이겼다아! 오늘 화력 최고였다!",
+      "en": "We won! Best firepower ever!"
      },
      {
       "id": "quake_victory_02",
-      "text": "땅이 우리 손을 들어 줬다!"
+      "text": "땅이 우리 손을 들어 줬다!",
+      "en": "Even the ground is cheering for us!"
      }
     ],
     "defeat": [
      {
       "id": "quake_defeat_01",
-      "text": "크으... 다음엔 더 뜨겁게 간다."
+      "text": "크으... 다음엔 더 뜨겁게 간다.",
+      "en": "Grr... hotter next time."
      },
      {
       "id": "quake_defeat_02",
-      "text": "불씨는 남았다. 다음 판!"
+      "text": "불씨는 남았다. 다음 판!",
+      "en": "The embers are still alive. Next round!"
      }
     ]
    }
@@ -2046,169 +2392,200 @@
     "select": [
      {
       "id": "staple_select_01",
-      "text": "스테이플 가동. 업무를 시작합니다."
+      "text": "스테이플 가동. 업무를 시작합니다.",
+      "en": "Staple online. Beginning work."
      },
      {
       "id": "staple_select_02",
-      "text": "서류 정리 모드. 적을 철하겠습니다."
+      "text": "서류 정리 모드. 적을 철하겠습니다.",
+      "en": "Filing mode. Enemies will be stapled."
      }
     ],
     "match_start": [
      {
       "id": "staple_match_start_01",
-      "text": "업무 시간입니다. 출근 확인."
+      "text": "업무 시간입니다. 출근 확인.",
+      "en": "Business hours. Attendance confirmed."
      },
      {
       "id": "staple_match_start_02",
-      "text": "작전 문서를 배포합니다. 숙지 바랍니다."
+      "text": "작전 문서를 배포합니다. 숙지 바랍니다.",
+      "en": "Distributing the operation memo. Please review."
      }
     ],
     "respawn": [
      {
       "id": "staple_respawn_01",
-      "text": "재부팅 완료."
+      "text": "재부팅 완료.",
+      "en": "Reboot complete."
      },
      {
       "id": "staple_respawn_02",
-      "text": "백업에서 복원되었습니다."
+      "text": "백업에서 복원되었습니다.",
+      "en": "Restored from backup."
      }
     ],
     "skill_q": [
      {
       "id": "staple_skill_q_01",
-      "text": "감시포 고정."
+      "text": "감시포 고정.",
+      "en": "Sentry secured."
      }
     ],
     "skill_e": [
      {
       "id": "staple_skill_e_01",
-      "text": "철사 설치. 접근 시 보고됩니다."
+      "text": "철사 설치. 접근 시 보고됩니다.",
+      "en": "Wire installed. Approaches will be reported."
      }
     ],
     "skill_shift": [
      {
       "id": "staple_skill_shift_01",
-      "text": "알람봇 배치. 삐빅."
+      "text": "알람봇 배치. 삐빅.",
+      "en": "Alarm bot deployed. Beep beep."
      }
     ],
     "ult_ready": [
      {
       "id": "staple_ult_ready_01",
-      "text": "강철 봉쇄, 결재 대기 중."
+      "text": "강철 봉쇄, 결재 대기 중.",
+      "en": "Steel lockdown, awaiting approval."
      }
     ],
     "ult_ally": [
      {
       "id": "staple_ult_ally_01",
-      "text": "강철 봉쇄 승인. 범위 내 적을 철합니다."
+      "text": "강철 봉쇄 승인. 범위 내 적을 철합니다.",
+      "en": "Steel lockdown approved. Stapling all enemies in range."
      }
     ],
     "ult_enemy": [
      {
       "id": "staple_ult_enemy_01",
-      "text": "경고. 이 구역은 봉쇄됩니다."
+      "text": "경고. 이 구역은 봉쇄됩니다.",
+      "en": "Warning. This area is now locked down."
      }
     ],
     "kill": [
      {
       "id": "staple_kill_01",
-      "text": "처리 완료."
+      "text": "처리 완료.",
+      "en": "Processed."
      },
      {
       "id": "staple_kill_02",
-      "text": "철했습니다."
+      "text": "철했습니다.",
+      "en": "Stapled."
      },
      {
       "id": "staple_kill_03",
-      "text": "서류 한 장 정리."
+      "text": "서류 한 장 정리.",
+      "en": "One document filed."
      }
     ],
     "multikill": [
      {
       "id": "staple_multikill_01",
-      "text": "일괄 처리 완료."
+      "text": "일괄 처리 완료.",
+      "en": "Batch processing complete."
      }
     ],
     "death": [
      {
       "id": "staple_death_01",
-      "text": "오류... 발생..."
+      "text": "오류... 발생...",
+      "en": "Error... occurred..."
      },
      {
       "id": "staple_death_02",
-      "text": "종이 걸림... 시스템... 정지."
+      "text": "종이 걸림... 시스템... 정지.",
+      "en": "Paper jam... system... halted."
      }
     ],
     "low_hp": [
      {
       "id": "staple_low_hp_01",
-      "text": "손상 경고. 수리 요청."
+      "text": "손상 경고. 수리 요청.",
+      "en": "Damage warning. Requesting repair."
      },
      {
       "id": "staple_low_hp_02",
-      "text": "내구도 위험 수준."
+      "text": "내구도 위험 수준.",
+      "en": "Durability at critical level."
      }
     ],
     "reload": [
      {
       "id": "staple_reload_01",
-      "text": "철심 보충."
+      "text": "철심 보충.",
+      "en": "Refilling staples."
      }
     ],
     "thanks": [
      {
       "id": "staple_thanks_01",
-      "text": "수리 확인. 감사합니다."
+      "text": "수리 확인. 감사합니다.",
+      "en": "Repair confirmed. Thank you."
      }
     ],
     "call_help": [
      {
       "id": "staple_call_help_01",
-      "text": "처리량 초과. 지원 요청."
+      "text": "처리량 초과. 지원 요청.",
+      "en": "Workload exceeded. Requesting support."
      }
     ],
     "enemy_spotted": [
      {
       "id": "staple_enemy_spotted_01",
-      "text": "적 감지. 좌표 공유."
+      "text": "적 감지. 좌표 공유.",
+      "en": "Enemy detected. Sharing coordinates."
      }
     ],
     "capture_start": [
      {
       "id": "staple_capture_start_01",
-      "text": "거점 진입. 점유 절차 개시."
+      "text": "거점 진입. 점유 절차 개시.",
+      "en": "Entering the point. Beginning occupancy procedure."
      }
     ],
     "point_captured": [
      {
       "id": "staple_point_captured_01",
-      "text": "거점 등록 완료."
+      "text": "거점 등록 완료.",
+      "en": "Point registered."
      }
     ],
     "point_losing": [
      {
       "id": "staple_point_losing_01",
-      "text": "거점 소유권 이전 중. 저지 바랍니다."
+      "text": "거점 소유권 이전 중. 저지 바랍니다.",
+      "en": "Point ownership transferring. Please intervene."
      }
     ],
     "victory": [
      {
       "id": "staple_victory_01",
-      "text": "임무 완료. 퇴근 처리합니다."
+      "text": "임무 완료. 퇴근 처리합니다.",
+      "en": "Task complete. Clocking out."
      },
      {
       "id": "staple_victory_02",
-      "text": "승리 보고서 작성 중."
+      "text": "승리 보고서 작성 중.",
+      "en": "Writing the victory report."
      }
     ],
     "defeat": [
      {
       "id": "staple_defeat_01",
-      "text": "결과: 반려. 재제출하겠습니다."
+      "text": "결과: 반려. 재제출하겠습니다.",
+      "en": "Result: rejected. I will resubmit."
      },
      {
       "id": "staple_defeat_02",
-      "text": "패배 기록. 개선안 검토."
+      "text": "패배 기록. 개선안 검토.",
+      "en": "Defeat logged. Reviewing improvements."
      }
     ]
    }
@@ -2225,17 +2602,20 @@
     {
      "id": "talk_quake_boulder_01",
      "agent": "quake",
-     "text": "볼더! 이번에도 앞에서 다 받아 줄 거지?"
+     "text": "볼더! 이번에도 앞에서 다 받아 줄 거지?",
+     "en": "Boulder! You'll tank everything up front again, right?"
     },
     {
      "id": "talk_quake_boulder_02",
      "agent": "boulder",
-     "text": "네가 불만 안 지르면."
+     "text": "네가 불만 안 지르면.",
+     "en": "If you don't set anything on fire."
     },
     {
      "id": "talk_quake_boulder_03",
      "agent": "quake",
-     "text": "그건 장담 못 한다!"
+     "text": "그건 장담 못 한다!",
+     "en": "Can't promise that!"
     }
    ]
   },
@@ -2249,12 +2629,14 @@
     {
      "id": "talk_snip_shear_01",
      "agent": "snip",
-     "text": "오늘은 내가 더 많이 벤다."
+     "text": "오늘은 내가 더 많이 벤다.",
+     "en": "I'll cut more than you today."
     },
     {
      "id": "talk_snip_shear_02",
      "agent": "shear",
-     "text": "말은 날보다 빠르네, 꼬맹이."
+     "text": "말은 날보다 빠르네, 꼬맹이.",
+     "en": "Your mouth's faster than your blade, kid."
     }
    ]
   },
@@ -2268,12 +2650,14 @@
     {
      "id": "talk_snip_origami_01",
      "agent": "snip",
-     "text": "종이 닌자. 오늘은 내 앞을 막지 마라."
+     "text": "종이 닌자. 오늘은 내 앞을 막지 마라.",
+     "en": "Paper ninja. Stay out of my way today."
     },
     {
      "id": "talk_snip_origami_02",
      "agent": "origami",
-     "text": "네가 먼저 뛰어나가지만 않으면."
+     "text": "네가 먼저 뛰어나가지만 않으면.",
+     "en": "As long as you don't charge ahead first."
     }
    ]
   },
@@ -2287,12 +2671,14 @@
     {
      "id": "talk_cardboard_origami_01",
      "agent": "cardboard",
-     "text": "오리가미 씨! 오늘도 포장 좀 도와줄 거죠?"
+     "text": "오리가미 씨! 오늘도 포장 좀 도와줄 거죠?",
+     "en": "Miss Origami! You'll help me pack today too, right?"
     },
     {
      "id": "talk_cardboard_origami_02",
      "agent": "origami",
-     "text": "...종이학은 택배 안 해."
+     "text": "...종이학은 택배 안 해.",
+     "en": "...Paper cranes don't do deliveries."
     }
    ]
   },
@@ -2306,12 +2692,14 @@
     {
      "id": "talk_scroll_inkwell_01",
      "agent": "scroll",
-     "text": "고양이 처자, 내 두루마리에 먹물 흘리지 마시오."
+     "text": "고양이 처자, 내 두루마리에 먹물 흘리지 마시오.",
+     "en": "Young cat, do not spill ink on my scroll."
     },
     {
      "id": "talk_scroll_inkwell_02",
      "agent": "inkwell",
-     "text": "흐음, 그럼 더 예뻐질 텐데."
+     "text": "흐음, 그럼 더 예뻐질 텐데.",
+     "en": "Hmm, it'd look prettier that way."
     }
    ]
   },
@@ -2325,12 +2713,14 @@
     {
      "id": "talk_pebble_gem_01",
      "agent": "pebble",
-     "text": "젬 언니! 나도 반짝이는 돌이야!"
+     "text": "젬 언니! 나도 반짝이는 돌이야!",
+     "en": "Gem! I'm a sparkly stone too!"
     },
     {
      "id": "talk_pebble_gem_02",
      "agent": "gem",
-     "text": "그럼 언니가 반짝반짝 닦아 줄게~"
+     "text": "그럼 언니가 반짝반짝 닦아 줄게~",
+     "en": "Then let me polish you up, sparkle sparkle~"
     }
    ]
   },
@@ -2344,12 +2734,14 @@
     {
      "id": "talk_needle_scroll_01",
      "agent": "needle",
-     "text": "할아버지, 부적은 의학적 근거가 없어."
+     "text": "할아버지, 부적은 의학적 근거가 없어.",
+     "en": "Grandpa, talismans have no medical basis."
     },
     {
      "id": "talk_needle_scroll_02",
      "agent": "scroll",
-     "text": "허허, 효과만 있으면 그만이오."
+     "text": "허허, 효과만 있으면 그만이오.",
+     "en": "Ho ho, so long as they work."
     }
    ]
   },
@@ -2363,12 +2755,14 @@
     {
      "id": "talk_staple_cardboard_01",
      "agent": "staple",
-     "text": "카드보드. 상자 봉인 업무에 협조하겠습니다."
+     "text": "카드보드. 상자 봉인 업무에 협조하겠습니다.",
+     "en": "Cardboard. I will assist with box sealing duties."
     },
     {
      "id": "talk_staple_cardboard_02",
      "agent": "cardboard",
-     "text": "오, 스테이플! 오늘도 꽉꽉 찍어 줘요!"
+     "text": "오, 스테이플! 오늘도 꽉꽉 찍어 줘요!",
+     "en": "Oh, Staple! Staple 'em tight today!"
     }
    ]
   },
@@ -2382,12 +2776,14 @@
     {
      "id": "talk_needle_snip_01",
      "agent": "needle",
-     "text": "또 베이고 오면 이번엔 마취 없이 꿰맨다."
+     "text": "또 베이고 오면 이번엔 마취 없이 꿰맨다.",
+     "en": "Come back cut up again and I stitch you without anesthesia."
     },
     {
      "id": "talk_needle_snip_02",
      "agent": "snip",
-     "text": "...안 다치면 되잖아."
+     "text": "...안 다치면 되잖아.",
+     "en": "...Then I just won't get hurt."
     }
    ]
   },
@@ -2401,12 +2797,14 @@
     {
      "id": "talk_quake_staple_01",
      "agent": "quake",
-     "text": "깡통! 과열 안 되게 조심해라!"
+     "text": "깡통! 과열 안 되게 조심해라!",
+     "en": "Tin can! Don't overheat!"
     },
     {
      "id": "talk_quake_staple_02",
      "agent": "staple",
-     "text": "정정합니다. 깡통이 아니라 사무 자동화 기기입니다."
+     "text": "정정합니다. 깡통이 아니라 사무 자동화 기기입니다.",
+     "en": "Correction. Not a tin can. An office automation device."
     }
    ]
   },
@@ -2420,12 +2818,14 @@
     {
      "id": "talk_shear_boulder_01",
      "agent": "shear",
-     "text": "볼더, 방벽 뒤에서 졸지 마."
+     "text": "볼더, 방벽 뒤에서 졸지 마.",
+     "en": "Boulder, don't doze off behind your wall."
     },
     {
      "id": "talk_shear_boulder_02",
      "agent": "boulder",
-     "text": "...안 잤다."
+     "text": "...안 잤다.",
+     "en": "...Wasn't sleeping."
     }
    ]
   },
@@ -2439,12 +2839,14 @@
     {
      "id": "talk_inkwell_gem_01",
      "agent": "inkwell",
-     "text": "여우, 반짝이 좀 줄여. 눈부셔."
+     "text": "여우, 반짝이 좀 줄여. 눈부셔.",
+     "en": "Fox, tone down the sparkle. It's blinding."
     },
     {
      "id": "talk_inkwell_gem_02",
      "agent": "gem",
-     "text": "고양이도 반짝이는 거 좋아하잖아요~"
+     "text": "고양이도 반짝이는 거 좋아하잖아요~",
+     "en": "Cats like sparkly things too~"
     }
    ]
   }

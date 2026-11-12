@@ -97,7 +97,7 @@ extension _GameVoice on GameController {
       final seq = int.tryParse(parts[0]) ?? 0;
       if (seq != _voice.captionSeq && parts.length >= 3) {
         _voice.captionSeq = seq;
-        final who = isCharacter(parts[1]) ? characterById(parts[1]).name : parts[1];
+        final who = isCharacter(parts[1]) ? charName(parts[1]) : parts[1];
         caption = '$who: ${parts.sublist(2).join('|')}';
         captionTime = 3.5;
       }

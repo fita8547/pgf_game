@@ -51,7 +51,15 @@ class _RpsAppState extends State<RpsApp> {
   void _onSettings() => setState(() {
     Rps.dark = Settings.I.dark;
     _applyPageBackground();
+    _applyVoiceLang();
   });
+
+  /// Agent lines follow the UI language (Korean or English audio + subtitles).
+  void _applyVoiceLang() {
+    try {
+      Engine.I.audio.setVoiceLang(Settings.I.lang);
+    } catch (_) {} // engine not loaded yet: _boot applies it
+  }
 
   @override
   void dispose() {
@@ -93,6 +101,7 @@ class _RpsAppState extends State<RpsApp> {
     // Phones: start on low graphics unless the player picked something.
     if (Engine.I.input.isTouch() && !s.qualitySaved) s.quality = 0;
     Engine.I.audio.setVolumes(s.sfxVolume, s.musicVolume, s.voiceVolume);
+    _applyVoiceLang();
     Engine.I.js.setQuality(s.quality);
 
     _step(0.4, tr('서버 연결 확인 중...', 'Checking the server...'));

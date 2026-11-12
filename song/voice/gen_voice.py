@@ -5,9 +5,10 @@
     python song/voice/gen_voice.py --force    # regenerate everything
 
 Reads song/voice/voice_lines.json (copied from new-modeling/voice) and writes
-song/voice/<agent>/<id>.mp3. A recorded file with the same name simply
-replaces the TTS one. Korean has only 3 neural voices, so characters are told
-apart by pitch and speed (VOICES below).
+song/voice/<agent>/<id>.mp3 (Korean) and song/voice/en/<agent>/<id>.mp3
+(English, text from voice_lines_en.txt, merged into the json as "en"). A
+recorded file with the same name simply replaces the TTS one. Korean has only
+3 neural voices, so characters are told apart by pitch and speed (VOICES).
 """
 import asyncio
 import json
@@ -35,32 +36,79 @@ VOICES = {
 }
 
 
-def jobs(data):
+# English: many more voices, so each agent gets their own.
+VOICES_EN = {
+    "boulder":   ("en-US-ChristopherNeural", "-10%", "-10Hz"),
+    "cardboard": ("en-US-GuyNeural", "+5%", "+0Hz"),
+    "shear":     ("en-GB-SoniaNeural", "+3%", "-6Hz"),
+    "origami":   ("en-US-AvaNeural", "-8%", "-4Hz"),
+    "pebble":    ("en-US-AnaNeural", "+8%", "+4Hz"),
+    "snip":      ("en-GB-RyanNeural", "-2%", "-6Hz"),
+    "gem":       ("en-US-JennyNeural", "+4%", "+4Hz"),
+    "needle":    ("en-US-MichelleNeural", "-4%", "-2Hz"),
+    "scroll":    ("en-GB-ThomasNeural", "-12%", "-4Hz"),
+    "inkwell":   ("en-GB-LibbyNeural", "-10%", "+0Hz"),
+    "quake":     ("en-US-EricNeural", "+10%", "+2Hz"),
+    "staple":    ("en-US-SteffanNeural", "-5%", "-15Hz"),
+}
+
+
+def merge_en(data):
+    """voice_lines_en.txt ("id | text") -> line["en"]; returns missing ids."""
+    en = {}
+    src = HERE / "voice_lines_en.txt"
+    if src.exists():
+        for raw in src.read_text(encoding="utf-8").splitlines():
+            raw = raw.strip()
+            if raw and not raw.startswith("#") and " | " in raw:
+                k, t = raw.split(" | ", 1)
+                en[k] = t
+    missing = []
+    for _, l in all_lines(data):
+        if l["id"] in en:
+            l["en"] = en[l["id"]]
+        else:
+            missing.append(l["id"])
+    return missing
+
+
+def all_lines(data):
     for agent, a in data["agents"].items():
         for lines in a["lines"].values():
             for l in lines:
-                yield agent, l["id"], l["text"]
+                yield agent, l
     for it in data.get("interactions", []):
         for l in it["lines"]:
-            yield l["agent"], l["id"], l["text"]
+            yield l["agent"], l
+
+
+def jobs(data):
+    for agent, l in all_lines(data):
+        yield agent, l["id"], l["text"], VOICES[agent], HERE / agent / f"{l['id']}.mp3"
+        if l.get("en"):
+            yield agent, l["id"], l["en"], VOICES_EN[agent], HERE / "en" / agent / f"{l['id']}.mp3"
 
 
 async def main(force):
-    data = json.loads((HERE / "voice_lines.json").read_text(encoding="utf-8"))
+    path = HERE / "voice_lines.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    missing = merge_en(data)
+    if missing:
+        print(f"{len(missing)} lines without English text, e.g. {missing[:3]}")
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
     todo = []
-    for agent, lid, text in jobs(data):
-        out = HERE / agent / f"{lid}.mp3"
+    for agent, lid, text, voice, out in jobs(data):
         if out.exists() and out.stat().st_size > 0 and not force:
             continue
-        todo.append((agent, lid, text, out))
+        todo.append((lid, text, voice, out))
     print(f"{len(todo)} lines to generate")
     sem = asyncio.Semaphore(6)
     done = 0
     failed = []
 
-    async def one(agent, lid, text, out):
+    async def one(lid, text, spec, out):
         nonlocal done
-        voice, rate, pitch = VOICES[agent]
+        voice, rate, pitch = spec
         out.parent.mkdir(parents=True, exist_ok=True)
         async with sem:
             for attempt in range(3):
