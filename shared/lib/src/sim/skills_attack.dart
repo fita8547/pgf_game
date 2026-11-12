@@ -115,9 +115,14 @@ class ShurikenStorm extends SkillImpl {
     return true;
   }
 
+  /// HP restored per kill while the storm is up.
+  static const double healOnKill = 70;
+
   @override
   void onKill(GameSim sim, Player killer, Player victim) {
-    if (killer.mode == 'shuriken') killer.fx['modeAmmo'] = math.min(5, (killer.fx['modeAmmo'] ?? 0) + 1);
+    if (killer.mode != 'shuriken') return;
+    killer.fx['modeAmmo'] = math.min(5, (killer.fx['modeAmmo'] ?? 0) + 1);
+    sim.heal(killer, healOnKill, null);
   }
 }
 

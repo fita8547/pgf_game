@@ -261,6 +261,17 @@ void main() {
     expect(p3.ult, closeTo(cost, 1e-6));
   });
 
+  test('origami ult kill heals 70', () {
+    final (sim, p, e) = duel('origami', 'gem', dist: 10);
+    charge(p);
+    cast(sim, p, Btn.ult);
+    expect(p.mode, 'shuriken');
+    p.hp = 50;
+    sim.applyDamage(e, 9999, p, 'shuriken_storm', false);
+    expect(e.alive, isFalse);
+    expect(p.hp, closeTo(120, 0.01));
+  });
+
   test('easter egg: origami sniper kill = full ult, cast twice in a row', () {
     final (sim, p, e) = duel('origami', 'gem', dist: 20);
     p.ult = 0;
